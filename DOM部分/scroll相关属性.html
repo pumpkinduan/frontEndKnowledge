@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        .box {
+            width: 200px;
+            height: 200px;
+            border: 5px solid #999;
+            padding: 50px;
+            margin: 20px;
+            background-color: pink;
+            overflow: auto;
+        }
+        .content {
+            background-color: skyblue;
+        }
+    </style>
+</head>
+<body>
+    <div class="box">
+        <div class="content">
+                jklaghagha
+                <br>
+                sgrke
+                <br>
+                584jsbg
+                <br>
+                kjsgbsgi
+                <br>
+                kweghiuae
+                <br>
+                sklhfiswhbr sdigjhelwigeagae
+                <br>
+                sliogheg
+                selrghe
+                <br>
+                gheihg
+                <br>
+                kjhgalkhsga
+                <br>
+                slhgisehg
+                kweghiuae
+                <br>
+                sklhfiswhbr sdigjhelwigeagae
+                <br>
+                sliogheg
+                selrghe
+                <br>
+                kweghiuae
+                <br>
+                kjhgalkhsga
+                <br>
+                slhgisehg
+                kweghiuae
+                <br>
+                sklhfiswhbr sdigjhelwigeagae
+                <br>
+                sliogheg
+                selrghe
+                <br>
+                kweghiuae
+        </div>
+        
+    </div>
+    <script>
+        //scrollTop: 当前元素的滚动条的竖直滚动像素距离,也就是元素内容被滚动的距离
+        //scrollLeft: 同理
+        var oBox = document.querySelector('.box');
+        var oContent = document.querySelector('.content');
+        oBox.onscroll = function() {
+            console.log(oBox.scrollTop)
+        }
+
+        //scrollHeight: 表示当前元素的总高度,包括溢出容器部分,不可见部分和padding
+        //scrollWidth: 表示当前元素的总宽度,包括溢出容器部分,不可见部分和padding
+        //若是有伪元素存在的话,还会包括伪元素的宽高
+
+
+        //注意:
+        //超出部分指的是：元素盒子的内容超出了该盒子的内容区域的范围的那部分
+        //而超出部分在盒子的padding区域还是会显示出来,即使出现了滚动条
+        //所以为什么下面显示的结果是478就可以解释的通了
+        console.log(oBox.scrollHeight);//478==height(200) + padding(上下共100) + 超出部分(178)
+    </script>
+</body>
+</html>

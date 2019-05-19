@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        //模拟func.call(thisArg):
+        // 原理其实很简单,把调用者func函数用变量储存起来,将其作为thisArg的方法,
+        // 然后thisArg来调用,这样func内部的this就会自动指向thisArg了
+        // var name = 'hhh';
+        var hack = {
+            nickName: '南瓜',
+            foo: function() {
+                console.log(arguments)
+                console.log(this.nickName);
+            }
+        }
+        Function.prototype.myCall = function(thisArg) {
+            //0.若是调用myCall的对象为非函数对象则报错
+            if (typeof this !== 'function') { throw new Error( this + 'is not Function instance'); }
+            if ( !thisArg ) { return this() };//solve thisArg == null || undefined
+            var args =  [...arguments];
+            if ( args.length >= 2 ) { 
+                args.shift();
+            }
+            //solve primary values
+            switch (typeof thisArg ) {
+                case 'number':
+                    thisArg = new Number(thisArg);
+                    break;
+                case 'string':
+                    thisArg = new String(thisArg);
+                    break;
+                case 'boolean':
+                    thisArg = new Boolean(thisArg);
+                    break;
+            }
+            //1.获取调用call方法的那个函数对象;
+            var fn = this;
+            //2.将函数对象添加至我们定义的thisArg对象中
+            thisArg.contextFunc = fn;
+            //3.执行函数,并且把不定参数传入
+            thisArg['contextFunc'](...args);
+            //4.把向thisArg添加的属性(函数)删除
+            delete thisArg['contextFunc'];
+        }
+        hack.foo.myCall(hack,1,2,3);    
+    </script>
+</body>
+</html>

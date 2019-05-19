@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        div {
+            height: 1000px;
+            width: 100px;
+            background-color: #eee;
+        }
+    </style>
+</head>
+<div>
+
+</div>
+<body>
+    <script>
+        //Element.scrollLeft属性表示当前元素的水平滚动条向右侧滚动的像素数量
+        //Element.scrollTop属性表示当前元素的垂直滚动条向下滚动的像素数量。
+        //对于那些没有滚动条的网页元素,这两个属性总是等于0。可读可写
+
+        //获取网页滚动条的滚动距离
+        //   window.pageXOffset / window.pageYOffset ,只读属性,若更改其值不会使滚动条发生滚动
+        //   IE8以及IE8以下不兼容
+        //   
+        //   IE8以及IE8以下兼容的方法
+        //   document.body.scrollLeft/Top,改变其值,滚动条会相应的滚动
+        //   document.documentElement.scrollLeft/Top
+        //   但是这两种方法兼容性很混乱,一种方法能用,在同一浏览器中另一种方法值则为0,最好是将二方法相加取值
+        //   其实是在标准模式下document.documentElement.scrollLeft/Top可用,在混杂模式下document.body.scrollLeft/Top可用
+        //   封装一个getscrollOffset() {}函数,获取滚动条的滚动距离
+
+        function getscrollOffset() {
+            if (window.pageXOffset) {
+                return {
+                    x: window.pageXOffset,
+                    y: window.pageYOffset
+                }
+            } else return {
+                x: document.body.scrollLeft + document.documentElement.scrollLeft,
+                y: document.body.scrollTop + document.documentElement.scrollTop
+            }
+        }
+    </script>
+</body>
+
+</html>

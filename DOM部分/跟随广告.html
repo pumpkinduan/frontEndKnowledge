@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .ad {
+            background-color: pink;
+            border: 1px solid #ddd;
+            width: 200px;
+            height: 200px;
+            position: absolute;
+        }
+
+        .msg {
+            text-align: center;
+            line-height: 30px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="ad">广告</div>
+    <div class="msg">
+        <p>ishva</p>
+        <p>ishva</p>
+        <p>ishva</p>
+        <p>ishva</p>
+        <p>ishva</p>
+        <p>ishva</p>
+        <p>ishva</p>
+        <p>ishva</p>
+        <p>ishva</p>
+        <p>ishva</p>
+        <p>ishva</p>
+        <p>ishva</p>
+        <p>ishva</p>
+        <p>ishva</p>
+        <p>ishva</p>
+        <p>ishva</p>
+        <p>ishva</p>
+        <p>ishva</p>
+        <p>ishva</p>
+        <p>ishva</p>
+        <p>ishva</p>
+        <p>ishva</p>
+        <p>ishva</p>
+        <p>ishva</p>
+        <p>ishva</p>
+        <p>ishva</p>
+        <p>ishva</p>
+        <p>ishva</p>
+        <p>ishva</p>
+        <p>ishva</p>
+        <p>ishva</p>
+        <p>ishva</p>
+        <p>ishva</p>
+        <p>ishva</p>
+        <p>ishva</p>
+        <p>ishva</p>
+        <p>ishva</p>
+        <p>ishva</p>
+        <p>ishva</p>
+        <p>ishva</p>
+        <p>ishva</p>
+        <p>ishva</p>
+    </div>
+
+    <script src="./animate.js"></script>
+    <script src="./tool.js"></script>
+    <script>
+        let oAd = document.getElementsByClassName('ad')[0];
+        let { width: clientW, height: clientH } = tool.getViewportOffset();
+        let offsetY = (clientH - oAd.offsetHeight) / 2;
+        animate(oAd, {
+            'top': offsetY
+        }, 'fastToSlow')
+        window.onscroll = function () {
+            //获取竖直方向的滚动距离
+            let extraOffsetY = tool.getPageOffset().y;
+            animate(oAd, {
+                'top': offsetY + extraOffsetY
+            }, 'fastToSlow')
+        }
+    </script>
+</body>
+
+</html>

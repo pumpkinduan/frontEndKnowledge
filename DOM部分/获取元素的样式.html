@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        div {
+            border: 1px solid #eee;
+            background-color: red;
+            width: 100em;
+            height: 100px;
+        }
+    </style>
+</head>
+    <div></div>
+<body>
+    <script>
+        //window.getCoumputedStyle(elem,null),第二参数一般写null,不过它表示获取元素的伪元素的样式,可写"after","before","null"
+        //返回一个CSSStyleDeclaration实例,包含了指定节点的最终样式,只读,无法写入,IE8及IE8以下不兼容
+        //获取的值都是经过计算后的绝对值(px),无相对单位（em...）
+        var oDiv = document.getElementsByTagName('div')[0];
+        console.log(window.getComputedStyle(oDiv, null).width);//1600px
+        //注意,CSSStyleDeclaration 实例是一个活的对象,任何对于样式的修改,会实时反映到这个实例上面
+        console.log(window.getComputedStyle(oDiv, null).height);//100px
+        oDiv.style.height = '1000px';
+        console.log(window.getComputedStyle(oDiv, null).height);//1000px
+
+        //IE8及IE8以下有自己的方法,dom.currentStyle[prop];查找css属性,获取的值不是绝对值
+        //console.log(oDiv.currentStyle['width']);//100em
+        //封装一个获取样式的方法,兼容任何浏览器
+        function getStyle(elem, prop) {
+            if (window.getComputedStyle) {
+                return window.getComputedStyle(elem, null)[prop];
+            }
+            return elem.currentStyle[prop];
+        }
+    </script>
+</body>
+
+</html>

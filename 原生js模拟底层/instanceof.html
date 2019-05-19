@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        //instanceof: 该运算符用于测试构造函数的prototype属性是否出现在对象的原型链中的任何位置
+        function Person() {
+
+        }
+        var xx = new Person();
+        // console.log( xx instanceof Person );//true
+
+        //模拟实现
+        //突破口: Object.prototype.__proto__ === null
+        function my_instanceof(obj, Func) {
+            while( true ) {
+                if ( obj === Func.prototype ) {
+                    return true;
+                } 
+                if ( obj === null ) {
+                    return false;
+                }
+                obj = obj.__proto__;
+            }
+        }
+        console.log(my_instanceof(xx, Object));
+    </script>
+</body>
+</html>

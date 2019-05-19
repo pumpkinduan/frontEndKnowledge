@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        .box {
+            background-color: pink;
+            width:100px;
+            height:100px;
+            position: absolute;
+            cursor: move;
+        }
+    </style>
+</head>
+<body>
+    <div class="box"></div>
+    <script>
+        //1.获取 需要操作的元素
+        let oBox = document.getElementsByClassName('box')[0];
+        oBox.onmousedown = function(ev) {
+            ev = ev || window.event;
+            //2.获取差值
+            var extraX = ev.pageX - parseInt(oBox.offsetLeft);
+            var extraY = ev.pageY - parseInt(oBox.offsetTop);
+            /*
+            var lastMouseX = ev.pageX;
+            var lastMouseY = ev.pageY; 
+            var beginl = parseFloat(window.getComputedStyle(oBox, null).left);
+            var beginT = parseFloat(window.getComputedStyle(oBox, null).top);
+            */
+            document.onmousemove = function(e) {
+                //获取偏移量
+                /*
+                var offsetX = e.pageX - lastMouseX;
+                var offsetY = e.pageY - lastMouseY;
+                oBox.style.left = offsetX + beginl + 'px';
+                oBox.style.top = offsetY + beginT + 'px';
+                */
+                var newX = e.pageX - extraX + 'px';
+                var newY = e.pageY - extraY + 'px';
+                oBox.style.left = newX;
+                oBox.style.top = newY;
+                
+            }
+        }
+        oBox.onmouseup = function() {
+            document.onmousemove = null;
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style type="text/css">
+        ul {
+            list-style-type: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div>
+        <span>gg</span>
+        <p>
+            <strong></strong>
+        </p>
+
+        <ul>
+            <li></li>
+        </ul>
+    </div>
+    <script type="text/javascript">
+        var div = document.getElementsByTagName('div')[0];
+        var span = document.getElementsByTagName('span')[0];
+        //1.遍历元素节点树(在原型链上编程)
+        /*var div = document.getElementsByTagName("div")[0],
+            nodeList = div.childNodes,
+            nodeLength = nodeList.length;
+        Object.prototype.counts = function () {
+            for (var i = 0;i < nodeLength;i ++){
+                if(nodeList[i].nodeType === 1){
+                    console.log(nodeList[i]);
+                }
+            }
+        }*/
+        // <div>  
+        // 		<span>
+        // 			<strong>
+        // 				<i></i>
+        // 			</strong>
+        // 		</span>
+        // </div>
+        //2.封装函数，返回元素e的第n层祖先元素节点
+
+        /*	function retParentElement(element,n){
+                var node = document.getElementsByTagName(element)[0];
+                for (var i = 0;i < n;i ++){
+                    var parent = node.parentNode;
+                    node = node.parentNode;
+                    if(parent == null){
+                        break;//元素没有父元素节点时返回null
+                    }
+                }
+                return parent;
+            }*/
+
+
+        //3.封装函数，返回元素e的第n个兄弟元素节点，n为正，返回后面的兄弟元素节点，n为负，返回前面的，n为0，返回自己
+        function retSiblingElement(e, n) {
+            while (e && n) {//当n很大时，e为null的一种兼容性写法
+                if (n > 0) {
+                    if (e.nextElementSibling) {
+                        e = e.nextElementSibling;//适配各个浏览器的兼容性写法
+                    } else {
+                        for (e = e.nextSibling; e && e.nodeType != 1; e = e.nextSibling);//若for循环里的{}没内容可省略，不过要加上;
+                        //使得while循环一次便找到一个兄弟元素节点,e && e.nodeType != 1兼容es为null的可能性		
+                    }
+                    n--;
+                } else {
+
+                    if (e.previousElementSibling) {
+                        e = e.previousElementSibling;
+                    }
+
+                    for (e = e.previousElementSibling; e && e.nodeType != 1; e = e.previousElementSibling)
+                        n++;
+                }
+            }
+            return e;
+        }
+        var div = document.getElementsByTagName("div")[0];
+
+        //4.编辑函数，封装myChildren功能，解决以前部分浏览器的兼容性问题
+        Element.prototype.myChildren = function () {
+            var child = this.childNodes,
+                len = child.length,
+                newNodes = [];
+            for (var i = 0; i < len; i++) {
+                if (child[i].nodeType === 1) {
+                    newNodes.push(child[i]);
+                }
+            }
+            return newNodes;
+        }
+        var div = document.getElementsByTagName("div")[0];
+
+        //5.自己封装hasChildren()方法，不可用children属性
+        Element.prototype.hasChildren = function () {
+            var son = this.myChildren();
+            if (son) {
+                return true;
+            }
+            return false;
+        }
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        //func.apply(thisArg, [arg1, arg2, ...])
+        //func.call(thisArg, arg1, arg2, ...)
+        //thisArg: 在函数func运行时改变其this的指向为thisArg
+        //注意点: 若是处于非严格模式
+        //1.而thisArg=null || undefined,则func的this => 全局对象,浏览器中是window,node中是global
+        //2.或thisArg = primaryValue(number, string, boolean),则func的this => 该原始值的自动包装对象
+        var name = 'window';
+        var obj1 = {
+            name: 'obj1',
+            foo: function () {
+                console.log(this.name);
+            }
+        }
+        var obj2 = {
+            name: 'obj2'
+        }
+        // obj1.foo();//obj1
+        // console.log(obj1.foo.call(null);//window
+        // obj1.foo.call();//undefined
+
+        //functionTarget.bind(thisArg, arg1, arg2, ...)
+        /*
+         * thisArg: 调用绑定函数时作为this参数传递给目标函数的值。
+         * 如果使用new运算符构造绑定函数,则忽略该值。
+         * 当使用bind在setTimeout中创建一个函数（作为回调提供）时,作为thisArg传递的任何原始值都将转换为object。
+         * 如果bind函数的参数列表为空,执行作用域的this将被视为新函数的thisArg。
+         */
+
+        /*
+         * arg1, arg2: 当目标函数被调用时,预先添加到绑定函数的参数列表中的参数。
+         *
+         */
+         //返回一个原函数的拷贝,并拥有指定的this值和初始参数。
+         var x = 9;
+         var vm = {
+             x: 11,
+             getX: function() { return this.x; }
+         };
+         var cloneGetX = vm.getX;
+        //  console.log(cloneGetX());//9
+        var bindGetX = cloneGetX.bind(vm);//返回一个原函数的拷贝,并将该函数的this指向vm
+        // bindGetX();//11
+        //1.偏函数的应用:
+       /**
+        * bind()的另一个最简单的用法是使一个函数拥有预设的初始参数。
+        * 只要将这些参数（如果有的话）作为bind()的参数写在this后面。
+        * 当绑定函数被调用时,这些参数会被插入到目标函数的参数列表的开始位置,传递给绑定函数的参数会跟在它们后面。
+        */
+        function list() {
+            return Array.prototype.slice.call(arguments);
+        }
+        // var oList = list(1,2,3);//[1,2,3]
+        //给目标函数预设一个参数4,也就是返回的函数中有个初始的参数4
+        var bindList = list.bind(null, 4);
+        //console.log(bindList());//[4]
+        //console.log(bindList(1,2,3))//[4,1,2,3]
+        //2.将类数组转为真数组的应用
+
+        //2.1
+        var likeArray = {0: 1, 1: 2, length: 2};
+        var slice = Array.prototype.slice;
+        var arr = slice.call(likeArray);
+        console.log(arr);
+        //2.2: slice是Function.prototype的call()方法的绑定函数,
+        // 并且将Array.prototype的slice()方法作为this的值。
+        // 这意味着我们压根儿用不着上面那个call()调用了
+        //记住一点: call和apply内部的this其实指向的便是调用它的函数对象,下面就好理解了
+        var unbindSlice = Array.prototype.slice;
+        var bindSlice = Function.prototype.call.bind(unbindSlice);
+        console.log(bindSlice(likeArray))
+        // function ff() {
+        //     Function.prototype.call.apply(unbindSlice, arguments);
+        // }
+        /**
+         * 在默认情况下,使用 window.setTimeout() 时,this 关键字会指向 window （或global）对象。
+         * 当类的方法中需要 this 指向类的实例时,你可能需要显式地把 this 绑定到回调函数,就不会丢失该实例的引用。
+         */ 
+        function lateBloomer(){//花开
+            this.petalCount = Math.ceil(Math.random() * 10) + 1;
+        }
+        lateBloomer.prototype.bloom = function() {
+            //每隔一秒开次花
+            // this.declare:内部的this在定时器下执行时默认会执行window
+            // window.setTimeout(this.declare ,1000);
+            //以往我们一般会这么使用
+            // var self = this;
+            // window.setTimeout(function() {
+            //     self.declare();
+            // },1000);
+           
+            //现在利用bind返回一个this.declare函数的拷贝函数,并且将该函数内部的this指向我们指定的thisArg;
+            // window.setTimeout(this.declare.bind(this) ,1000);
+        }
+        lateBloomer.prototype.declare = function() {
+            //宣告玫瑰开花了
+            console.log('I am a beautiful rose with ' + this.petalCount + ' petals!!!')
+        }
+        new lateBloomer().bloom();
+    </script>
+</body>
+</html>

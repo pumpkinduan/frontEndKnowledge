@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div class="box">
+        你好<
+        <p>hi</p>
+    </div>
+    <script>
+        var oDiv = document.querySelector('.box');
+        //Element.innerHTML: 
+        //1.获取元素的内容,包括该元素下的所有标签,可读写,若为''=>删除元素下包含的所有节点
+        //2.返回该元素包含的所有 HTML 代码,且会保留原文中的空格(IE8及以下会剔除原文中的空格)
+        //3.注意:若是文本节点包含 大于号> 小于号< &...,辣么会将其转为字符实体格式返回
+        //    如:小于号转为:  &lt;
+
+        //如果想得到原文,建议使用element.textContent
+        console.log(oDiv.innerHTML);
+        //若是给innerHTML设置的值为包含HTML,则会被解析成为节点对象插入DOM
+        // oDiv.innerHTML = '<span>我是span</span>';
+
+        //下面的脚本会插入到DOM中,虽然不会执行,但还是不安全,所以若是插入的内容为文本则最好用textContent
+        // oDiv.innerHTML = "<script>alert('haha')";
+
+        //Element.textContent: 返回该元素下的所有文本内容,保留原文中的空格
+        //IE8及以下不支持该属性
+        console.log(oDiv.textContent);
+
+        //Element.innerText:  返回该元素下的所有文本内容,剔除原文中的空格
+        console.log(oDiv.innerText);
+
+        //最后: innerHTML和innerText无兼容性问题,textContent不兼容IE8及以下
+        //封装一个设置元素文本内容的兼容性函数
+        function setText(obj, text) {
+            if ( obj.textContent ) {
+                return obj.textContent = text;
+            } else {
+                obj.innerText = text;
+            }
+        }
+    </script>
+</body>
+</html>

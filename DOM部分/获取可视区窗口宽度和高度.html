@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        //可视区窗口，就是编写的HTML文档可见的部分，不包括导航栏，控制台等
+        //获取可视区窗口宽度和高度
+        //window.innerWidth/Height ie8以及ie8以下不兼容,返回不带单位的数值
+        //document.documentElement.clientWidth/Height 标准模式下，任意浏览器都兼容,返回不带单位的数值
+        //document.body.clientWidth/clientHeight 适用于怪异模式下的浏览器，去掉DTD声明即为怪异模式
+        //注意:标准模式下document.body.clientWidth与document.documentElement.clientWidth(多)相差16像素
+        //可用document.compatMode可知是标准(CSS1Compat) 还是怪异(BackCompat)
+        //封装一个获取可视窗口的方法来兼容浏览器
+        function getViewportOffset() {
+            if (window.innerWidth) {
+                return {
+                    width: window.innerWidth,
+                    heigth: window.innerHeight
+                }
+            } else if (document.compatCode === "CSS1Compat") {
+                return {
+                    width: document.documentElement.clientWidth,
+                    height: document.documentElemnt.clientHeight
+                }
+            }
+            else {
+                return {
+                    width: document.body.clientWidth,
+                    height: document.body.clientHeight
+                }
+            }
+        }
+    </script>
+</body>
+
+</html>

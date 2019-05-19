@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        .box {
+            width: 200px;
+            height: 200px;
+            border: 5px solid #000000;
+            padding: 20px;
+            background-color: red;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+<body>
+    <div class="box"></div>
+    <script>
+        var oDiv = document.querySelector('.box');
+        //clientHeight: 获取元素的 高度 + 上下padding, 不包括边框
+        //clientWidth: 获取元素的 宽度 + 左右padding, 不包括边框
+        //返回值为整数
+        console.log(oDiv.clientHeight);
+        console.log(oDiv.clientWidth);
+
+
+        //clientTop: 获取元素的上边边框宽度
+        //clientLeft: 获取元素的左边边框宽度
+        //返回值为整数
+        console.log(oDiv.clientTop)
+        console.log(oDiv.clientLeft)
+    </script>
+</body>
+</html>

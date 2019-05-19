@@ -1,0 +1,81 @@
+* {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+figure {
+    width: 800px;
+    margin: 100px auto;
+    border: 1px solid #000;
+    position: relative;
+    background-color: pink;
+}
+figure figcaption {
+    font-size: 24px;
+    line-height: 30px;
+    text-align: center;
+}
+figure video {
+    width: 100%;
+}
+.control {
+    width: 100%;
+    padding: 20px 0;
+    background: linear-gradient(to bottom, #999 ,#000);
+    position: absolute;
+    bottom: 0px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+.control .control-bar {
+    height: 40px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #fff;
+}
+#play {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    background-size: 30px 30px;
+    transition: all 0.2s;
+}
+.pause {
+    background:  url(./images/play.png) 7px 4px no-repeat;
+}
+.play {
+    background:  url(./images/pause.png) 5px 4px no-repeat;
+}
+#play:hover,
+#fullScreen:hover {
+    background-color: rgba(0,0,0,.95);
+    border-radius: 50%;
+}
+.control .control-bar .time {
+    width: 80%;
+}
+#fullScreen {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    background: url(./images/full_screen.png) 5px 4px no-repeat;
+    background-size: 30px 30px;
+    transition: all 0.2s;
+}
+.control .progress {
+    background-color: #cccdd0;
+    width: 100%;
+    height: 5px;
+    border-radius: 30px;
+    margin-top: 10px;
+    cursor: pointer;
+}
+.control .progress .line {
+    background-color: #fff;
+    width: 100%;
+    height: 100%;
+    border-radius: 30px;
+    transform: translateX(-100%);
+}

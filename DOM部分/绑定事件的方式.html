@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        div {
+            width: 100px;
+            height: 100px;
+            border: 1px solid #000;
+        }
+    </style>
+</head>
+<div></div>
+<body>
+    <script>
+        //如何绑定一个事件
+        //1.dom.onclick = function (){}，注意，一个元素的同一事件类型只能绑定一个处理函数
+        // 该程序中的this指向dom元素本身
+
+        //2.dom.addEventListener(事件类型,处理函数,false);IE9以下不兼容，可为一个元素的同一事件类型绑定多个处理函数
+        // 该程序中的this指向dom元素本身
+
+        //3.attatchEvent('on' + 事件类型,处理函数);IE独创的方法,同一个事件类型同样可绑定多个处理函数,该处理函数中的this指向window,小bug
+        var div = document.getElementsByTagName("div")[0];
+        div.onclick = function (e) {
+            console.log(e);
+            this.style.backgroundColor = "lightblue";
+        }    
+    </script>
+</body>
+
+</html>

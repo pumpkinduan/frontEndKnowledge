@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .wrapper {
+            overflow: hidden;
+            margin: 0 auto;
+            position: relative;
+            background-color: pink;
+        }
+
+        .wrapper .box {
+            padding-bottom: 10px;
+            padding-right: 10px;
+            float: left;
+        }
+
+        .wrapper .box .img-wrap {
+            border: 1px solid #ccc;
+            padding: 8px;
+            background-color: #f2f2f2;
+        }
+
+        img {
+            width: 140px;
+            vertical-align: top;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrapper">
+        <!-- <div class="box">
+            <div class="img-wrap">
+                <img src="./img/1.jpg">
+            </div>
+        </div> -->
+    </div>
+    <script src="tool.js"></script>
+    <script>
+        //0.注意,由于图片资源是异步加载的,所以在瀑布流布局时获取高度有可能不正确,所以一定要等到图片全部加载完在进行流式布局
+        //1.初始化图片且添加至页面中
+        let oWrapper = document.getElementsByClassName('wrapper')[0];
+        initImg(oWrapper);
+        window.onload = function () {
+            let oItems = document.querySelectorAll('.box');
+            waterFall('wrapper', 'box');
+            window.onresize = tool.throttle(function () {
+                waterFall('wrapper', 'box');
+            }, 400)
+            window.onscroll = tool.debounce(function () {
+                loadImg(oWrapper, oItems);
+                waterFall('wrapper', 'box');
+            }, 300)
+        }
+        function initImg(oWrapper) {
+            //1.1创建box
+            //由于闭包问题,下面的变量声明用let
+            for (let i = 1; i <= 8; i++) {
+                let box = document.createElement('div');
+                box.classList.add('box');
+                box.innerHTML = `<div class="img-wrap">
+                                    <img src="./img/${i}.jpg">
+                                </div>`;
+                oWrapper.appendChild(box);
+            }
+        }
+        function waterFall(parent, child) {
+            let oWrapper = document.getElementsByClassName(parent)[0];
+            let oItems = document.getElementsByClassName(child);
+            let len = oItems.length;
+            let heightArr = [];
+            //获取可视区宽高
+            let { width, height } = tool.getViewportOffset();
+            //求出一行中可放置的图片数目,也就是列数
+            let cols = Math.floor(width / oItems[0].offsetWidth);
+            //布局每个box
+            for (let i = 0; i < len; i++) {
+                let item = oItems[i];
+                if (i < cols) {
+                    heightArr.push(item.offsetHeight);
+                    item.style.position = 'absolute';
+                    item.style.left = i * item.offsetWidth + 'px';
+                    item.style.top = '0';
+                } else {
+                    item.style.position = 'absolute';
+                    //获取第一行中最矮的盒子
+                    let minIndex = heightArr.findIndex((item) => {
+                        return item === getMinHeight(heightArr);
+                    })
+                    item.style.left = oItems[minIndex].offsetLeft + 'px';
+                    item.style.top = heightArr[minIndex] + 'px';
+                    //更新数组
+                    heightArr[minIndex] += item.offsetHeight;
+                }
+            }
+            //将第一行图片所占宽度设置给wrapper
+            oWrapper.style.width = cols * oItems[0].offsetWidth + 'px';
+            oWrapper.style.height = Math.max(...heightArr) + 'px';
+        }
+        function getMinHeight(arr) {
+            return Math.min(...arr);
+        }
+        function loadImg(oWrapper) {
+            let { height } = tool.getViewportOffset();
+            let oItems = document.getElementsByClassName('box');
+            let scrollY = tool.getPageOffset().y;
+            let lastBox = oItems[oItems.length - 1];
+            let lastBoxHeight = lastBox.offsetHeight;
+            if ((height + scrollY) >= (lastBoxHeight / 2 + lastBox.offsetTop)) {
+                initImg(oWrapper);//重新加载图片
+            }
+        }
+    </script>
+</body>
+
+</html>

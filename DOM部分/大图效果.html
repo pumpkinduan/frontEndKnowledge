@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        .box {
+            width: 300px;
+            height: 533px;
+            position: relative;
+            margin-left: 200px;
+            box-sizing: border-box;
+        }
+        .small-box {
+            width: 100%;
+            position: absolute;
+        }
+        .small-box>img {
+            width: 100%;
+            vertical-align: top;
+            border: 1px solid #ddd;
+        }
+        .small-box>.mask {
+            background-color: rgba(0, 0, 0, .4);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 80px;
+            height: 80px;
+            display: none;
+        }
+        .big-box {
+            width: 100%;
+            position: absolute;
+            height: 100%;
+            left: 300px;
+            overflow: hidden;
+            display: none;
+            border: 1px solid #ddd;
+        }
+        .big-box>img {
+            width: 800px;
+            position: absolute;
+            top: 0px;
+            left: 0px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box">
+        <div class="small-box">
+            <img src="http://hbimg.huabanimg.com/6d4da5877350bab6454fb1e64b94955db75e8f5a150cdf-22qzUV_fw658" alt="">
+            <span class="mask"></span>
+        </div>
+        <div class="big-box">
+            <img src="http://hbimg.huabanimg.com/6d4da5877350bab6454fb1e64b94955db75e8f5a150cdf-22qzUV_fw658" alt="">
+        </div>
+    </div>
+    <script>
+        //1.获取需要操作的元素
+        let oMask = document.querySelector('.mask');
+        let smallBox = document.querySelector('.small-box');
+        let bigBox = document.querySelector('.big-box');
+        let bigImg = document.querySelector('.big-box>img');
+        let oBox = document.querySelector('.box');
+        //2.监听小盒子的移入移出事件
+        smallBox.onmouseenter = function () {
+            bigBox.style.display = 'block';
+            oMask.style.display = 'block';
+        }
+        smallBox.onmouseleave = function () {
+            bigBox.style.display = 'none';
+            oMask.style.display = 'none';
+        }
+        //3.监听小盒子的移动事件
+        smallBox.onmousemove = function (e) {
+            e = e || window.event;
+            //3.1获取小盒子内鼠标点相对于小盒子的偏移位
+            let mouseX = e.pageX - oBox.offsetLeft;
+            let mouseY = e.pageY - oBox.offsetTop;
+            let maskW = oMask.offsetWidth;
+            let maskH = oMask.offsetHeight
+            let smallImgW = smallBox.offsetWidth;
+            let smallImgH = smallBox.offsetHeight;
+            let maxMoveMaskWidth = smallImgW - maskW;
+            let maxMoveMaskHeight = smallImgH - maskH;
+            //3.2重新计算鼠标的位置(需要将鼠标点移动到蒙版的中心位置)
+            mouseX = mouseX - maskW / 2;
+            mouseY =  mouseY - maskH / 2;
+            //3.3进行安全校核,避免蒙版随鼠标移动而超出了小盒子
+            mouseX = mouseX < 0 ? 0 : mouseX;
+            mouseY = mouseY < 0 ? 0 : mouseY;
+            //3.4再次进行安全校核
+            mouseX = mouseX > maxMoveMaskWidth ? maxMoveMaskWidth : mouseX;
+            mouseY = mouseY > maxMoveMaskHeight ? maxMoveMaskHeight : mouseY;
+            //3.5将获取到的坐标给到蒙版
+            oMask.style.left = mouseX + 'px';
+            oMask.style.top = mouseY + 'px';
+            //3.6计算大图需要移动的距离
+            //蒙版移动距离与大图移动距离的比例关系
+            //蒙版移动距离 / 蒙版最大能够移动距离 =  大图移动距离 / 大图最大能够移动距离 ;
+            let bigImgMoveX = mouseX / maxMoveMaskWidth * (bigImg.offsetWidth - bigBox.offsetWidth);
+            let bigImgMoveY = mouseY / maxMoveMaskHeight * (bigImg.offsetHeight - bigBox.offsetHeight);
+            //3.7将获取到的坐标给到大图
+            bigImg.style.left = -bigImgMoveX + 'px';
+            bigImg.style.top = -bigImgMoveY + 'px';
+        }
+    </script>
+</body>
+
+</html>

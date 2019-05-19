@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <button id="btn">clicke me</button>
+    <script src="./debounce_and_throttle.js"></script>
+    <script>
+        var btn = document.getElementById('btn');
+        var n = 0;
+        //延迟1s后执行处理函数,连续点击时间间隔在1s内不执行
+        // btn.onclick = debounce(1000, function() {
+        //     console.log( ++n );
+        // })
+
+        btn.onclick = throttle(1000, function() {
+            console.log( ++n );
+        })
+    </script>
+</body>
+</html>

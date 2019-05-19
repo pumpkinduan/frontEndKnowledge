@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            list-style-type: none;
+        }
+
+        .wrapper {
+            width: 400px;
+            border: 1px solid #000;
+            margin: 100px auto;
+            overflow: hidden;
+        }
+
+        ul {
+            display: flex;
+            position: relative;
+        }
+
+        img {
+            width: 140px;
+            vertical-align: top;
+        }
+
+        .progress {
+            background-color: #ccc;
+            height: 20px;
+            width: 100%;
+            position: relative;
+        }
+
+        .progress .bar {
+            width: 40px;
+            height: 100%;
+            border-radius: 10px;
+            background-color: deeppink;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrapper">
+        <ul>
+            <li>
+                <img src="./img/1.jpg" alt="">
+            </li>
+            <li>
+                <img src="./img/2.jpg" alt="">
+            </li>
+            <li>
+                <img src="./img/3.jpg" alt="">
+            </li>
+            <li>
+                <img src="./img/4.jpg" alt="">
+            </li>
+            <li>
+                <img src="./img/5.jpg" alt="">
+            </li>
+            <li>
+                <img src="./img/6.jpg" alt="">
+            </li>
+        </ul>
+        <div class="progress">
+            <div class="bar"></div>
+        </div>
+    </div>
+    <script src="./tool.js"></script>
+    <script>
+        let bar = document.querySelector('.bar');
+        let progress = document.querySelector('.progress');
+        let wrapper = document.querySelector('.wrapper');
+        let items = document.querySelectorAll('ul>li>img');
+        let imgW = items[0].offsetWidth;
+        let oUl = document.querySelector('ul');
+        //给ul设置宽度
+        oUl.style.width = imgW * items.length + 'px';
+        //计算滚动条的宽度
+        // 滚动条的宽度 / 滚动条的最大宽度 = 滚动内容可见部分的宽度 / 滚动内容的最大宽度
+        let barWidth = wrapper.clientWidth / oUl.offsetWidth * progress.offsetWidth;
+        bar.style.width = barWidth + 'px';
+        bar.onmousedown = function (e) {
+            let barMaxMoveWidth = progress.offsetWidth - bar.offsetWidth;
+            e = e || window.event;
+            //获取鼠标在滚动条范围内的位置
+            let begin = parseFloat(tool.getStyle(bar, 'left')) || 0;
+            let mouseX = e.pageX - tool.getElementPosition(progress).x;
+            document.onmousemove = function (ev) {
+                ev = ev || window.event;
+                //重新计算鼠标位置
+                let newMouseX = ev.pageX - tool.getElementPosition(progress).x;
+                //计算滚动条的位置
+                let disX = newMouseX - mouseX + begin;
+                //安全校核
+                disX = disX > 0 ? disX : 0;
+                disX = disX > barMaxMoveWidth ? barMaxMoveWidth : disX;
+                //给到滚动条
+                bar.style.left = disX + 'px';
+                //计算内容移动距离
+                // 内容移动距离 / 内容移动距离最大移动距离 = 滚动条移动距离 / 滚动条最大移动距离
+                let offsetX = disX / barMaxMoveWidth * ( oUl.offsetWidth - wrapper.clientWidth );
+                oUl.style.left = -offsetX + 'px';
+            }
+        }
+        document.onmouseup = function () {
+            document.onmousemove = null;
+        }
+    </script>
+</body>
+
+</html>

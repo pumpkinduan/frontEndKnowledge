@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        .father {
+            width: 100px;
+            height: 100px;
+            background-color: pink;
+            position: relative;
+            border: 10px solid #ccc;
+            margin: 20px;
+        }
+        .father .child {
+            width: 50px;
+            height: 50px;
+            border: 5px solid #000;
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="father">
+        <div class="child"></div>
+    </div>
+    <script>
+         var child = document.getElementsByClassName('child')[0];
+        //获取元素的偏移位  
+        //dom.offsetLeft/offsetTop
+        //对于无定位父级的元素(从目标元素的边框外边缘开始算),返回相对文档的坐标,
+        //对于有定位父级的返回相对于最近的有定位的父级的坐标(父级的内容区的边缘为止),
+        //从当前元素的边框外边缘到offset parent(有定位的父级)的边框的内边缘的这段距离;
+        console.log(child.offsetLeft);
+        //dom.offsetParent
+        //返回最近的有定位的父级，如无，返回body,body.offsetParent返回null
+        //求元素相对于文档的坐标getElementPosition
+        function getElementPosition (ele){
+            var result_X = 0,
+                result_Y = 0;
+            while(ele.offsetParent !== null){//一直循环到根元素
+                var parent = ele.offsetParent;
+                var w = (parent.offsetWidth - parent.clientWidth)/2;//有定位父级的左边框宽度
+                var h = (parent.offsetHeight - parent.clientHeight)/2;//有定位父级的下边框宽度
+                result_X += (ele.offsetLeft + w); //每循环一次获取一个到有定位我的父级坐标，每次累加
+                result_Y += (ele.offsetTop + h);
+                ele = parent;
+            }
+            return {
+                x : result_X,
+                y : result_Y
+            }
+        }
+    </script>
+</body>
+</html>

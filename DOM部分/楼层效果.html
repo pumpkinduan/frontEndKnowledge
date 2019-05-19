@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            list-style-type: none;
+        }
+        html, body {
+            width: 100%;
+            height: 100%;
+        }
+        ol {
+            position: fixed;
+            top: 50%;
+            transform: translateY(-50%);
+            text-align: center;
+        }
+        ol li {
+            line-height: 30px;
+            width: 100px;
+            background-color: #f2f2f2;
+            border-bottom: 1px solid #999;
+            cursor: pointer;
+        }
+        ol li.selected {
+            background-color: tomato;
+        }
+        ul {
+            text-align: center;
+        }
+        ul li {
+            font-size: 46px;
+        }
+    </style>
+</head>
+
+<body>
+    <ol>
+        <li class="btn selected">楼层一</li>
+        <li class="btn">楼层二</li>
+        <li class="btn">楼层三</li>
+        <li class="btn">楼层四</li>
+        <li class="btn">楼层五</li>
+    </ol>
+    <ul>
+        <li class="floor">楼层一</li>
+        <li class="floor">楼层二</li>
+        <li class="floor">楼层三</li>
+        <li class="floor">楼层四</li>
+        <li class="floor">楼层五</li>
+    </ul>
+    <script src="./tool.js"></script>
+    <script>
+        //初始化楼层样式
+        let bgcArr = ['red', 'skyblue', 'pink', 'green', 'gray'];
+        let oFloor = document.getElementsByClassName('floor');
+        let clientHeight = tool.getViewportOffset().height;
+        let timerId = null;
+        for ( let i = 0; i < bgcArr.length; i ++ ) {
+            oFloor[i].style.backgroundColor = bgcArr[i];
+            oFloor[i].style.height = clientHeight + 'px';
+        }
+        let oBtn = document.getElementsByClassName('btn');
+        let curIndex = 0;
+        for ( let i = 0; i < oBtn.length; i ++ ) {
+            oBtn[i].onclick = function() {
+                oBtn[curIndex].classList.remove('selected');
+                this.classList.add('selected');
+                curIndex = i;
+                clearInterval(timerId);
+                timerId = setInterval(function() {
+                    let begin = document.documentElement.scrollTop;
+                    let end = oFloor[i].offsetHeight * i;
+                    let speed = (end - begin) * 0.3;
+                    if ( Math.abs(end - begin) <= Math.abs(speed) ) {
+                        document.documentElement.scrollTop = end;
+                        clearInterval(timerId);
+                    }
+                     //注意:给 document.documentElement.scrollTop设置值时不能带单位
+                     document.documentElement.scrollTop += speed;
+                }, 100)
+                
+            }
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background-color: #000;
+        }
+        span {
+            display: inline-block;
+            font-size: 16px;
+            color: #fff;
+            font-weight: 800;
+            transition: all 1s;
+            animation: flash 1.5s infinite alternate;
+            position: absolute;
+        }
+        span:hover {
+            font-size: 60px !important;
+            transform: rotate(180deg);
+        }
+        @keyframes flash {
+            from {
+                opacity: 1;
+            }
+            to {
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <script>
+        //1.获取可视区域宽高
+        let {width, height} = getViewportOffset();
+        //2.生成雪花并添加到页面中去
+        for (var i = 0 ; i < 200; i ++) {
+            var snowFlake = document.createElement('span');
+            // snowFlake.innerText = '❄';
+            setText(snowFlake, '❄');
+            var x = Math.random() * width;
+            var y = Math.random() * height;
+            snowFlake.style.fontSize = ( Math.random() + 1 ) * 16 + 'px';
+            snowFlake.style.top = y + 'px';
+            snowFlake.style.left = x + 'px';
+            snowFlake.style.animationDelay = Math.random() * 4 + 's';
+            document.body.appendChild(snowFlake);
+        }
+        function setText(obj, text) {
+            if ( obj.textContent ) {
+                return obj.textContent = text;
+            } else {
+                obj.innerText = text;
+            }
+        }
+        function getViewportOffset() {
+            if (window.innerWidth) {
+                return {
+                    width: window.innerWidth,
+                    height: window.innerHeight
+                }
+            } else if (document.compatCode === "CSS1Compat") {
+                return {
+                    width: document.documentElement.clientWidth,
+                    height: document.documentElemnt.clientHeight
+                }
+            }
+            else {
+                return {
+                    width: document.body.clientWidth,
+                    height: document.body.clientHeight
+                }
+            }
+        }
+    </script>
+</body>
+</html>

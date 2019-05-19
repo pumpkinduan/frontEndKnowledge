@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        div {
+            width: 100px;
+            height: 100px;
+            background-color: pink;
+            padding: 10px;
+            border: 5px solid #000;
+        }
+    </style>
+</head>
+<body>
+<div></div>
+<ul>
+    <li>1</li>
+    <li>2</li>
+    <li>3</li>
+    <li>4</li>
+    <li>5</li>
+    <li>6</li>
+    <li>7</li>
+    <li>8</li>
+    <li>9</li>
+    <li>10</li>
+</ul>
+    <script>
+    //事件对象
+    var div = document.getElementsByTagName('div')[0];
+    div.onclick = function (e){
+        var event = e || window.event;
+        //兼容IE,IE上事件对象会存在window.event上，不会存在形参e上
+        // console.log(window.event);
+        console.log('offsetX:' + event.offsetX)
+        console.log('pageX:' + event.pageX)
+        console.log('clientX:' + event.clientX)
+        div.style.backgroundColor = "pink";
+    }
+
+    // event.pageX :鼠标相对与文档的x坐标,注意是文档,浏览器的窗口大小可任意调整，但文档还是不变的，即会多滚动条来保持文档大小不变,与浏览器的可视窗口要区分开
+    // event.screenX：鼠标相对与显示屏的x坐标
+    // event.offsetX：鼠标相对与事件源的x坐标,即点击的那个元素
+    // event.clientX：鼠标相对浏览器的可视窗口的x坐标
+
+    //事件源对象，事件对象里的target和srcElement属性里的值便是事件源对象,即为触发某事件的第一最先对象
+    //event.target火狐只有这个
+    //event.srcElement IE只有这个
+    //谷歌二者皆有
+    
+    // 要求点击第一个li输出1，依次类推，输出它们的顺序
+    /*var li = document.getElementsByTagName('li'),
+        len = li.length;
+        for(var i = 0;i < len;i++){
+            li[i].onclick = function () {
+                console.log(this.innerText);
+            }
+        } 该方法效率低，不易维护，不建议*/
+
+    var ul = document.getElementsByTagName('ul')[0];
+    ul.addEventListener('click',function (e) {
+        var event = e || window.event;
+        // console.log(event);
+        var target = event.target || event.srcElementIE;
+        console.log(target.innerHTML);
+    },true);
+    /*ul.onclick = function (e) {
+        var event = e || window.event;
+        // console.log(event);
+        var target = event.target || event.srcElementIE;
+        console.log(target.innerHTML);//该方法的事件源对象是li,li包含了ul标签的全部,由li冒泡到ul,以此来触发绑定给ul的事件
+    }*/
+    
+    
+    //事件委托---^
+    //利用事件冒泡，和事件源对象进行处理
+    //优点:
+    //1.性能 不需要循环所有的元素一个个绑定事件
+    //2.灵活 当有新的子元素时不需要重新绑定事件
+    </script>
+</body>
+</html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        .box {
+            width: 100px;
+            height: 100px;
+            border: 5px solid #000;
+            padding: 10px;
+            margin: 10px;
+            background-color: pink;
+            /* box-sizing: border-box; */
+        }
+    </style>
+</head>
+<body>
+    <div class="box" id="box"></div>
+    <script>
+        // var oDiv = document.getElementsByClassName('box')[0];
+        var oDiv = document.querySelector(".box");
+        //1.通过window.getComputedStyle获取(不兼容IE8及以下)
+        /*
+        oDiv.style.width = '200px';
+        var styleObj = window.getComputedStyle(oDiv);
+        //获取页面中最终展示的元素的宽高,只能获取,不能更改,返回值带单位
+        // styleObj.width = 100 + 'px';//error
+        console.log(styleObj.width);//200px
+        console.log(styleObj.height);//100px
+        */
+
+
+
+        //2.通过elem.currentStyle获取(兼容IE8及以下)
+        /*
+        var styleObj = oDiv.currentStyle;
+        //获取页面中最终展示的元素的宽高,只能获取,不能更改,返回带值单位
+        // oDiv.style.width = '200px';
+        // styleObj.width = '300px';//error
+        console.log(styleObj.width);//200px
+        console.log(styleObj.height);//100px
+         */
+
+        //3.通过Element.offsetWidth/offsetHeight属性获取
+        //获取页面中最终展示的元素的大小尺寸(包括padding和border),只能获取,更改无效也不报错,返回值为整数,无兼容性问题
+        oDiv.style.width = '200.5px';
+        oDiv.offsetWidth = 300 + 'px';
+        console.log(oDiv.offsetWidth);//200
+        console.log(oDiv.offsetHeight);//100
+
+        //注意: 
+        //第一和第二种方法获取的元素宽高都是获取的元素内容盒子(content box || containing area)的宽高,
+        //也就是外联或内联css设置的width和height属性并不是元素实际尺寸
+
+        //而第三种则是获取的元素盒子实际的尺寸大小,包括了padding + border + containing area(content box)
+        //所以在使用时要注意了,到底用何种方法好
+
+        //封装一个兼容性获取元素宽高的函数
+        function getElemWH(elem) {
+            if ( window.getComputedStyle ) {
+                return {
+                    width: window.getComputedStyle(elem, null).width,
+                    height: window.getComputedStyle(elem, null).height
+                }
+            } else if ( elem.currentStyle ) {
+                return {
+                    width: elem.currentStyle.width,
+                    height: elem.currentStyle.height
+                }
+            }
+        }
+    </script>
+</body>
+</html>

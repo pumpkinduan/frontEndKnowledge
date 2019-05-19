@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        div {
+            text-align: center;
+        }
+        .top {
+            height: 50px;
+            background-color: skyblue;
+        }
+        .nav {
+            background-color: pink;
+            height: 60px;
+            width: 100%;
+        }
+        .content {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <div class="top">top</div>
+    <div class="nav">nav</div>
+    <div class="content">
+        content
+        <br> content
+        <br> content
+        <br> content
+        <br> content
+
+        <br> content
+        <br> content
+        <br> content
+        <br> content
+        <br> content
+        <br> content
+
+        <br> content
+        <br> content
+        <br> content
+        <br> content
+        <br> content
+        <br> content
+        <br> content
+        <br> content
+        <br> content
+        <br> content
+        <br> content
+        <br> content
+        <br> content
+        <br> content
+        <br> content
+        <br> content
+        <br> content
+        <br> content
+        <br> content
+        <br> content
+        <br> content
+        <br> content
+        <br> content
+        <br> content
+        <br> content
+        <br> content
+        <br> content
+        <br> content
+        <br> content
+        <br> content
+        <br> content
+        <br> content
+        <br> content
+        <br> content
+        <br> content
+        <br> content
+        <br> content
+        <br> content
+        <br>
+    </div>
+    <script src="./tool.js"></script>
+    <script>
+        let oTop = document.getElementsByClassName('top')[0];
+        let nav = document.getElementsByClassName('nav')[0];
+        let topHeight = oTop.offsetHeight;
+        window.onscroll = function() {
+            //获取滚动距离
+            let offsetY = tool.getPageOffset().y;
+            if ( offsetY >= topHeight ) {
+                nav.style.position = 'fixed';
+                nav.style.top = '0px';
+                nav.style.left = '0px';
+            } else {
+                nav.style.position = '';
+            }
+        }
+    </script>
+</body>
+</html>

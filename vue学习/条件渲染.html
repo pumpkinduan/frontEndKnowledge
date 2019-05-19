@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <button @click="change">show/hide</button>
+        <div v-if="show" key='userName'>
+            <span>userName:</span><input type="text">
+        </div>
+        <div v-else key="pwd">
+            <span>password:</span><input type="text">
+        </div>
+    </div>
+    <script src='vue.js'></script>
+    <script>
+        //v-if: 将元素从DOM中移除
+        //可与v-else一起配合使用,但是二者之间不能有第三方插入,下面则会报错类名为middle的div不能在中间
+        /*
+            <div v-if="show">
+                <span>userName:</span><input type="text">
+            </div>
+            <div class="middle"></div>
+            <div v-else>
+                <span>password:</span><input type="text">
+            </div>
+        */
+        //v-if注意点: Vue会尽可能高效地渲染元素,通常会复用已有元素而不是从头开始渲染
+        //           将uerName切换至password时会复用上一个input和div元素,也就是只会重新渲染span标签内的内容
+        //           若是不想复用已有元素可在v-if,v-else所在的元素上绑定 key="" 告知vue这是唯一的元素
+
+
+
+        //v-show: 只改变元素的display显示与隐藏
+        //初始化时无论条件为真还是假,都会进行元素的渲染,
+        //不支持v-else,
+        //也无法作用在template模板标签上
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                show: false
+            },
+            methods: {
+                change() {
+                    this.show = !this.show;
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

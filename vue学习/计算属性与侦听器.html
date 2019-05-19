@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <p>{{age}}</p>
+        <p>{{name}}</p>
+        <button @click="changeAge">changeAge</button>
+        <!-- <p>{{now}}</p> -->
+    </div>
+    <script src='vue.js'></script>
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                age: 18,
+                name: 'pumpkin',
+                sex: 'male',
+                likes: 999
+            },
+            //methods内定义的方法:
+            //1.将被混入到vue的实例中去,可以通过vue实例进行访问
+            //2.只要触发了该方法就会执行对应的函数,无论方法内部所依赖的属性值是否改变
+            //注意: 由于上面的特点造成同一方法的多次不必要执行,耗费性能
+            //如: 当我点击button按钮时,changeAge执行,age发生改变,再次点击时,changeAge又执行,而此时age是不需要改变的
+            //控制台多次打印'------methods'
+            methods: {
+                changeAge() {
+                    console.log('------methods');
+                    // this.age ++;
+                    this.age = 21;
+                    this.name = 'pum'
+                }
+            },
+            //计算属性内定义的方法:
+            //1.key自动成为vue实例的属性,函数的返回值成为vue实例key属性的值
+            //2.在初始化时,对应的计算属性的方法会执行,将被混入到vue的实例中去
+            //3.只有方法中所依赖的响应式属性(data中的属性都是)的值发生变化时,对应的方法才会重新执行,重新计算,否则每次都是取得之前缓存的值
+            //
+            /*如: 当我多次点击button按钮时,控制台'------computed'除了初始化外只打印一次
+            computed: {
+                // now() {
+                //     //age改变,该方法重新执行,不改变不执行
+                //     console.log('------computed')
+                //     return this.age + 3;
+                // }
+                //还有一种写法,二者同等
+                now: {
+                    get() {
+                        console.log('------computed');
+                        // console.log(arguments[0])//vue实例
+                        return this.age + 3;
+                    }
+                }
+            },
+            watch: {
+                //只有当age属性的值变化,该方法才会执行
+                //适用于数据变化时执行异步或开销较大的操作时
+                //注意: watch监听的是响应式的属性,如data与computed中的
+                age(newVal, oldVal) {
+                    console.log(newVal);
+                    console.log(oldVal);
+                    console.log('age changed');
+                },
+                now() {
+                    console.log('now changed')
+                }
+            }*/
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        div {
+            width: 200px;
+            line-height: 50px;
+        }
+        .bgc {
+            background-color: green;
+        }
+        .active {
+            background-color: pink;
+        }
+        
+    </style>
+</head>
+<body>
+    <div id="app" @click="changeClass" :style="[colorStyle, fontSizeStyle]" :class="[isActive ? 'bgc' : '']">
+         pumpkin
+    </div>
+    <script src='vue.js'></script>
+    <script>
+        //a.HTML class
+        //通过 v-bind来将html class与vue的数据data属性进行绑定,进而可以实现class的动态切换
+        //1.对象绑定多个类名写法  :class="{类名: data属性名}" 还可以写简单的表达式  三目运算
+        //                      :class="{类名: data属性名 ? '' : data属性名}"
+            
+        //2.数组绑定多个类名写法  :class="['类名1', '类名2',...]"  可写三目运算
+        //                      :class="[isActive ? 'active' : '']" --> class=active或''
+
+        //b. style对象的内联写法
+        //1. 对象写法  :style="{backgroundColor: 'blue'}"  若css属性名带有-则需写出小驼峰式或加''
+        //2. 数组写法(将多个样式对象应用到同一个元素上) :style="[colorStyle, fontSizeStyle]"
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                isActive: true,
+                bgc: true,
+                colorStyle: {
+                    color: '#f40'
+                },
+                fontSizeStyle: {
+                    'font-size': '28px'
+                }
+            },
+            methods: {
+                changeClass() {
+                    this.isActive = !this.isActive;
+                }   
+            }
+        })     
+    </script>
+</body>
+</html>

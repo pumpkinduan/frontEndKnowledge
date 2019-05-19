@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        //1.如何获取当前月份的总天数?
+        //new Date(year, month, 0).getDate()返回当前月份的总天数
+        //注意: month传正常的月份索引即可  1-12
+        console.log(new Date(2019, 5, 0).getDate()) //31
+
+        //2.如何获取某年某月某日是星期几?
+        //Date.prototype.getDay() 返回0-6,0 代表的是周日
+        //获取2019-5-11是星期几,new Date(year, month, date).getDay()
+        //PS: month为0-11与上面要区分开来  0代表1月,以此类推
+        console.log(new Date(2019, 4, 11).getDay())
+
+    </script>
+</body>
+</html>

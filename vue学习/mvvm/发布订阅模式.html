@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+    <ul></ul>
+    <button id="btn">change</button>
+<body>
+    <script>
+        var data = {
+            NBA: '雄鹿VS猛龙',
+            CBA: '北京VS新疆',
+            News: 'Game Of Throne upcoming'
+        }
+        //发布订阅模式: 定义了一种一对多的关系,即当一种对象的状态发生改变时,所有依赖它的对象状态都会发生相应的改变
+        //举例来说:
+        //1.发布者: 体育赛事新闻报社(N)
+        //2.订阅者: 每个热爱体育比赛的人员(P)
+        /*
+            p0 p1 p2 p3都是不同的人员,相当于watcher
+            P向N订阅体育赛事,如: P0订阅NBA的赛事,P1也订阅NBA的赛事,P2订阅CBA的赛事,P3订阅News(新闻)
+            当有人向N订阅相关信息时,那么N就会记录这些人,也就是发布者会收集所有的watcher
+            而发布者这里本身有着所有订阅者(watcher)都关注的信息,一旦订阅者订阅的信息发生了更新,
+            发布者就会通知所有订阅该消息的所有watcher,告诉它们消息更新了,然后他们自己做出相应的决策
+
+            好比: NBA最新消息发布了,雄鹿淘汰了猛龙将晋级总决赛,那么发布者通知P0 P1这两个watcher消息更新了
+                  他们自己可以选择现在就去看最新的消息,也可以等会在看,而订阅了CBA和News的watcher们由于没有最新消息
+                  发布者也就不会通知他们了
+        */
+
+        //下面实现上述的过程
+        class Publisher {
+            constructor() {
+                //收集所有watcher
+                this.subs = new Map();
+            }
+            addSub(key, watcher) {
+                let subs = this.subs;
+                if ( !subs.has(key) ) {
+                    subs.set(key, [watcher]);
+                } else {
+                    subs.get(key).push(watcher);
+                }
+                console.log(subs)
+            }
+            notify(key) {
+                let watchers = this.subs.get(key);
+                console.log(watchers);
+                for (let i = 0, l = watchers.length; i < l; i++) {
+                    watchers[i].update();
+                }
+            }
+
+        }
+        class Watcher {
+            constructor() {
+            }
+            update() {
+                console.log('data updated, please re-render the page')
+            }
+        }
+        
+        function obeserve(data, render) {//监听一组数据
+            Object.keys(data).forEach((key) => defineReactive.call(this, key, data, data[key], render));
+        }
+        function defineReactive(key, obj, value, render) {
+            let publisher = new Publisher();
+            Object.defineProperty(obj, key, {
+                writtable: true,
+                configurable: true,
+                get: function () {
+                    //收集订阅某个信息(NBA || CBA)的watcher
+                    publisher.addSub(key, globalWatcher);
+                    return value;
+                },
+                set: function (newValue) {
+                    if ( newValue === value ) return;
+                    value = newValue;
+                    //通知订阅者订阅的信息(key -> NBA)更新了
+                    publisher.notify(key);
+                    
+                }
+            })
+        }
+        let globalWatcher = new Watcher();
+        //页面未初始化时将数据变为可观察的
+        obeserve(data);
+        //模拟页面初始化触发属性对象的get函数执行
+        var oUl = document.getElementsByTagName('ul')[0];
+        var oBtn = document.getElementById('btn');
+        oBtn.onclick = function() {
+            data.CBA = '你好';
+            data.NBA = '雄鹿赢了'
+        }
+        var str = '';
+        for (var attr in data ) {
+            oUl.innerHTML += `<li>${ data[attr] }</li>`;
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <div class="post">
+            <input type="text" v-model.lazy.trim="taskValue" @keyup.enter="addTask">
+            <button class="btn" @click="addTask">发布</button>
+            <span :style="{color: 'red'}" v-show="show"> {{ prompt }}</span>
+        </div>
+        <ol class="todolist">
+            <li v-for="(value,index) in todolist" :key="index">
+                <span>{{ value }}</span>
+                <button @click="deleteTask(value, index)"> X </button>
+            </li>
+        </ol>
+        <ol class="completeList">
+            <h4>任务完成清单:</h4>
+            <li  v-for="(value,index) in completeList" :key="index">
+                <span>{{ value }}</span>
+            </li>
+        </ol>
+    </div>
+    <script src="vue.js"></script>
+    <script>
+         var vm = new Vue({
+             el: "#app",
+             data: {
+                taskValue: '',
+                prompt: '',
+                todolist: [],
+                completeList: [],
+                show: false
+             },
+             methods: {
+                addTask() {
+                    if ( !this.taskValue ) {
+                        this.prompt = 'todolist不能为空'
+                        this.show = true;
+                        return;
+                    } else if ( this.todolist.includes(this.taskValue) ) {
+                        this.prompt = 'todolist不能重复'
+                        this.show = true;
+                        return;
+                    } else {
+                        this.show = false;
+                        this.todolist.push(this.taskValue);
+                        this.taskValue = '';
+                    }
+                    
+                },
+                deleteTask(value, index) {
+                    this.completeList.push(value);
+                    this.todolist.splice(index, 1);
+                    // this.isActive = false;
+                }
+             },
+         })
+    </script>
+</body>
+</html>

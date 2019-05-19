@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<script>
+		//模板字符串  ``
+		//可以当作普通字符串使用,也可以用来定义多行字符串,或者在字符串中嵌入变量
+		// 1.普通字符串
+		var normal = `123456789`; //typeof normal === 'string'
+		// 2.定义多行字符串
+		var str = `<p>1234</p>
+					<p>pppp</p>`;
+		var ele = document.createElement('div');
+		document.body.appendChild(ele);
+		ele.innerHTML = str;
+
+		// 3.在字符串中嵌入变量
+		//通过${}来嵌入变量
+		let [name, age] = ['pumpkin', '18'];
+		let word = `I am ${name},and I'm ${age}`;
+		console.log(word);
+
+		//4.如果使用模板字符串表示多行字符串，所有的空格和缩进都会被保留在输出之中。
+		console.log(str);//保留在编辑器中的代码原样输出，所有模板字符串的空格和换行
+
+		//5.${},大括号内部可以放入任意的 JavaScript 表达式，可以进行运算，以及引用对象属性。
+		let [a, b] = [1, 2];
+		let {obj} = {obj: {num: 12}};
+		let res = `${a + b}`;
+		console.log(res)//'3'(string)
+		res = `${a} + ${obj.num + b}`;
+		console.log(res)//'1 + 14'(string)
+
+		//6.模板字符串之中还能调用函数
+		let foo = function() {
+			return 'geek';
+		}
+		res = `${foo()}`;
+		console.log(res);//'geek'
+
+		//7.大括号内不是字符串会按照一般的规则转换为字符串
+		let person = {EnglishName: 'pumpkin'};
+		res = `${person}`;
+		console.log(res)//调用对象自身的toSting方法,得出'[object Object]';
+
+		//8.标签模板:模板字符串可以紧跟在一个函数名后面，该函数将被调用来处理这个模板字符串。这被称为“标签模板”功能（tagged template）
+		// alert('hello world')
+		// alert`hello world`
+
+		//8.1
+		/*标签模板其实不是模板,而是函数调用的一种特殊形式。'标签'指的就是函数,紧跟在后面的模板字符串就是它的参数。
+		但是,如果模板字符里面有变量,就不是简单的调用了,而是会将模板字符串先处理成多个参数,再调用函数。*/
+		function printf() {
+			console.log(arguments);
+		}	
+		printf`12${'x'}56`;//等价于printf([12,56],x)
+		printf`12${'x'}`;//等价于printf([12,''],x),这里注意模板字符串的末尾有一个逻辑上的空字符串
+		// printf函数会对模板字符串进行处理后在调用
+		// 其第一个参数为一个数组,数组的成员为模板字符串中没有变量替换的部分,以上例子则为[12,56]
+		// 其余参数则为模板字符串中各个变量被替换后的值
+
+		//8.2
+		//防止xss的注入-->过滤HTML标签,防止用户输入恶意内容
+		function safeHTML(strings, ...values) {
+			console.log(strings,values)
+			let output = strings.join('');
+			for( let i = 0; i < values.length; i ++) {
+				output += values[i].replace(/</g,'&lt;').
+									replace(/>/g,'&gt;').
+									replace(/&/g,'&amp;');
+			}
+			return output;
+		}
+		//注入的恶意代码
+		let sender = "<script>alert('hello world')<\/script>";
+		document.write(safeHTML`<p>hello world${sender}</p>`);
+			
+
+
+
+		//ES6中新增的字符串实例方法
+		//1.startsWith(string,index)
+		// string：指的是字符串中的开头是否是该sring
+		// index: 指的是开始索引位置,即从该索引位开始(包括该索引位)往后匹配的
+		let strings = 'hello world, I am geek-Pum'
+		console.log(strings.startsWith('hello'))//true
+		console.log(strings.startsWith('hello',1))//false
+//-------------------------------------------------------------------------
+
+		//2.endsWith(string,index)：与以上几乎一样
+		// string:指的是字符串中的结尾是否是该string
+		// 注意:这里的index指的是结束的索引位置(且不包括该索引位置)
+		console.log(strings.endsWith('world'))//false
+		console.log(strings.endsWith('world',11))//true
+		console.log(strings.endsWith('h',1))//true
+		console.log(strings.endsWith('h',0))//false
+	</script>
+</body>
+</html>

@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<p>I am Pumpkin!!!</p>
+	<script>
+		// map:ES6中新的数据结构
+		// Object对象实质是键值对的集合(hash结构),键必须是字符串,这不够灵活,所以便出现了Map数据结构,实质是值-值的集合
+
+		//1.作为构造函数，Map 可以接受一个数组作为参数。该数组的成员是一个个表示键值对的数组。
+		// const para = document.getElementsByTagName('p')[0];
+		// let map = new Map([[para,'self_inroduction']]);
+		// console.log(map)
+		// console.log(typeof map)//object类型
+
+		//2.map中对应的四个方法
+		//2.1 set:用来向map对象里放键值对,接受两个参数,第一参数为键,第二个为值
+		// let map1 = new Map()
+		// map1.set(1,2)
+		// map1.set(2,3)
+		// console.log(map1.entries().next())
+
+
+
+
+
+		
+		//map结构模拟
+		function myMap(array) {
+			this.__entries__ = [];
+			this.init();
+			if(Object.prototype.toString.call(array) === '[object Array]') {
+				array.forEach((ele) => {
+					if(Object.prototype.toString.call(ele) === '[object Array]') {
+						if(ele.length === 0) {
+							this.set(undefined, undefined);
+						}else {
+							this.set(ele[0], ele[1]);
+						}
+					}else {
+						throw new Error(ele + ' is not iterable')
+					}
+				})
+			}else if(array){
+				throw new Error('it only receives the type of Array');
+			}
+		}
+		//原理:邻接链表,地址链接
+		//邻接表为一个数组,该数组中的每个成员为一个顶层节点,该节点中只存储着用于链接下一个链表的地址,不存数据值
+		//以每个顶层节点为起点,将一系列满足要求(自己需求)的链表通过指针(也就是顶层节点默认时的那个地址)一个一个链接起来,构成单链表结构
+		//-------------------------------------------------------------------------------------------------------------------
+		// Map中的实现,注意:以下说的链表为一个对象,该对象的结构为{key,value,next},next是用来链接下一个链表的
+		//-------------------------------------------------------------------------------------------------------------------
+		//定义一个桶(数组),我们通过hash算法(要求)对桶中的成员进行编号,
+		//每个编号对应一块区域(以下用一个对象模拟{next:null}该区域),通过next来链接下一个存储着一系列值的链表,
+		//我们通过hash算法将这些值区分开来,存储到对应的区域中去
+		//结构是{key,value,next}(相当于一个链表)
+		//根据key计算得出编号,然后放入(链接到)对应的区域中去
+		myMap.prototype.bucket = [];			
+		//桶的长度
+		myMap.prototype.len = 8;
+		//分8块区域(数组的成员),每块区域有一个编号(数组的索引),该编号有顺序,将链表中的key通过hash算法得出一个与区域对应的编号,然后放入	
+		myMap.prototype.init = function() {
+			for(let i = 0; i < this.len; i ++) {
+				this.bucket[i] = {next: null};//桶中的成员为一对象,默认的next指向null
+			}
+		}
+		//來額hash算法,优化查找效率,将一系列值进行一个归类,类别代号为数字形式的,如:key为12,则对应的hash我们计算得出为12,而字符串''-->0
+		myMap.prototype.makeHash = function(key) {
+			let hash = 0;
+			let len = 0;
+			//若是key為字符串,則對其进行转码(unicode编码形式)
+			if(typeof key === 'string') {
+				//取字符串的后三位来处理
+				//因为字符串的最后面几位变化的多些
+				//如： 100000000100 and 100000000101
+				// 这样就可以分配到不同的桶中,避免同一个桶中连接的链表过长,影响查找效率
+				len = (key.length > 3) ? key.lenth : 3;
+				for(let i = len - 3; i < len; i++) {
+					// 字符串小于三位,往后加0
+					hash += (key[i] !== undefined) ? key[i].charCodeAt() : 0;
+				}
+			}else if(isNaN(key)){
+				//若key为NaN,则将其放入到0号桶中
+				hash = 0;
+			}else {
+				//对于其他类型,如:number,boolean,undefined,null,'',[]直接转为数字
+				hash = +key;
+			}
+			return hash;
+		}
+		myMap.prototype.set = function(key, value) {
+			// next相当于指针,用于链接保存数据的对象
+			//根据key计算出来的hash值对桶的长度取模得出小于其长度的整数,而该整数便是区域的编号,把需要添加的数据放入该区域即可
+			let hash = this.makeHash(key) % this.len;
+			let list = this.bucket[hash];//桶的某一成员
+			while(list.next) {
+				//若添加的key值已存在该桶链接的链表中,则覆盖其value
+				if(list.next.key === key) {
+					list.next.value = value;
+				}else {
+					list = list.next;
+				}
+			}
+			//否则将对应的key-value添加到该桶链接的下一个链表中
+			list.next = {key, value, next:null};
+			//同步map对象的私有属性值
+			this.__entries__ .push({key, value})
+		}
+		myMap.prototype.get = function(key) {
+			let hash = this.makeHash(key) % this.len;
+			let list = this.bucket[hash];
+			while(list.next) {
+				if(list.next.key === key) {
+					return list.next.value;
+				}else {
+					list = list.next;
+				}
+			}
+		}
+		myMap.prototype.has = function(key) {
+			let hash = this.makeHash(key) % this.len;
+			let list = this.bucket[hash];
+			while(list.next) {
+				if(list.next.key === key) {
+					return true;
+				}else {
+					list = list.next;
+				}
+			}
+			return false;
+		}
+		myMap.prototype.delete = function(key) {
+			//获取需要delete的数据所对应的桶号
+			let hash = this.makeHash(key) % this.len;
+			let list = this.bucket[hash];
+			while(list.next) {
+				//找到需要删除的key所在的那个对象,然后把对应的next指向下一个next
+				//如: 1->2->3,想删除2,只需将1->3,因为这里都是操作的引用值
+				if(list.next.key === key) {
+					list.next = list.next.next;
+				}else {
+					list = list.next;
+				}
+			}
+			let delIndex;
+			//同步map对象的私有属性值,删除对应的那个对象
+			this.__entries__.forEach((ele, index) => {
+				//在该数组中找到与需要删除的数据对应的索引值,然后在删除该数据值
+				if(ele.key === key) {
+					delIndex = index;
+					return;
+				}	
+			})
+			this.__entries__.splice(delIndex, 1);
+		}
+		myMap.prototype.clear = function() {
+			this.init();
+			this.__entries__ = [];
+		}
+		// let map = new Map([[1,2],[4,5]]);
+		let map = new myMap()
+		map.set(5,2)
+		map.set(13,2)
+		// map.set(NaN,NaN)
+		// console.log(map.get('1'));
+		// console.log(map.has('1'));
+		// console.log(map.has(0));
+		// map.delete(1)
+		
+	</script>
+</body>
+</html>

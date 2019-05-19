@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        //不重复
+        //key-value为任意值
+        //set delete clear has
+        //Map接收二维数组作为参数
+        //number 1 is not iterable (cannot read property Symbol(Symbol.iterator))
+        class MyMap {
+            constructor(array) {
+                this.bucketLength = 8;
+                this.init();
+                if (array && Array.isArray(array)) {
+                    array.forEach((ele) => {
+                        if (ele && Array.isArray(ele)) {
+                            if (ele.length == 0) {
+                                this.set(undefined, undefined);
+                            } else {
+                                this.set(ele[0], ele[1]);
+                            }
+                        } else {
+                            throw new Error(ele + ' is not iterable')
+                        }
+                    })
+                } else if (array) {
+                    throw 'it only receives the iterable data structure';
+                }
+            }
+            init() {
+                //2.桶中每一份放一个对象,该对象为邻接链表的头结点
+                for (var i = 0; i < this.bucketLength; i++) {
+                    this.__bucket__[i] = {
+                        next: null,
+                        type: 'bucket_' + i
+                    }
+                }
+            }
+            //1.初始化桶的长度,分为8份
+            __bucket__ = new Array(this.bucketLength)
+            makeHash(key) {
+                let hash = 0;
+                //利用hash算法将无法确定范围的一组值转为一定范围
+                //string
+                if (typeof key === 'string') {
+                    //只取字符串的后三位进行处理
+                    let len = key.length >= 3 ? key.length : 3;
+                    for (var i = len - 3; i < len; i++) {
+                        // 'a'  'ab'  'abc '00bcd'
+                        //对于字符小于3的字符串来说 key[i]可能取到undefined
+                        hash += key[i] ? key.charCodeAt(i) : 0;
+                    }
+                } else if (typeof key === 'boolean') {
+                    hash = +key;
+                } else if (typeof key === 'object') {
+                    //[] {} null
+                    hash = 3;
+                } else if (typeof key === 'number') {
+                    // 1 2 NaN
+                    if (Object.is(key, NaN)) { hash = 0; }
+                    else { hash += key; }
+                }
+                //若是函数则hash = 0
+                return hash % 8;
+            }
+            set(key, value) {
+                //拿到key对应的hash
+                let hash = this.makeHash(key);
+                //找到对应的桶
+                let tempBucket = this.__bucket__[hash];
+                //由于桶中的头结点并没有存数据,而是存储到next下的,所以循环条件为tempBucket.next
+                while (tempBucket.next) {
+                    //相同key就覆盖
+                    if (tempBucket.next.key === key) {
+                        tempBucket.next.value = value;
+                        return;
+                    } else {
+                        tempBucket = tempBucket.next;
+                    }
+                }
+                //没有相同key就添加一个新的结点到链表的尾部
+                tempBucket.next = {
+                    key: key,
+                    value: value,
+                    next: null
+                }
+            }
+            get(key) {
+                let hash = this.makeHash(key);
+                let temp = this.__bucket__[hash];
+                while (temp.next) {
+                    if (temp.next.key === key) {
+                        return temp.next.value;
+                    } else {
+                        temp = temp.next;
+                    }
+                }
+            }
+            delete(key) {
+                let hash = this.makeHash(key);
+                let temp = this.__bucket__[hash];
+                while (temp.next) {
+                    if (temp.next.key === key) {
+                        temp.next = temp.next.next;
+                        return true;
+                    } else {
+                        temp = temp.next;
+                    }
+                }
+                return false;
+            }
+            clear() {
+                this.init();
+            }
+            has(key) {
+                let hash = this.makeHash(key);
+                let temp = this.__bucket__[hash];
+                while (temp.next) {
+                    if (temp.next.key === key) {
+                        return true;
+                    } else {
+                        temp = temp.next;
+                    }
+                }
+                return false;
+            }
+        }
+        let oMap = new MyMap([[5,6]]);
+        console.log(oMap)
+        oMap.set(1, 2)
+        oMap.set(3, 4)
+        oMap.set({}, 2)
+        oMap.delete(1)
+        console.log(oMap.has(3))
+        // oMap.clear()
+    </script>
+</body>
+
+</html>

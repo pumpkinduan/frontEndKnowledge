@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // class Person {
+        //     constructor(name) {
+        //         this.name = name;
+        //     }
+        // }
+        // var person1 = Person('pumpkin')
+        // console.log(person1)
+    </script>
+    <script>
+        //class模拟
+        //1.必须使用new,否则报错TypeError: Class constructor Person cannot be invoked without 'new'
+        //2.定义在原型上的属性和方法不可枚举
+
+        function _classCallCheck(_this, _constructor) {//检测是否使用new
+            if (!(_this instanceof _constructor)) {
+                throw "TypeError: Class constructor Person cannot be invoked without 'new'";
+            }
+        }
+        
+        //定义一个函数,根据参数来给指定的构造函数添加静态属性或方法及往原型上添加属性或方法
+        //_proProperties: 数组 [{key: 'oldAge', value: '75'}]
+        //_staicProperties: 数组 [{key: 'alive', value: true}]
+        function _defineProperties(_proProperties, _staicProperties, _constructor) {
+            if ( _proProperties && _constructor.prototype ) {
+                _proProperties.forEach(function(obj) {//原型上添加
+                    Object.defineProperty(_constructor.prototype, obj.key, {
+                        value: obj.value,
+                        writable: true,
+                        configurable: true
+                    });
+                })
+            }
+            if ( _staicProperties ) {
+                _staicProperties.forEach(function(obj) {//构造函数上添加
+                    Object.defineProperty(_constructor, obj.key, {
+                        value: obj.value,
+                        writable: true,
+                        configurable: true
+                    })
+                })
+            }
+        }
+        var Person = (function () {
+            //如何判断是否使用了new操作符讷,其实很简单
+            //使用new的话辣么系统就会自动创建出this对象,且this的原型为构造函数的prototype
+            function Person(name) {
+                _classCallCheck(this, Person);
+                this.name = name;
+                _defineProperties([
+                        {
+                            key: 'alive',
+                            value: true
+                        }
+                    ], [
+                        {
+                            key: 'run',
+                            value: function() {
+                                console.log('I can run')
+                            }
+                        }
+                    ], Person);
+            }
+            /*下面写法太麻烦
+            Person.sex = 'male';//静态属性
+            Person.prototype.eat = function() {console.log('i can eat')}//原型方法
+            */
+            return Person;
+        })();
+        var per = new Person('pun');
+        console.log(per)
+    </script>
+</body>
+
+</html>

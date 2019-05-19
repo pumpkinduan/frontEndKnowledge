@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <ul>
+        <li></li>
+    </ul>
+    <ul>
+        <li>1</li>
+        <li>2</li>
+        <li>3</li>
+    </ul>
+    <script>
+    //迭代器Iterator
+    //是一个对象，专门为可迭代对象设计的统一接口,专门用来遍历数据
+    //每个迭代器 都有 next方法，返回一个结果对象{value,done}
+    //value是每次迭代的数据,done表示迭代是否结束 Boolean值
+    //每个迭代器又专门的指针,开始时指向数据结构的第一个值,每次调用next方法,返回当前值,指针下移
+    //每个迭代器支持for of 循环
+
+ 
+
+
+    // 默认的Iterator接口,其实都用到了闭包
+    // Array Map Set String arguments NodeLists的原型上都部署了连接该接口的[Symbol.iterator]
+    // 所有的迭代器上都有一个属性Symbol.iterator,必须通过[Symbol.iterator]进行访问,返回默认的迭代器对象,该对象有一个next方法,用来返回包含值的结果对象
+
+    // 一个数据结构只要部署了Symbol.iterator属性,就被视为具有iterator接口,就可以用for...of循环遍历它的成员。
+    // 也就是说,for...of循环内部调用的是数据结构的Symbol.iterator方法。
+    // 所以上的 Array Map Set String arguments NodeLists的实例可以直接用for of循环
+    let arr = [1,2,3]
+    for(let i of arr){
+        console.log(i)
+    }//1 2 3
+
+    //模拟部署在数组上的遍历器-->arr[Symbol.iterator]
+    // function myIterator(arr) {
+    //  let index = 0;
+    //  return { 
+    //      next: function() {
+    //          if(index < arr.length) {
+    //              return {value:arr[index++],done:false};
+    //          }else {
+    //              return {value:undefined,done:true};
+    //          }
+    //      }
+    //  }
+    // }
+    let map = new Map();
+    map.set('0',1);
+    map.set('1',2)
+    console.log(map)
+    for (var k of map) {
+        console.log(k)
+    }
+    </script>
+</body>
+
+</html>

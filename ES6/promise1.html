@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+
+<body>
+	<script>
+	//Promise构造函数接受一个函数作为参数,该函数的两个参数分别是resolve和reject。
+	//它们是两个函数,由JavaScript引擎提供,不用自己部署。
+	//每个Promise对象都是有状态和返回值的
+	//Promise对象.then方法都会返回一个新的Promise对象,方便链式调用
+	let p1 = new Promise(function(resolve, reject) {
+		console.log(1)
+		resolve(23)
+	})
+	console.log(p1) //Promise {[[PromiseStatus]]: "resolved", [[PromiseValue]]: 23}
+	//resolve函数的作用是,将Promise对象的状态'未完'变为'成功'(即从pending变为resolved),在异步操作成功时调用,并将异步操作的结果,作为参数传递出去;
+	//reject函数的作用是,将Promise对象的状态从'未完成'变为'失败'(即从pending 变为rejected),在异步操作失败时调用,并将异步操作报出的错误,作为参数传递出去。
+
+	//Promise实例生成以后，可以用then方法分别指定resolved状态和rejected状态的回调函数。
+	p1.then(function(value) {
+		console.log(value) //23
+	}, function(value) {
+		console.log(value)
+	})
+	//then方法可以接受两个回调函数作为参数。
+	//第一个回调函数是Promise对象的状态变为resolved时调用
+	//第二个回调函数是Promise对象的状态变为rejected时调用。
+	//其中，第二个函数是可选的，不一定要提供。这两个函数都接受Promise对象传出的值作为参数
+
+
+	function timeout(ms) {
+		return new Promise((resolve, reject) => {
+			setTimeout(resolve, ms, 'done');
+		})
+	}
+	timeout(1000).then((value) => console.log(value))
+
+
+	//-------------------------------------------------------
+	//p2和p3都是Promise的实例,但是p3的resolve方法将p2作为参数
+	//注意,这时p2的状态就会传递给p3,也就是说,p2的状态决定了p3的状态,
+	//还有就是,p2的[[PromiseValue]]值会传递给p3的[[PromiseValue]],而这个值就是then函数参数中的回调函数的参数的值
+	//如果p2的状态是pending,那么p3的回调函数就会等待p2的状态改变;
+	//如果p2的状态已经是resolved或者rejected,那么p3.then的回调函数将会立刻执行。
+	const p2 = new Promise(function(resolve, reject) {
+		console.log('p2')
+		setTimeout(() => reject('failed'), 3000)
+		
+	})
+	console.log(p2)
+	const p3 = new Promise(function(resolve, reject) {
+		setTimeout(() => resolve(p2), 1000)
+	})
+  	
+	var pr = p3.then(result => console.log(result),rejected=>console.log(rejected))
+	//上面代码中,p2是一个Promise对象,3s之后状态变为'rejected',p3也是一个Promise对象,1s之后状态本应该变为'resolved',
+	//但是由于其resolve函数的参数接受的是另一个Promise对象,那么其状态就由这个对象的状态决定,所以在这1s内p3的状态理应为'pending'
+	//接着2s后,p2的状态变为'rejected',那么p3的状态也变为了'rejected',也就触发了p3.then函数的第二个回调函数的执行                                                                                                                                                                                                                                                                                                           
+
+	//异步加载图片
+	function loadImg(url) {
+		// img.src = url//不将这段代码放在开头
+		return new Promise((resolve,reject)=>{
+			let img = new Image();
+			img.onload = ()=>{
+				resolve(img);
+			}
+			img.onerror = ()=>{
+				reject(`${url} is not effective`);
+			}
+			//不把这段代码放在开头是因为,
+			//若是图片非常的小,读取速度非常快,
+			//辣么就可能在给img添加事件句柄之前图片就加载或引入失败完毕,则无法执行resolve/reject函数
+			img.src = url;
+		})
+	}
+	let imgObj = loadImg(`https://www.baidu.com/img/baidu_jgylogo3.gif`)
+			.then(img=>document.body.appendChild(img),mesg=>console.log(mesg));
+
+	let pro = new Promise((suc, err) => {
+		setTimeout(() => {
+			suc(2)
+		}, 2000)
+	});
+	console.log(pro)
+	setTimeout(() => {
+		console.log(pro)
+	}, 2000)
+	let pro1 = pro.then( (suc) => {
+		console.log(suc)
+		console.log(1)
+	}, (err) => {
+
+	} )
+	</script>
+</body>
+
+</html>

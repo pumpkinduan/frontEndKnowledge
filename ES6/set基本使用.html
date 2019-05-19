@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        //应用场景：
+        //1.数组去重
+        // let arr = [1,1,1,3,4,5];
+        // let set = new Set(arr);
+        // // let newArr = [...set];
+        // let newArr = Array.from(set);
+        // console.log(newArr)
+
+
+        //2.取并集
+        // let arr1 = [1,2,3];
+        // let arr2 = [3,4,5];
+        // let set1 = new Set(arr1.concat(arr2));
+        // let newArr = [...set1];
+        // console.log(newArr)//[1,2,3,4,5]
+
+        //3.取交集
+        // let arr1 = [1,2,3];
+        // let arr2 = [3,4,5];
+        // let set1 = new Set(arr1);
+        // let set2 = new Set(arr2);
+        // let newArr = arr2.filter(ele => set1.has(ele))
+        // console.log(newArr)//[3]
+        // function getCross(arr1, arr2) {
+        //     let set = new Set(arr1);
+        //     return arr2.filter(ele => set.has(ele));
+        // }
+        // console.log(getCross(arr1, arr2))
+
+
+        //4.取补集
+        let arr1 = [1,2,3,4];
+        let arr2 = [2,3,4,5];
+        let set1 = new Set(arr1);
+        let set2 = new Set(arr2);
+        let newArr1 = arr1.filter(ele => !set2.has(ele));
+        let newArr2 = arr2.filter(ele => !set1.has(ele));
+        console.log(newArr1.concat(newArr2));//[1,5];
+    </script>
+</body>
+</html>

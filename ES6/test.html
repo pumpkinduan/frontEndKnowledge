@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // let arr1 = [1,2,3]
+        // console.log(...arr1)
+        // // (...arr1)//error
+        // function foo() {
+        //     for(let i = 0; i < arguments.length; i ++) {
+        //         console.log(arguments[i])
+        //     } 
+        // }
+        // foo.call(null,...arr1)
+        //------------------------------------
+        // let arr1 = [1,2,{name: 'Toms'}]
+        // let cloneArr = [...arr1]
+        // console.log(cloneArr);
+        // arr1[2].name = 'Jerry'
+
+        // console.log(Math.max(1,2,3))//3
+            
+
+        // let obj1 = {0:'a',1:'b',length:2}
+        // // console.log(Array.from(obj1))
+        // Array.from(obj1,(ele,index) => {
+        //     console.log(ele,index,this)
+        // })
+        // let set = new Set([1,2,3])
+        // let map = new Map([[0,'a'],[1,'b']])
+        // console.log(Array.from(map))
+
+
+
+        //  Array.prototype.isInclude = function(callback,thisValue) {
+		//  	if(!(this.findIndex(callback) === -1)) {
+		//  		return true
+		//  	}else {
+		//  		return false;
+		//  	}
+		//  }
+		//   console.log([1,2].isInclude(ele=>ele === 1))
+
+
+        let arr1 = Array.of(1,2,3);
+        let keys = arr1.keys();
+        let values = IteratorArrValue(arr1)
+        // let values = arr1.values()
+        let entries = arr1.entries();
+        
+        console.log(values.next())
+        console.log(values.next())
+        console.log(values.next())
+       
+        console.log(values.next())
+        // console.log(entries.next())
+        // console.log(entries.next())
+        // console.log(entries.next())
+        // console.log(entries.next())
+        arr1.push(4)
+        console.log(values.next())
+        function IteratorArrKey(arr) {
+            let index = 0;
+            return {
+                next: function() {
+                    if(index < arr.length) {
+                        return {value:index++,done:false}
+                    }
+                    else {
+                        return {value: undefined, done: true}
+                    }
+                }
+            }
+        }
+        function IteratorArrValue(arr) {
+            let index = 0;
+            return {
+                next: function() {
+                    if(index < arr.length) {
+                        return {value:arr[index++],done:false}
+                     }else {
+                         return {value:arr[index++],done:true}
+                    }
+                }
+            }
+        }
+        function IteratorArrEntries(arr) {
+            let inex = 0;
+            return {
+                next: function() {
+                    if(index < arr.length) {
+                        return {value:[index,arr[index++]],done:false};
+                    }
+                    else {
+                        return {value:undefined,done:true}
+                    }
+                }
+            }
+
+        }
+    </script>
+</body>
+</html>

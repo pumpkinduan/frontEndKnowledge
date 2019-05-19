@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>arrow</title>
+</head>
+<body>
+	<script>
+		//箭头函数
+		//基本结构: () => {}
+		// let person = (name) => name;
+		//对于小括号(),函数得参数有且只有一个,才可以省略()
+		//函数体,也就是{}里得语句只有一条时,可以省略不写{}
+		// 几个注意点:
+		// 1.在箭头函数中,函数体内只有一条语句,且是返回对象的语句,则按以下写法
+		// let obj = (name) => ({name: name});
+		//let obj = function(name) {return {name: name}};
+
+		// 2.箭头函数中this默认为undefined,也就是在预编译阶段时this为undefined,执行阶段的箭头函数中的this就会发生改变了.
+		// 无arguments,无super(class中的),无prototype
+		// 3.不能被new操作符执行
+		// 4.不能被作为构造函数,更多功能用于计算,数据的流向,方便js引擎优化代码
+		// 5.具有绑定this的能力,绑定的this指向的是离自己最近的非箭头函数作用域中的this
+
+
+
+		let obj1= {
+			name: 'pumpkin',
+			getName: function() {
+				let showName = () => console.log(this.name);
+				showName();//pumpkin
+			}
+		}
+		obj1.getName()
+		// this绑定分为四种
+		// 1.默认绑定(空执行的函数,this=>window)
+		// 2.隐式绑定(谁调用指向谁)
+		// 3.显示绑定(apply call bind)
+		// 4.new绑定
+
+		function a() {
+			this.value = 12;
+			var as = 23
+			return function() {
+				console.log(as)
+				console.log(this.values)
+			}
+		}
+		var abj = new a();
+		abj()
+	</script>
+</body>
+</html>

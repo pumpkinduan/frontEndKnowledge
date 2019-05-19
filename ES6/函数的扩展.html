@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<script>
+		//箭头函数
+
+
+		//ES6中的函数参数默认值
+		//0.只有形参的值绝对等于undefined,函数的参数才会被赋予给定的默认值
+
+		//1.ES6中的函数默认值对arguments的影响
+
+		//在ES5之前,函数中的实参与arguments的关系是一一对应,且arguments与形参是相互映射的,当形参的值改变时,arguments对应值会发生改变
+		//不过在严格模式下不是的,当形参的值改变时,不影响arguments对应的值,arguments与实参一一对应
+		/*function max(num1, num2) {
+			//非严格模式下,arguments与形参值一一对应
+			// console.log(num1, arguments[0])//11,11
+			// console.log(num2, arguments[1])//22,22
+			// num1 = 2;
+			// console.log(num1, arguments[0])//2,2
+			// console.log(num2, arguments[1])//22,22
+
+			//严格模式下
+			'use strict';
+			console.log(num1, arguments[0])//11,11
+			console.log(num2, arguments[1])//22,22
+			num1 = 2;
+			num2 = 13;
+			console.log(num1, arguments[0])//2,11
+			console.log(num2, arguments[1])//13,22
+		}*/
+
+		//ES6中,当给函数的参数加上默认值并且用默认值后,
+		//其行为类似严格模式下的arguments
+		function max(num1 = 232, num2) {
+			console.log(num1, arguments[0])//232,undefined
+			console.log(num2, arguments[1])//22,22
+			num1 = 2;
+			num2 = 13;
+			console.log(num1, arguments[0])//2,undefined
+			console.log(num2, arguments[1])//13,22
+		}
+		max(undefined,22);
+
+
+
+		//2.函数的默认参数的惰性求值:只有每次调用函数时,且要用到参数默认值时
+		//就会计算参数默认表达式的值,不然不会计算表达式的值,也就是说每次都要重新计算参数默认值。
+
+
+
+
+
+		//3.函数的length属性
+		//指定了默认值后,函数的length属性会失真,也就是length值等于函数的参数个数减去指定了默认值的参数个数
+		function foo(a, b, c) {}
+		console.log(foo.length);//3
+
+		//3.1如设置了默认值的参数不在尾部,辣么其后的参数不计算入length属性值
+		function fff(a=1, b, c) {}
+		console.log(fff.length);
+		//0; a=1在头部,则其后的参数b,c不计算入length
+
+
+		//4.无名参数和扩展运算符
+		// 4.1默认值的问题
+		// 4.2参数不定时候,通过arguments的下标式访问,不直接
+		// 4.3箭头函数不支持arguments
+
+		// 注意:
+		      //a.在定义函数时,每个函数圆括号中最多且只有一个不定参数(无名参数)
+		      //b.每个函数中的不定参数只能放到最后,是最后一个参数
+		      //c.不定参数不可以有默认值
+		//要求:把若干数字,加到指定的数组中去
+		 function count(arr = 2, ...arg) {
+		 	//arg是无名参数,
+		 	//代表之后的所有形参并把它们依次放到一个数组中去,然后给到这个不定参数
+		 	console.log(arg);//把1，2，3，4，5放到一个数组中并把引用给arg
+		 	console.log(arguments);
+		 	for(var i = 0; i < arg.length; i ++) {
+		 		arr.push(arg[i])
+		 	}
+		 	return arr;
+		 }
+		 console.log(count([],1,2,3,4,5));//[1,2,3,4,5]
+
+
+
+		 //扩展运算符 (...)
+		 //a.它好比rest 参数的逆运算,将数组和字符串转为用逗号分隔的参数序列。
+		 //b.会调用默认的 Iterator 接口,从而去遍历对应的数据
+
+		 let str = 'rtr';
+		 let arr = [1,2,3]
+		 console.log(...str)//'r','t','r'
+		 console.log([...str])//['r','t','r']
+		 console.log(...arr)//1,2,3
+		 console.log(...[arr])//[1,2,3]
+
+	</script>
+</body>
+</html>

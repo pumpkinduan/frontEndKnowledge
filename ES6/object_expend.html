@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<script>
+		//在ES6中,对象内的属性与值的写法,key === value时可简写为key的形式
+		/*let obj = {
+			name,//name: name的简写
+			ff(){
+				console.log(this.name)
+			}//ff: function() {console.log(this.name)}的简写形式
+		}*/
+		//js引擎会去当前作用域找name变量对应的值,找到就赋值给name属性,不然会沿着作用域链继续,都找不到就赋值为undefined
+		// let name = 'hacker';
+		// function foo() {
+		// 	let obj = {name};
+		// 	console.log(obj.name)//hacker
+		// }
+		// foo();
+
+
+		//可计算的属性
+		// ES6允许字面量定义对象时,用表达式作为对象的属性名,即把表达式放在方括号内[]
+
+		let bool = 'bool';
+		let obj1 = {
+			[bool]: true,
+			['pum' + 'pkin']: 'you are handsome!!!'
+		}
+		console.log(obj1.bool,obj1.pumpkin)
+
+
+
+		//ES6中新加的关于对象的方法
+		//定义新的方法时不在全局定义,不在Object.prototype上定义,这样是为了避免方法名的冲突
+		//所以采用了静态方法来定义,在Object这个函数对象上定义
+		//Object.is()类似加强的比较运算 ===,可判断NaN等于其自身
+		console.log(NaN === NaN)//false
+		console.log(Object.is(NaN,NaN))//true
+		//Object.assign(target, origin)把origin上的属性(浅)copy到target对象上面,属性相同则值覆盖,返回target
+		let car1 = {
+			number: 666666,
+			age: 3,
+			name: '宾利',
+			run: [1,2,4,8]
+		}
+		let car2 = {
+			number: 999999,
+			name: '特斯拉'
+		}
+		let res = Object.assign(car2,car1)
+		console.log(res)
+		console.log(car2)
+		car2['run'].push(9)
+
+		//---------------------------------------------------------------------------------
+		//Object.setPrototypeOf(a,b) 使得a.__proto__ 指向b
+		let person = {
+			name: 'pumpkin',
+			sayEn(){
+				console.log(this.name);
+			}
+		}
+		let animal = {
+			name: 'dog',
+			eat() {
+				console.log(this.name);
+			}
+		}
+		// Object.setPrototypeOf(person, animal);
+		// console.log(person.__proto__ === animal)
+		// console.log(person)
+		// console.log(animal)
+
+
+		let proto = {
+		  x: 'hello',
+		  y: 12,
+		  foo() {
+		    console.log(this.x);
+		  },
+		};
+
+		let obj = {
+		  x: 'world',
+		  y: 122,
+		  foo() {
+		  	super.foo();//改变this指向,指回当前super所绑定的对象,本是指向proto
+		  	//等同于Object.getPrototypeOf(this).foo.call(this);
+		    //super => this.__proto__ => proto
+		    console.log(super.y);//this不改变,等于proto.y
+		    //12,等同于Object.getPrototypeOf(this).y
+		  }
+		 /* ff: function() {
+		  	super.foo();
+		  	//'super' keyword unexpected here
+		  	//注意不能将super用在这种函数内,得用上面那种简写形式,因为函数内部有个私有属性[[homeObject]],值为方法所在的对象,不过该方法必须是函数简写形式,若是key-value形式则该属性无法绑定对应的值(因为是匿名函数),然后super则会绑定为[[homeObject]]绑定的那个对象的原型
+		  }*/
+		}
+		Object.setPrototypeOf(obj, proto);
+		obj.foo() // "world"
+
+
+		 // super是一个关键字,指向当前方法所在对象的原型对象
+		 //从以上代码可得出:当super调用方法时,等同于执行Object.getPrototypeOf(this).方法名.call(this)
+
+		 // 当super访问属性时等同于Object.getPrototypeOf(this).属性名
+
+		//Object.create(obj),这个方法接受一对象作为参数,并且返回一个对象,而这个返回的对象的原型便是这个为对象的参数
+		var oo = {age: 19};
+		var object = Object.create(oo)
+		console.log(object)//object.__proto__ === oo
+
+	</script>
+</body>
+</html>

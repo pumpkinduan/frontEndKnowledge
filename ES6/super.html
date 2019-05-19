@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<script>
+		//super关键字
+		//1.super 当对象使用
+		//1.1应用场景:
+			// a.(普通对象)要应用于对象的简写形式的方法中,否则会报错
+			// b.(class语法)应用于类中定义的普通方法中,指向父类的原型对象,在静态方法中,指向父类
+		//1.2举例:
+		//1.1.a.指向当前方法所在对象的原型对象,即super === Object.getPrototypeOf(this),
+			  //this指向当前方法所在对象
+
+		//注意:
+			//(1)当super调用方法时,等同于执行Object.getPrototypeOf(this).方法名.call(this)
+		 	//(2)当super访问属性时等同于Object.getPrototypeOf(this).属性名
+		let obj1 = {
+			func() {
+				//console.log(super)//super不能单独使用,必须要调用某属性或方法,不然会报错
+				//super === obj1.__proto__
+				// 相当于father.name
+				console.log(super.name)//world
+				// 相当于father.foo.call(this)
+				super.foo()//43 line --> hello; //44 line --> obj1
+			}
+			/*
+			 	因为函数内部有个私有属性[[homeObject]],值为方法所在的对象,不过该方法必须是函数简写形式,
+				若是key-value形式则该属性无法绑定对应的值(因为是匿名函数),
+				然后super则会绑定为[[homeObject]]绑定的那个对象的原型
+			 */
+			// show: function() {
+			// 	super.foo()//不能将super用于这种形式的方法中
+			// }
+		};
+		let father = {
+			name: 'world',
+			age: 'X',
+			foo() {
+				console.log('hello')
+				console.log(this)
+			}
+		}
+		Object.setPrototypeOf(obj1, father);//obj1.__proto__ === father
+		obj1.func();
+		//obj1.show()
+		//-----------------------------------------------------------------------------------------
+		//2.super作为函数调用时,代表父类的构造函数,ES6要求,子类的构造函数必须执行一次super函数。
+		class Human {
+			constructor() {
+				this.age = 18;
+				console.log(this)
+			}
+			eat() {console.log('I can eat food naturally ')}
+		}
+		//在ES6中的继承中,子类的constructor函数必须调用super(),否则会报错
+		class Person extends Human {
+			constructor() {
+				//super虽然代表了父类Human的构造函数,但是返回的是子类Person的实例,即super内部的this指向Person
+				super();//Human.prototype.constructor.call(this)
+
+				super.eat()//I can eat food naturally,这里的super指向父类Human的原型prototype
+
+				//由于super指向父类的原型对象,所以定义在父类实例上的方法或属性,是无法通过super调用的
+				//console.log(super.age)//undefined
+			}
+			foo() {
+				//作为函数时,super()只能用在子类的构造函数之中,用在其他地方就会报错。
+				//super()//报错
+			}
+		}
+		let person = new Person();
+		console.log(person)
+		console.log(person.__proto__ === Person.prototype);
+		console.log(Person.prototype.__proto__ === Human.prototype);
+		//2.1补充:
+			// a.子类的__proto__属性,表示构造函数的继承,总是指向父类。
+			// b.子类prototype属性的__proto__属性,表示方法的继承,总是指向父类的prototype属性
+		//理清上面代码父子类的关系:
+		//person.__proto__ === Person.prototype,而Person.prototype.__proto__ === Human.prototype,通过__proto__即实现子类的实例对象可访问父类原型上的属性和方法
+	</script>
+</body>
+</html>

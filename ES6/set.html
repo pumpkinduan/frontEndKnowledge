@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<script>
+	// Set:ES6中新的一种数据结构,加强版的数组,没有重复的值,所有成员都是唯一的
+	//1.Set本身是一个构造函数,用来生成Set数据结构,存储的值是有顺序的,类似数组
+	// 可以接受一个数组(或是具有iterable接口的其他数据结构)来初始化
+	const set = new Set([1,2,4,5])
+	//console.log(set)//Set{1,2,4,5}
+
+	//2.在Set内部,其内部使用的算法(Same-value-zero equality)与===的区别就在于两个NaN是相等的
+	//3.Set结构中的实例方法
+	// add(value)：添加某个值，返回 Set 结构本身。
+	// delete(value)：删除某个值，返回一个布尔值，表示删除是否成功。
+	// has(value)：返回一个布尔值，表示该值是否为Set的成员。
+	// clear()：清除所有成员，没有返回值。
+	set.add(NaN)
+	set.add(NaN)
+	console.log(set)//Set{1,2,4,5,NaN}
+	//------------------------------------------------------------------------
+	// keys方法,values方法,entries方法返回的都是遍历器对象
+	// 由于Set结构没有键名,只有键值(或者说键名和键值是同一个值)所以keys方法和values方法的行为完全一致
+	// 这三个方法与数组的类似,就不在累赘
+	let keys = set.keys()
+	let values = set.values()
+	let entries = set.entries()
+	console.log(keys.next())//{value: 1, done: false}
+	console.log(entries.next())//{value: [1,1], done: false}
+	function setValues(set) {
+		//将set结构的数据转为数组,因为可以取出数组中的每个成员,而set结构的值取不出来,没有相应的api
+		let arr = Array.from(set);
+		let index = 0;
+		let size = set.size;
+		return {
+			next: function() {
+				if(index < size) {
+					return {
+						value: [arr[index],arr[index++]],
+						done: false
+					}
+				}else {
+					return {
+						value:undefined,
+						done: true
+					}
+				}
+				
+			}
+		}
+	}
+	let result = setValues(set);
+	console.log(result.next())
+	console.log(result.next())
+	console.log(result.next())
+	console.log(result.next())
+	console.log(result.next())
+		//模拟set方法
+		function mySet(array) {
+			let arr = array || undefined;
+			this.__entries__ = [];
+			this.init();
+			if(Object.prototype.toString.call(arr) === '[object Array]') {
+				arr.forEach((ele, index) => {
+						if(ele.length === 0) {
+							this.add(undefined);
+						}else {
+							this.add(ele);
+						}
+				})
+			}else if(array){
+				throw new Error('it only receives the type of Array');
+			}
+		}
+		mySet.prototype.bucket = [];			
+		mySet.prototype.len = 8;			
+		mySet.prototype.init = function() {
+			for(let i = 0; i < this.len; i ++) {
+				this.bucket[i] = {next: null};
+			}
+		}
+		//來額hash算法
+		mySet.prototype.makeHash = function(value) {
+			let hash = 0;
+			let len = 0;
+			if(typeof value === 'string') {
+				len = (value.length > 3) ? value.lenth : 3;
+				for(let i = len - 3; i < len; i++) {
+					hash += (value[i] !== undefined) ? value[i].charCodeAt() : 0;
+				}
+			}else if(isNaN(value)){
+				hash = 0;
+			}else {
+				hash = +value;
+			}
+			return hash;
+		}
+		mySet.prototype.add = function(value) {
+			let hash = this.makeHash(value) % this.len;
+			let list = this.bucket[hash];
+			while(list.next) {
+				if(list.next.value === value) {
+					return;
+				}else {
+					list = list.next;
+				}
+			}
+			list.next = {value, next:null};
+			this.__entries__.push({value});
+		}
+		mySet.prototype.has = function(value) {
+			let hash = this.makeHash(value) % this.len;
+			let list = this.bucket[hash];
+			while(list.next) {
+				if(list.next.value === value) {
+					return true;
+				}else {
+					list = list.next;
+				}
+			}
+			return false;
+		}
+		mySet.prototype.delete = function(value) {
+			//获取需要添加的数据所对应的桶号
+			let hash = this.makeHash(value) % this.len;
+			let list = this.bucket[hash];
+			while(list.next) {
+				//找到需要删除的key所在的那个对象,然后把对应的next指向下一个next
+				//如: 1->2->3,想删除2,只需将1->3,因为这里都是操作的引用值
+				if(list.next.value === value) {
+					list.next = list.next.next;
+				}else {
+					list = list.next;
+				}
+			}
+			let delIndex;
+			//同步map对象的私有属性值,删除对应的那个对象
+			this.__entries__.forEach((ele, index) => {
+				//在该数组中找到与需要删除的数据对应的索引值,然后在删除该数据值
+				if(ele.value === value) {
+					delIndex = index;
+					return;
+				}	
+			})
+			this.__entries__.splice(delIndex, 1);
+		}
+		mySet.prototype.clear = function() {
+			this.init();
+			this.__entries__ = [];
+		}
+		// let s = new mySet([1,2,3]);
+		// let set = new Set([1,2,3]);
+	</script>
+</body>
+</html>

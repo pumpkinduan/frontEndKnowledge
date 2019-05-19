@@ -1,0 +1,27 @@
+html,body {
+    background: url('./vue.png') 0 0 no-repeat;
+}
+p {
+    color: #ccc;
+    font-size: 16px;
+    transform: rotate(45deg);
+    background-color: red;
+}
+a {
+    color: #000;
+    text-decoration: none;
+    font-size: 20px;
+    font-weight: 900;
+    padding: 15px;
+    background-color: pink;
+}
+ul, li {
+    margin: 0;
+    padding: 0;
+}
+h1 {
+    font-size: 22px;
+}
+.clearfix {
+    clear: both;
+}

@@ -1,0 +1,38 @@
+npm init -y : 初始化项目,会生成一个package.json的文件用来描述初始化的项目
+webpack4+支持无配置文件便可以运行打包文件
+webpack默认只能处理js文件,处理其他文件(css,html,less..)需要配置相应的插件或loader
+
+tree shaking(js and css): 
+   在webpack项目中,有一个入口文件(index.js),相当于一棵树的主干,入口文件有很多依赖的模块,相当于树枝。
+   实际情况中,虽然依赖了某个模块,但其实只使用其中的某些功能。
+   通过tree-shaking,将没有使用的模块摇掉,这样来达到删除无用代码的,提高性能的目的
+
+mode = production中:
+    webpack自动tree shaking(不会进行作用域分析,只会进行词法和语法分析),
+    安装插件webpack-deep-scope-plugin 配合production模式 进行deep js tree shaking
+    打包后的代码是经过压缩的,缩小体积
+
+mode = development中, 不会进行tree shaking
+
+css抖动放在js抖动之前,否则会报错
+
+postcss:不是插件,
+    1.将css解析成js可以操作的抽象语法树
+    2.调用插件来处理AST并得到结果
+    a.postcss一般不单独使用,会配合构建工具(webpack,gulp,grunt...)
+
+loaders:每个loader解析器都有自己的配置属性options,可根据自己选择的loader进行配置
+如对postcss-loader进行配置: {
+        loader: 'postcss-loader',
+        options: {
+            plugins: [...]
+        }
+    }
+
+安装webpack-dev-server可开启本地服务器,需要全局和局部安装,以免报错;可自动监听文件变化,同步到浏览器中,无需刷新浏览器
+webpack --watch: Watch the filesystem for changes
+webpack-dev-server --open:开启本地服务器且自动在浏览器中打开页面
+
+
+热更新不支持单独抽离的css和js文件,默认下支持利用style-loader解析的css
+其原理见:https://webpack.js.org/concepts/hot-module-replacement/

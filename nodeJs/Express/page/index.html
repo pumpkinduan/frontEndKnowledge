@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- <form action="/upload" method="POST" enctype="multipart/form-data">
+        <input type="file" class="file_"  name="file_msg" \>
+        <input type="submit" value="上传" \>
+    </form> -->
+    <input type="file" id="file_" \>
+    <input id="submit" value="上传" type="button" onclick="_submit()">c
+    <img src="">
+    <!-- download： 下载资源 -->
+    <a href="/getPic?path=uploads\c7d636e2a54dd2569b1e92b6ca966fc8" download="1.png">download</a>
+    <script>
+        var submit = document.getElementById('submit');
+        function _submit() {
+            var file = document.getElementById('file_').files[0];
+            var form = new FormData();
+            form.append('file_msg', file);
+            var xml = new XMLHttpRequest();
+            xml.open('post', '/upload', true);
+            xml.onload = function() {
+                alert('upload successfully')
+            }
+            xml.send(form);
+            xml.onreadystatechange = function () {
+                if (xml.readyState == 4 && xml.status >= 200 && xml.status < 300) {
+                    var path = xml.responseText;
+                    var img = new Image();
+                    img.src = '/getPic?path=' + path;
+                    img.onload = function() {
+                        document.body.appendChild(img);
+                    }
+                }
+            }
+        }
+        /**
+         *  form表单中enctype属性可以用来控制对表单数据的发送前的如何进行编码，enctype有三种，分别为：
+
+            multipart/form-data不对字符编码，用于发送二进制的文件，其他两种类型不能用于发送文件；
+
+            text/plain用于发送纯文本内容，空格转换为 "+" 加号，不对特殊字符进行编码，一般用于email之类的；
+
+            application/x-www-form-urlencoded，在发送前会编码所有字符，即在发送到服务器之前，所有字符都会进行编码（空格转换为 "+" 加号，"+"加号转换为空格，特殊符号转换为 ASCII HEX 值）。
+
+            其中application/x-www-form-urlencoded为默认类型。 
+         * 
+         * 
+         * 
+         */ 
+    </script>
+</body>
+
+</html>

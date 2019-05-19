@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+		}
+		.login, .register {
+			margin-bottom: 20px;
+			margin-top: 15px;
+			font-size: 14px;
+		}
+		input{
+			width: 200px;
+			outline: none;
+			line-height: 30px;
+			border: 1px solid #eee;
+		}
+		button {
+			width: 50px;
+			height: 30px;
+			line-height: 30px;
+			color: #ccc;
+			background: linear-gradient(to right, skyblue, blue, skyblue);
+			border: 1px solid #eee;
+			cursor: pointer;
+		}
+	</style>
+</head>
+<body>	
+	<!-- <div class="login">
+		<label for="student_number">学号:</label>
+		<input type="text" placeholder="请输入学号" id="student_number">
+		<label for="login_pwd">密码:</label>
+		<input type="password" id="login_pwd">
+		<button>登录</button>
+	</div> -->
+	<!--不使用ajax时的古老的技术-->
+	<form action="/login" class="login" method="post">
+		<label for="student_number">学号:</label>
+		<input type="text" placeholder="请输入学号" id="student_number" name="stu_number" \>
+		<label for="login_pwd">密码:</label>
+		<input type="password" id="login_pwd" name="stu_pwd" \>
+		<button>登录</button>
+	</form>
+		
+	<!-- <div class="register">
+		<label for="create_num">创建学号:</label>
+		<input type="text" placeholder="请输入学号" id="create_num">
+		<label for="reg_password">密码:</label>
+		<input type="password" id="reg_password">
+		<button>注册</button>
+	</div> -->
+	<script src="./ajax.js"></script>
+	<script>
+		var login = document.getElementsByClassName('login')[0];
+		var login_btn = login.getElementsByTagName('button')[0];
+		var number = document.getElementById('student_number');
+		var pwd = document.getElementById('login_pwd')
+		login_btn.onclick = function() {
+			var stu_number = number.value;
+			var stu_pwd = pwd.value;
+			// ajax({
+			// 	url: "/login",
+			// 	data: {
+			// 		number: stu_number,
+			// 		password: stu_pwd
+			// 	},
+			// 	// method: 'get',
+			// 	method: 'post',
+			// 	success: function(xml) {
+			// 		alert('login successful');
+			// 		location.href = '/index.html';//登录成功后跳转到首页
+			// 	},
+			// 	error: function(err) {
+			// 		alert('login failed,请重新登录')
+			// 		number.value = '';
+			// 		pwd.value = '';
+			// 	},
+			// 	time: 200//200ms后未请求到数据则终止ajax请求
+			// });
+		}
+	</script>
+</body>
+</html>

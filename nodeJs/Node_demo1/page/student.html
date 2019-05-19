@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>学生信息表</title>
+    <link rel="stylesheet" href="./lib/bootstrap-table/dist/bootstrap-table.min.css">
+</head>
+<body>  
+    <table id="table"></table>
+    <script src="lib/jquery-3.3.1.js"></script>
+    <script src="./lib/bootstrap-table/dist/bootstrap-table.min.js"></script>
+    <script>
+        $('#table').bootstrapTable({
+            url: '/getStudentPage',
+            pageList: [5, 10],
+            pageSize: 5,
+            pagination: true,
+            sidePagination: 'server',
+            paginationLoop: false,
+            columns: [
+                {field: 'number',title: 'Student_number'},
+                {field: 'class',title: 'Student_class'},
+                {field: 'name',title: 'Student_name'},
+                {field: 'age',title: 'Student_age'},
+                {field: 'birth',title: 'Student_birth'},
+                {field: 'ctime',title: 'Student_ctime'}
+            ]
+            
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        //添加cookie的方法
+        function addCookie(option) {
+            //{key, value, day, path, domain}
+            //处理cookie的生效路径
+            // /course/28/task/229/show
+            var pathname = window.location.pathname
+            var index = pathname.lastIndexOf('/');
+            // /course/28/task/229
+            option.path = option.path || pathname.slice(0,index);
+
+            //处理cookie生效的域名
+            option.domain = option.domain || document.domain;
+
+            //处理cookie的过期时间
+            if ( option.day ) { 
+                var time = new Date();
+                time.setDate(time.getDate() + option.day); 
+                //添加cookie
+                document.cookie = option.key+'='+option.value+';'+'expires='+time.toGMTString()+';'+'path='+option.path+';'+'domain='+option.domain+';';
+            } else {
+                document.cookie = option.key+'='+option.value+';'+'path='+option.path+';'+'domain='+option.domain+';';
+            } 
+        }    
+
+        //获取cookie
+        function getCookie(key) {
+            var cookies = document.cookie.split('; ');
+            var len = cookies.length;
+            for ( var i = 0; i < len; i ++ ) {
+                var arr = cookies[i].split('=');
+                if ( arr[0] === key ) {
+                    return arr[1];
+                }
+            }
+        }
+
+        //删除cookie
+        //注意: 删除cookie时需指定对应路径,不然只会删除默认路径下的cookie
+        // 只能通过指定过期时间来删除对应的cookie
+        function removeCookie(key, path) {
+            addCookie({
+                key: key,
+                day: -1,
+                path: path
+            })
+        }   
+    </script>
+</body>
+</html>

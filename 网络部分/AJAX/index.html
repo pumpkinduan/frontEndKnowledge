@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>ajax-get</title>
+</head>
+<body>
+	<input type="submit" value="提交" id="submit">
+	<script src="ajax_comments.js"></script>
+	<script>
+		var sub = document.getElementById('submit');
+		// 什么是Ajax？
+		// 是与服务器进行数据交换并更新部分网页的一种技术，在不重新加载整个网页的情况下.达到用户与数据的交互
+		// 特点: 简单易用, 不用刷新整个页面即可实现数据交互
+		// 注意点: 由于浏览器的同源政策(协议，域名，端口必须一致),在使用ajax其向服务器请求时会存在跨域的问题
+		// 解决方案: 
+		/**
+		 * 1. jsonp请求: 无兼容问题,只要服务器端实现相应的接口参数即可
+		 * 		1.1.由于src属性请求资源时不存在跨域问题,所有我们便可借助script标签的src属性来实现
+		 * 2.CORS: 
+		 */
+		// JSONP请求:
+		function jsonp() {
+			var oScript = document.createElement('script');
+			// oScript.setAttribute('type', 'text/javascript');
+			//a.请求地址,cb这个参数为服务器端给出的接口,必须指定,用来告诉服务器客户端的回调函数名称为doJson
+			//b.服务器接收到doJson后会将相应的JSON格式的数据包用执行的方式作为该函数的参数--> 'doJson({...})'
+			//c.服务器返回的是一个字符串格式的 'doJson({...})',不过 浏览器会把它作为代码来解析执行,因为是script发出的请求
+			//d.只要客户端这边定义部署好doJson这个函数,数据返回后就会自动执行它,这时候我们需要的数据便在该参数中了
+			oScript.src = 'http://127.0.0.1:8888/getData?cb=doJson';
+			document.body.appendChild(oScript);//添加到页面中去执行该脚本
+			oScript.onload = function () {
+				//达到目的后删除,也就是拿到数据做了相应的功能实现,避免多次发生jsonp请求
+				document.body.removeChild(oScript);
+			}
+		}
+		sub.onclick = function () {
+			// jsonp();
+			ajax({
+				type: "get",
+				data: { name: "pumpkin", age: 18 },
+				url: "http://127.0.0.1:8888/getData",//请求的本机地址,请在node中运行server.js开启本地服务器
+				success: function (result) {
+					alert(result.response);
+				},
+				dataType: 'jsonp',//jsonp请求
+				jsonpCallBack: 'doJson'//浏览器端部署好这个函数用来接收数据
+			});
+		}
+		function doJson(data) {
+			console.log(data)
+			console.log(typeof data)
+			alert('返回的数据为:' + data);
+		}
+	</script>
+</body>
+</html>

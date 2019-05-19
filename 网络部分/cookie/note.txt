@@ -1,0 +1,3 @@
+这里在node下开启了一个十分简陋的web服务器
+因为在file://协议下无法写入cookie
+cookie是针对的http协议

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        /*
+        1.什么是cookie:
+            cookie是服务器保存到浏览器的一下段文本信息,每个cookie大小一般不超过4kb
+            浏览器每次向服务器发送http请求时都会自动附带上这段信息
+
+        2.cookie的作用:
+            主要是用来分辨两个请求是否来自同一个浏览器,以及保存一些状态信息
+        
+        3.cookie的生命周期
+            默认情况下是 每次会话结束(浏览器窗口被关闭)后cookie就会被删除
+            但是也可以自己设置cookie的过期时间
+        
+        4.cookie的获取与设置:
+            通过document.cookie可获取当前网页的所有cookie信息
+            通过document.cookie也可以给当前网页设置cookie
+
+        4.1: 通过document.cookie写入cookie时只能一条一条的写入
+             不过可以和cookie的属性一起写入
+        */
+        var time = new Date();
+        time.setDate(time.getDate() + 1);
+        //expires表示当前写入的cookie的过期时间
+        document.cookie = 'age=18;expires='+ time.toGMTString();
+        document.cookie = 'name=pumpkin;expires='+ time.toGMTString();
+
+        //读取当前网页下的cookie
+        console.log(document.cookie)//age=18; name=pumpkin
+
+        /*
+            cookie的作用范围:
+                0.默认情况下: 当前设置的cookie生效域名为当前域名,路径为当前网页文件的路径
+
+                1.同一浏览器下的同一域名下的当前路径及其子路径可访问
+                例如: 谷歌浏览器上的localhost/page/index.html 下设置了cookie
+                      那么只有在谷歌浏览器上的localhost/page目录下的子路径中的文件可访问到该cookie
+
+                2.如果想要localhost域名下的所有路径都可以共享到设置的cookie,
+                  则需要在设置cookie时加上属性path=/;
+        */
+       document.cookie = 'sex=male;path=/;';
+       //这个sex=male这段cookie在localhost下的所有路径匹配到的网页文件都可以访问到
+
+       /*
+       测试:
+            我们可以在谷歌浏览器上访问 localhost:12306/page/index.html,
+            另外开启两个窗口分别访问localhost:12306/page/index1.html和
+            localhost:12306/cookie-test.html
+       */
+
+       //此外还有一个注意点,但是由于这里没有多个域名不能演示
+       //举例: 如何让edu.it666.com 访问 www.it666.com保存的cookie讷?
+       //我们知道在www.it666.com下设置的cookie生效范围是www.it666.com/
+       //而edu.it666.com域名下是无法访问的
+       //但是我们可以通过domain=it666.com;让cookie的作用范围为该一级域名,这样的话二级域名下的路径也可以访问了
+       //document.cookie = sex=male;domain=it666.comn;path=/;
+
+
+       function addCookie(option) {
+            //{key, value, day, path, domain}
+            //处理cookie的生效路径
+            // /course/28/task/229/show
+            var pathname = window.location.pathname
+            var index = pathname.lastIndexOf('/');
+            // /course/28/task/229
+            option.path = option.path || pathname.slice(0,index);
+
+            //处理cookie生效的域名
+            option.domain = option.domain || document.domain;
+
+            //处理cookie的过期时间
+            if ( option.day ) { 
+                var time = new Date();
+                time.setDate(time.getDate() + option.day); 
+                //添加cookie
+                document.cookie = option.key+'='+option.value+';'+'expires='+time.toGMTString()+';'+'path='+option.path+';'+'domain='+option.domain+';';
+            } else {
+                document.cookie = option.key+'='+option.value+';'+'path='+option.path+';'+'domain='+option.domain+';';
+            } 
+        }
+        addCookie({key:'id', value:1});
+        function getCookie(key) {
+            var cookies = document.cookie.split('; ');
+            var len = cookies.length;
+            for ( var i = 0; i < len; i ++ ) {
+                var arr = cookies[i].split('=');
+                if ( arr[0] === key ) {
+                    return arr[1];
+                }
+            }
+        }
+        console.log(getCookie('id'))
+
+        function removeCookie(key, path) {
+            addCookie({
+                key: key,
+                day: -1,
+                path: path
+            })
+        } 
+        removeCookie('sex', '/')
+    </script>
+</body>
+</html>

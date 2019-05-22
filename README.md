@@ -1,6 +1,7 @@
 # frontEndKnowledge
 每块知识目录下都有对相应的知识点进行了较为深入的了解
-+ ES6中主要对map和set数据结构以及promise进行了深入了解
++ [ES6](https://github.com/Pumpumpkin/frontEndKnowledge/tree/master/ES6)
+  > ES6中主要对map和set数据结构以及promise进行了深入了解
 + vue中对其响应式数据原理与依赖收集和虚拟DOM进行了探究及初步实现
 + 原生js模拟手撕了诸如: new,instanceof,call,apply,bind...的实现
 + jq学习中进行了一个简易版的jq封装,这是第一封装一个js库,还是蛮有成就感的

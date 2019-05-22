@@ -4,7 +4,7 @@
   > ES6中主要对map和set数据结构以及promise进行了深入了解
 + [vueJs](https://github.com/Pumpumpkin/frontEndKnowledge/tree/master/vue%E5%AD%A6%E4%B9%A0)
   > vue中对其响应式数据原理与依赖收集和虚拟DOM进行了探究及初步实现
-+ [原生js模拟]()
++ [原生js模拟](https://github.com/Pumpumpkin/frontEndKnowledge/tree/master/%E5%8E%9F%E7%94%9Fjs%E6%A8%A1%E6%8B%9F%E5%BA%95%E5%B1%82)
   > 原生js模拟手撕了诸如: new,instanceof,call,apply,bind...的实现
 + jq学习中进行了一个简易版的jq封装,这是第一封装一个js库,还是蛮有成就感的
 + DOM部分主要是配合小例子进行学习,以及封装了一个操作DOM的工具函数tool.js,实现了兼容性

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <span name="pum" dzz="d">111</span>
+    <span class="text2">222</span>
+    <input type="checkbox" >
+    <script src="jquery-3.3.1.js"></script>
+    <script>
+        // 1.什么是属性? 对象身上保存的变量就是属性
+        // 2.什么是属性节点? HTML代码中添加的属性就是属性节点,添加的属性会被保存到attributes属性里去,在浏览器中找到span这个DOM元素之后，展开看到的都是属性，
+        // 在attributes属性中保存的所有内容就是属性节点
+
+        // 属性节点只存在于DOM元素上，而属性则存在于所有的对象上
+        
+
+
+        //jq中操作属性节点的方法: attr(name/pro/key,val/fn);
+        //获取或者设置属性节点的值
+        //可传一个参数: 代表获取属性节点的值
+        //传两个参数: 代表设置属性节点的值
+        //注意 : 
+        //若是获取属性节点的值，无论找到多少个DOM元素,都只会返回第一个元素指定的属性节点的值
+        //若是设置: 找到多少个元素就会设置多少个元素:若设置的属性节点不存在，则系统会自动新增该设置的属性节点
+        
+        //removeAttr();  删除所有找到元素指定的属性节点
+       $(function (){
+            console.log($('span').attr('class')); 
+            //找到两个span，但是只打印出了第一个span的class属性节点的值,注意是属性节点的值，这里是undefined,
+            //因为在attributes属性里没有class这个属性节点，故而为undefined
+            // $('span')[0].setAttribute('class','has');
+            console.log($('span').prop('class')); //打印空' ',因为prop可操作属性,而class是span元素的一个属性,在span对象里class值为' '
+            
+       });
+
+     /*  $(function (){
+            console.log($('span').attr('dzz'));
+       });*/
+
+      /* $(function (){
+            $('span').removeAttr('dzz name class');
+       })
+    */
+   
+
+
+    //prop()方法的特点和attr方法一致
+    //removeProp()
+    //注意点: prop方法不仅可以操作属性(<--主要针对)还可操作属性节点
+    //prop方法不能取出用户自定义的属性节点的值，也不能设置一个系统中不存在的属性节点,但attr可以
+    /*$(function (){
+        console.log($('span').prop('dzz')); //undefined 取不出来
+    });
+    $(function (){
+        console.log($('span').prop('i','i'));//设置不了i="i"
+    });*/
+
+    // attr和prop的区别;
+    // jq认为:attr的checked ,selected和disabled就是表示属性初始状态的值
+    // 而prop的checked ,selected和disabled才表示该属性实时状态的值(true or false);
+    // 官方推荐:若是操作以上三个属性节点则,或是只添加属性名称该属性就会生效(即添加特性===系统规定的一些属性)用prop，其余用attr
+   /* $(function (){
+        console.log($('input').prop('checked'));
+    })*/
+
+    /*$(function (){
+        console.log($('input').attr('checked')); 
+        //会看HTML标签中有没有设置checked属性,有则返回checked,无则undefined
+        //尽管一开始没有设置checked,后面自己√上了复选框,还是返回undefined(在控制台可看出)
+    })*/
+
+
+
+    </script>
+</body>
+</html>

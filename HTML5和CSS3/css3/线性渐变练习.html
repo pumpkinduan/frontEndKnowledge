@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            background-color: #323232;
+        }
+        .box {
+            text-align: center;
+            width: 300px;
+            box-sizing: border-box;
+            margin: 100px auto;
+            background-clip: text;
+            /* 裁剪文字为背景大小 */
+            font-size: 60px;
+            background: linear-gradient(to right, transparent 10px, white 30px,white 50px, transparent 60px);
+            color: rgba(0,0,0,0.4);
+            background-repeat: no-repeat;
+            /* background-position: -250px 0; */
+            transition: all 3s;
+        }
+        .box:hover {
+            background-position: 250px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="box">PUMPKIN</div>
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+		}
+		.box {
+			border: 40px solid skyblue;
+			width: 160px;
+			height: 160px;
+			box-sizing: border-box;
+			margin: 100px auto;
+			background-color: red;
+			/* 边框图片的优先级高于边框颜色 */
+			/*默认下: 系统会根据边框的宽度来拟定边框图片的大小,并设置在边框的四个角上,均为正方形*/
+			border-image-source: url(./img/border.png);
+			
+			/*充当切片的作用,根据指定值将边框图片划分为9个区域,四个角,四条边,和中间区域,默认情况下中间区域完全透明处理*/
+			/*划分好边框图片区域后,先将图片的四个角的部分设置在边框的四个角上,然后在把图片区域的其他区域分别设置在边框的其他区域,中间区域不设置*/
+			border-image-slice: 27;
+
+			border-image-repeat: round;
+		}
+		.box1 {
+			border: 60px solid skyblue;
+			width: 160px;
+			height: 160px;
+			box-sizing: border-box;
+			margin: 0 auto;
+			background-color: #f0f0f0;
+			/* 边框图片的优先级高于边框颜色 */
+			/*默认下: 系统会根据边框的宽度来拟定边框图片的大小,并设置在边框的四个角上,均为正方形*/
+			border-image-source: url(./img/border.png);
+
+			/*图片边框向内偏移。*/
+		}
+	</style>
+</head>
+<body>
+	
+	<div class="box">
+		
+	</div>
+	<div class="box1">
+		
+	</div>
+	<img src="./img/border.png" alt="">
+</body>
+</html>

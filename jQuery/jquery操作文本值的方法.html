@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <textarea cols="30" rows="10"></textarea>
+    <input type="text">
+    <input type="checkbox">
+    <select>
+        <optgroup label="name">
+            <option>James</option>
+            <option>Westbrook</option>
+            <option>Kobe</option>
+        </optgroup>
+        <optgroup label="age">
+            <option>33</option>
+            <option>30</option>
+            <option>40</option>
+        </optgroup>
+    </select>
+    <script src="jquery-3.3.1.js"></script>
+    <script>
+        //html()
+        //text()
+        //val():获取匹配元素集合中第一个元素的当前值,获取值时不接受参数,主要用来获取表单元素的值，如input, select 和 textarea。当在一个空集合上调用，它返回undefined
+        // 该方法也可用来设置值
+            $(function (){
+                var $input = $('input')[0];
+                $input.oninput = function (){
+                    console.log($(this).val());
+                }
+            })
+
+    </script>
+</body>
+</html>

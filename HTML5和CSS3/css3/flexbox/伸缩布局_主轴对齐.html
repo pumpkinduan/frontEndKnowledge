@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+        ul {
+            width: 600px;
+            border: 1px solid #000;
+            margin: 100px auto;
+            display: flex;
+            flex-direction: row;
+            /* justify-content: 伸缩项在主轴方向的对齐方式 */
+            /* 默认:flex-start --> 排列好的伸缩项对齐于主轴的起点 */
+            /* 也就是第一个伸缩项的左外边距线放置于主轴起点所在的边线,后面的伸缩项一个接一个的与前面的伸缩项平齐摆放 */
+            /* justify-content: flex-start; */
+
+            /* 排列好的伸缩项整体对齐于主轴的终点 */
+            /* 也就是最后一个伸缩项的右外边距线放置于主轴终点所在的边线,前面的伸缩项一个接一个的与后面的伸缩项平齐摆放 */
+            justify-content: flex-end;
+
+            /* 排列好的伸缩项整体对齐于主轴的中点 */
+            /* justify-content: center; */
+
+            /*
+               计算:(主轴的长度 - 排列好的伸缩项的总长度) / (伸缩项的数量 - 1) = 某个值
+                    将计算得到的值插在每个伸缩项之间,以此将每个伸缩项之间隔开一段距离
+               最后我们看的效果会是:排列好的伸缩项的第一个和最后一个分别对齐主轴的起点和终点；
+             */
+            /* justify-content: space-between; */
+
+            /*  计算:(主轴的长度 - 排列好的伸缩项的总长度) / (伸缩项的数量 * 2) = 某个值(x)
+                    将计算得到的值插在每个伸缩项的两端,以此将每个伸缩项隔开一段距离(x)
+                    且将第一个伸缩项与最后一个伸缩项分别与主轴的起点与终点隔开一段距离(x)
+            */
+            /* justify-content: space-around; */
+        }
+        ul li {
+            width: 100px;
+            height: 100px;
+            background: pink;
+            text-align: center;
+            line-height: 100px;
+            color: #fff;
+            font-size: 40px;
+        }
+        ul li:nth-child(2) {
+            background-color: tomato;
+        }
+        ul li:nth-child(3) {
+            background-color: skyblue;
+        }
+    </style>
+</head>
+<body>
+    <ul>
+        <li>1</li>
+        <li>2</li>
+        <li>3</li>
+    </ul>
+</body>
+</html>

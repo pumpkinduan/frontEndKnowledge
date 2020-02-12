@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        .box {
+            color: transparent;
+            font-size: 60px;
+            margin: 100px auto;
+            width: 300px;
+            background-image:url(./img/text.png);
+            background-size: cover;
+            background-position: -300px -3px;
+            background-color: #222;
+            background-repeat: no-repeat;
+            -webkit-background-clip: text;
+            animation: loop 5s linear 0s infinite normal;
+        }
+        @keyframes loop {
+            0% {
+                background-position: -300px -3px;
+            }
+            100% {
+                background-position: 0 -3px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="box">是谁的心啊</div>
+</body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <img src="https://img.alicdn.com/bao/uploaded/i1/TB13vxpPVXXXXc_XVXXXXXXXXXX_!!0-item_pic.jpg_200x200q90.jpg_.webp">
+    <script src="jquery-3.3.1.js"></script>
+    <script>
+        // 原生js入口函数加载模式:等待DOM元素加载完毕,并且图片也加载完毕才会执行
+        // 在拿网络上的图片时，会向服务器远端发送请求报文，拿到远程图片，下载到本地，然后在从本地拿到图片
+        // 清除浏览器的cookies，可验证
+        window.onload = function (){
+            var img = document.getElementsByTagName('img')[0];
+            console.log(img);
+            var imgWidth = window.getComputedStyle(img).width;
+            console.log(imgWidth);
+        }
+        
+
+
+        //jq入口函数会等到DOM元素加载完毕，但不会等到图片也加载完毕就执行
+        //先清除浏览器的cookies，可验证
+        $(function (){
+            console.log($('img'));
+            console.log($('img').width())//0  图片没有加载完毕,获取的宽度为0
+        })
+
+        // 原生js若是编写了多个入口函数，则后面的会覆盖前面
+        // 而jq不会，如下:
+        /*window.onload = function (){
+            alert('hello1')
+        }
+        window.onload = function (){
+            alert('hello2')
+        }
+        */
+
+        $(function (){
+            alert('hello1')
+        })
+        $(function (){
+            alert('hello2')
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <ul>
+        <li>0</li>
+        <li>1</li>
+        <li>2</li>
+        <li>3</li>
+    </ul>
+    <ul>
+        <li>4</li>
+    </ul>
+    <p>我是p1</p>
+    <p>我是p2</p>
+    <script src='jquery-3.3.1.js'></script>
+    <script>
+    //同级插入到末尾
+    //a.insertBefore(target) 把a插入到target的前面,剪切式的插入,返回对象为a
+    //a.before(target),把target插入到a的前面，剪切式的插入,返回对象为a
+    //注意:a,target都是同级关系的元素，只是位置发生了改变
+    // $('li').eq(3).insertBefore($('li:eq(0)')).css('color','red');
+    // $('li').eq(3).before($('li:eq(1)')).css('color','red');
+    //$('ul').before($('p'));//p是一组选出来的元素,ul也是一组匹配出来的元素,辣么p会插入到所有ul的前面
+
+
+
+    //父子级插入到末尾
+    //obj.appendTo(target):将匹配的元素插入到target的末尾,返回的结果是obj
+    //obj.append(target):将target插入到匹配的元素的末尾,返回的结果是obj
+    $(function (){
+        // $('p').appendTo($('ul')).css('background-color','pink');
+        // p被插入到ul的末尾,并作为ul的子元素
+
+        // $('ul').append($('p'));
+
+
+    })
+
+    //父子级插入到头部
+    //.prepend(content):将参数内容插入到每个匹配元素的前面(元素内部)
+    //content:DOM元素，文本节点，元素和文本节点的数组，HTML字符串，或者jQuery对象，将被插入到匹配元素前的内容。
+    $(function (){
+        // $('ul').prepend($('p'));
+        // $('ul').prepend('b');
+    })
+
+    </script>
+</body>
+</html>

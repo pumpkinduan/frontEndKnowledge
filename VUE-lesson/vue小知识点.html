@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<!-- 将来的vue实例会控制这个元素中的所有内容 -->
+	<div id="app">
+		{{ msg }}
+	</div>
+	<script src="vue.js"></script>
+	<script>
+		//创建一个vue实例，
+		//当我门导入vue的包之后,浏览器的内存中就多了一个Vue的构造函数
+		//注意:我们new出来的这个vm对像就是MVVM中的VM的调度者
+		let vm = new Vue({
+			el: '#app',
+			data: {//MVVM中的M,专门用来保存实例的数据
+				msg: '欢迎加入vue的入坑之旅'
+				//通过vue提供的指令很方便的将数据渲染到页面上
+				//程序不再手动操作DOM了
+			}
+		})
+	</script>
+</body>
+</html>

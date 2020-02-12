@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <div id="box">
+        <div>
+            <p>rrr</p>
+        </div>
+        <p>fff</p>
+    </div>
+    <div>
+        <p>eee</p>
+    </div>
+    <ul>
+        <li>1</li>
+        <li>2</li>
+        <li class="demo">3</li>
+        <li>4</li>
+        <li>5</li>
+    </ul>
+    <script src="jquery-3.3.1.js"></script>
+    <script>
+    // jQuery:一个非常优秀的js库
+    // 8,9000行代码，重在封装思想，使用方法会用就可以先查先用
+    // zepto(移动端的库)从jquery演变而来
+    
+    // $()里可以填原生的dom,css选择器,jQuery对象,函数,null/undefined
+    // $(child,parent)里可以传两个参数,第一个表示要选择的dom元素，第二个表示第一个dom元素的执行期上下文,即用于来指定选择器查找的范围
+    $('p','#box').css('color','red');
+   /* var div = document.getElementsByTagName('div');
+    console.log($(div));*/
+
+   /* console.log($(function (){
+        console.log('pumpkin !!!');
+    }));*/
+
+     //console.log($(null)); //返回一个类数组，只不过里面为空，空的jQuery对象
+     
+     /*$('ul li:first').css('color','pink');
+     $('ul li:last').css('color','pink');*/
+     //$('ul li:eq(2)').css('color','pink');//eq()索引从0开始
+     // $('ul li:odd').css('color','pink');
+     // $('ul li:even').css('color','pink');
+     // $('li').filter('.demo').css('color','lightblue');
+     // $('li').not('.demo').css('color','lightblue');
+     
+
+
+
+
+
+
+
+
+
+    </script>
+</body>
+</html>

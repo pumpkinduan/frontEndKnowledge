@@ -1,43 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Document</title>
-  </head>
-  <body>
-    <script>
-      //原生的Promise
-      //1.参数必须传,必须是函数
-      //let p1 = new Promise();//Promise resolver undefined is not a function
 
-      //2.promise对象是有状态和值的,被保存在对应的隐式属性上,分别默认为pending和undefined
-      //  且回调函数中接受两个参数,
-      //  一个参数对应一个转态为resolved的函数,
-      //  一个对应状态为rejected的函数
-      //  执行resolve函数,则状态变为'resolved'; 执行reject函数,则状态变为'rejected',都不执行,则为默认值
-      //  注意: Promise对象的状态是不可逆的,值也是可不改变的
-      let p2 = new Promise(function(resolve, reject) {
-        resolve(2);
-        resolve(3); //Promise对象的状态还是'resolved',值还是2
-      });
-     console.log(p2); //[[PromiseStatus]]:"resolved", [[PromiseValue]]:2
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>Document</title>
+</head>
 
-      // let p3 = Promise.resolve(2222)
+<body>
+  <script>
+    //原生的Promise
+    //1.参数必须传,必须是函数
+    //let p1 = new Promise();//Promise resolver undefined is not a function
 
-      //通过与原生的Promsie对比来模拟其内部原理,剖析源码
-      //ES5写法
-      function myPromise(fn) {
-        if (typeof fn !== "function") {
-          throw TypeError("Promise resolver " + fn + "is not a function");
-        }
-        //初始时promise对象的状态和值
-        this.status = "pending";
-        this.value = undefined;
-        var self = this;
-        this.resolveCB = [];
-        this.rejectCB = [];//针对下列异步情况,缓存then函数的对应回调函数,等待异步操作有了结果在去执行相应回调
+    //2.promise对象是有状态和值的,被保存在对应的隐式属性上,分别默认为pending和undefined
+    //  且回调函数中接受两个参数,
+    //  一个参数对应一个转态为resolved的函数,
+    //  一个对应状态为rejected的函数
+    //  执行resolve函数,则状态变为'resolved'; 执行reject函数,则状态变为'rejected',都不执行,则为默认值
+    //  注意: Promise对象的状态是不可逆的,值也是可不改变的
+    let p2 = new Promise(function (resolve, reject) {
+      resolve(2);
+      resolve(3); //Promise对象的状态还是'resolved',值还是2
+    });
+    console.log(p2); //[[PromiseStatus]]:"resolved", [[PromiseValue]]:2
+
+    // let p3 = Promise.resolve(2222)
+
+    //通过与原生的Promsie对比来模拟其内部原理,剖析源码
+    //ES5写法
+    function myPromise(fn) {
+      if (typeof fn !== "function") {
+        throw TypeError("Promise resolver " + fn + "is not a function");
+      }
+      //初始时promise对象的状态和值
+      this.status = "pending";
+      this.value = undefined;
+      var self = this;
+      this.resolveCB = [];
+      this.rejectCB = [];//针对下列异步情况,缓存then函数的对应回调函数,等待异步操作有了结果在去执行相应回调
       /*  let pro = new Promise((suc, err) => {
           setTimeout(() => {
             suc(2)
@@ -48,112 +50,114 @@
         }, (err) => {
 
         })*/
-       
-        function resolve(data) {
-          //当调用该resolve函数时,则promise对象状态改变,属性值改变
-          //Promise对象的状态是不可逆的
-          setTimeout(function() {
-            if (self.status === "pending") {
-              self.status = "resolved";
-              self.value = data;
-              self.resolveCB.length &&
-                self.resolveCB.forEach(function(fn) {
-                  fn();
-                });
-            }
-          });
-        }
-        function reject(data) {
-          //当调用该reject函数时,则promise对象状态改变,属性值改变
-          setTimeout(function() {
-            if (self.status === "pending") {
-              self.status = "rejected";
-              self.value = data;
-              self.rejectCB.length &&
-                self.rejectCB.forEach(function(fn) {
-                  fn();
-                });
-            }
-          });
-        }
-        fn(resolve, reject);
-      }
-      //then方法的参数对应着两个状态的回调函数
-      myPromise.prototype.then = function(resolveFn, rejectFn) {
-        var _self = this;
-        if (this.status === "resolved") {
-          var result = resolveFn(this.value);
-          //判断resolve函数返回的结果是否是一个新的promise对象
-          if (result instanceof myPromise) {
-            //是的话就返回这个promise对像
-            return result;
-          } else {
-            //否则就重新包装一个状态为'resolved',值为resolve函数返回的结果,的新的promise对象
-            return myPromise.resolve(result);
+      function resolve(data) {
+        //当调用该resolve函数时,则promise对象状态改变,属性值改变
+        //Promise对象的状态是不可逆的
+        setTimeout(function () {
+          if (self.status === "pending") {
+            self.status = "resolved";
+            self.value = data;
+            self.resolveCB.length &&
+              self.resolveCB.forEach(function (fn) {
+                fn();
+              });
           }
-        }
-        if (this.status === "rejected") {
-          rejectFn(this.value);
-        }
-        if (this.status === "pending") {
-          return new myPromise(function(suc, err) {
-            _self.resolveCB.push(
-              (function(resolveFn) {
-                return function() {
-                  var result = resolveFn(_self.value);
-                  if (result instanceof myPromise) {
-                    result.then(suc, err);
-                  } else {
-                    suc(result);
-                  }
-                };
-              })(resolveFn)
-            );
-          });
-        }
-      };
-      myPromise.resolve = function(data) {
-        return new this(function(resolve) {
-          resolve(data);
         });
-      };
-      myPromise.reject = function(data) {
-        return new this(function(resolve, reject) {
-          reject(data);
+      }
+      function reject(data) {
+        //当调用该reject函数时,则promise对象状态改变,属性值改变
+        setTimeout(function () {
+          if (self.status === "pending") {
+            self.status = "rejected";
+            self.value = data;
+            self.rejectCB.length &&
+              self.rejectCB.forEach(function (fn) {
+                fn();
+              });
+          }
         });
-      };
-      console.log(1);
-      var my_promise = new myPromise(function(suc, err) {
-          suc(2)
-      })
-      //console.log(my_promise)// {status: "resolved", value: 2}
-      my_promise.then(function(data){console.log(data),null})
-      console.log(3)
+      }
+      fn(resolve, reject);
+    }
+    //then方法的参数对应着两个状态的回调函数
+    myPromise.prototype.then = function (resolveFn, rejectFn) {
+      var _self = this;
+      if (this.status === "resolved") {
+        var result = resolveFn(this.value);
+        //判断resolve函数返回的结果是否是一个新的promise对象
+        if (result instanceof myPromise) {
+          //是的话就返回这个promise对像
+          return result;
+        } else {
+          //否则就重新包装一个状态为'resolved',值为resolve函数返回的结果,的新的promise对象
+          return myPromise.resolve(result);
+        }
+      }
+      if (this.status === "rejected") {
+        rejectFn(this.value);
+      }
+      if (this.status === "pending") {
+        return new myPromise(function (suc, err) {
+          _self.resolveCB.push(
+            (function (resolveFn) {
+              return function () {
+                var result = resolveFn(_self.value);
+                if (result instanceof myPromise) {
+                  result.then(suc, err);
+                } else {
+                  suc(result);
+                }
+              };
+            })(resolveFn)
+          );
+        });
+      }
+    };
+    myPromise.resolve = function (data) {
+      return new this(function (resolve) {
+        resolve(data);
+      });
+    };
+    myPromise.reject = function (data) {
+      return new this(function (resolve, reject) {
+        reject(data);
+      });
+    };
+    var my_promise = new myPromise(function (suc, err) {
+      suc(2)
+    })
+    //console.log(my_promise)// {status: "resolved", value: 2}
+    my_promise.then(function (data) { console.log(data + 1), null })
+    my_promise.then(function (data) { console.log(data + 2), null })
+    my_promise.then(function (data) { console.log(data + 3), null })
+    console.log(3)
+    console.log(my_promise)
       // let my_promise1 = myPromise.resolve(33)
 
-    //   var my_promise2 = myPromise.resolve(234);
-    //   var x = my_promise2.then(function() {
-    //     return 124;
-    //   });
-    //   x.then(
-    //     function(data) {
-    //       console.log(data);
-    //       return myPromise.reject("failed");
-    //     },
-    //     function() {
-    //       console.log(1245);
-    //     }
-    //   ).then(
-    //     function(data) {
-    //       console.log(data);
-    //     },
-    //     function() {
-    //       console.log("error");
-    //     }
-    //   );
+      var my_promise2 = myPromise.resolve(234);
+      var x = my_promise2.then(function() {
+        return 124;
+      });
+      console.log(x)
+      x.then(
+        function(data) {
+          console.log(data);
+          return myPromise.reject("failed");
+        },
+        function() {
+          console.log(1245);
+        }
+      ).then(
+        function(data) {
+          console.log(data);
+        },
+        function() {
+          console.log("error");
+        }
+      );
       //124
-      //failed
       //--------------------------------------------------------------------------
-    </script>
-  </body>
+  </script>
+</body>
+
 </html>

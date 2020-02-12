@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+        ul {
+            width: 600px;
+            height: 600px;
+            border: 1px solid #000;
+            margin: 100px auto;
+            display: flex;
+            flex-direction: row;
+
+            /* align-items:伸缩项在侧轴上的对齐方式,默认为flex-start */
+            /* 伸缩项整体与侧轴的起点对齐 */
+            /* 也就是所有的伸缩项的上外边距线与侧轴的起点所在的变现平齐 */
+            /* align-items: flex-start; */
+
+            /* 伸缩项整体与侧轴的终点对齐 */
+            /* 也就是所有的伸缩项的下外边距线与侧轴的终点所在的变现平齐 */
+            /* align-items: flex-end; */
+
+            /* 伸缩项整体的中点与侧轴的中点对齐 */
+            /* align-items: center; */
+
+            /* 伸缩项的基线在一条直线上 */
+            /* align-items: baseline; */
+
+            /* 侧轴的默认方式:拉升对齐strech,使得伸缩项的高度被拉升至与侧轴高度相等,这时伸缩项的高度包括了padding,border,margin*/
+            /* 注意点: 只有伸缩项的高度没有设置的情况下才会生效 */
+            align-items: stretch;
+
+        }
+        ul li {
+            width: 100px;
+            /* height: 100px; */
+            background: pink;
+            text-align: center;
+            line-height: 100px;
+            color: #fff;
+            font-size: 40px;
+        }
+        ul li:nth-child(2) {
+            background-color: tomato;
+            padding-top: 40px;
+            /* margin-top: 40px; */
+        }
+        ul li:nth-child(3) {
+            background-color: skyblue;
+            /* 单独给某个伸缩项设置在侧轴上的对齐方式,优先级大于align-items */
+            /* align-self: center; */
+        }
+    </style>
+</head>
+<body>
+    <ul>
+        <li>1x</li>
+        <li>2</li>
+        <li>3</li>
+    </ul>
+</body>
+</html>

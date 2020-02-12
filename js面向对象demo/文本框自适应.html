@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        textarea {
+            margin: 100px 200px;
+            padding: 10px;
+            height: 80px;
+            font-size: 14px;
+            resize: none;
+            outline: none;
+            border-radius: 4px;
+            border: 1px solid #323232;
+        }
+    </style>
+</head>
+<body>
+    <textarea>iugigigigiugigigigggilhhiugigigigggilhhiugigigigggilhhiugigigigggilhhggilhh</textarea>
+    <script>
+        //利用textarea标签可事项多行文本的编辑,但是当用户输入的内容超出标签容纳范围则出现滚动条,不利用户体验
+        //为此,利用js来动态控制textarea的高度,让其高度随内容自适应
+        //利用的DOM属性
+        //1.scrollHeight：表示元素的总高度,包括content-box高度(height属性值)+溢出部分的高度(有的话)+padding-top+padding-bottom+伪元素
+        function AutoSize(ele) {
+            if ( !(this instanceof AutoSize) ) {//可进行无new操作
+                return new AutoSize(ele);
+            }
+            if ( !ele ) {
+                throw new Error('element can not be empty!!!');
+            }
+            if ( typeof ele === 'string' ) {
+                ele = document.querySelector(ele) || document.getElementsByClassName(ele)[0];
+            }
+            this.ele = ele;//存储元素
+            this.extraHeight = 0;//初始化内容高度
+            const style = window.getComputedStyle(ele, null);
+            const {boxSizing, paddingTop, paddingBottom, borderTop, borderBottom} = style;
+            // const attrs = ['box-sizing', 'padding-top', 'padding-bottom', 'border-top', 'border-bottom'];
+            // const [boxSizing, paddingTop, paddingBottom, borderTop, borderBottom] = attrs.map(item => style.getPropertyValue(item));
+            if ( boxSizing === 'border-box' ) {
+                //IE盒模型下: 元素盒子大小 = width/height = border + padding + 内容区域大小
+                this.extraHeight = parseFloat(borderTop) + parseFloat(borderBottom);
+            } else {
+                //标准盒模型下元素盒子大小 = border + padding + width/height
+                this.extraHeight = -parseFloat(paddingTop) - parseFloat(paddingBottom);
+            }
+            this.ele.style.height = this.extraHeight + this.ele.scrollHeight + 'px';//初始化盒子高度
+            this.initEvent();//初始化
+        }
+        AutoSize.prototype = {
+            initEvent() {
+                this.actionFn = throttle(this.listenHandler, 10).bind(this);
+                addEvent(this.ele, 'input', this.actionFn);
+            },
+            listenHandler(e) {
+                var event = e || window.event;
+                if(!event) {return;}
+                var target = event.target || event.srcElement;
+                target.style.height = 0;
+                //每次清0,这样内容区域则为溢出部分
+                //这样scrollHeight重新计算高度时为动态的,盒子高度达到自适应增加或缩小
+                target.style.height = target.scrollHeight + this.extraHeight + 'px';
+            },
+            destroy() {
+                this.ele.removeEvent('input', this.actionFn, false);
+                this.actionFn = null;
+            }
+        }
+        AutoSize('textarea');
+        function debounce(hanler, delay) {
+            var timer = null;
+            return function() {
+                var arg = arguments;
+                var self = this;
+                clearTimeout(timer);
+                timer = setTimeout(function() {
+                    hanler.apply(self, arg);
+                }, delay);
+            }
+        }
+        function addEvent(elem, type, handler) {
+            if (elem.addEventListener) {
+                return elem.addEventListener(type, handler, false);
+            } else if (elem.attatchEvent) {
+                return elem.attatchEvent('on' + type, function() {
+                    handler.call(elem);
+                });
+            } else {
+                return elem['on' + type] = handler;
+            }
+        }
+        function throttle(handler, delay) {
+			//handler节流的目标函数; delay延迟时间
+			var lastTime = 0;
+			return function() {
+				//其实当用户点击操作时,会传入一个事件对象给这个函数
+				//也就是arguments[0] = event
+				//这个函数里的this指的是调用该函数的那个DOM节点对象
+                var nowTime = new Date().getTime();
+				if(nowTime - lastTime >= delay) {
+					handler.apply(this, arguments);
+					lastTime = nowTime;
+				}
+			}
+        }
+        function removeEvent(ele, type, handler) {
+            if(ele.removeEventListener) {
+                return ele.removeEventListener(type, handler, false);
+            }else if (ele.detatchEvent) {
+                ele.detatchEvent('on' + type, handler);
+            }else {
+                return ele['on' + type] = null;
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+        ul {
+            width: 300px;
+            height: 400px;
+            border: 1px solid #000;
+            margin: 100px auto;
+            display: flex;
+        }
+        ul li {
+            height: 100px;
+            text-align: center;
+            line-height: 100px;
+            color: #fff;
+            font-size: 40px;
+            /* 1.无论是w3c标准盒模型还是IE盒模型规则中,设置在伸缩项中的那些扩充(flex-grow),缩小(flex-shrink),拉伸(flex-basis)属性,都是作用在元素盒子的content-box,也就是内容区 */
+        }
+        ul li:nth-child(1) {
+            flex-grow: 1;
+            /* 300-74 = 226 */
+            box-sizing: border-box;
+            border: 2px solid #000;
+            padding: 5px;
+            background-color: pink;
+        }
+        ul li:nth-child(2) {
+            background-color: tomato;
+        }
+        ul li:nth-child(3) {
+            background-color: skyblue;
+        }
+    </style>
+</head>
+<body>
+    <ul>
+        <li>1</li>
+        <li>2</li>
+        <li>3</li>
+    </ul>
+</body>
+</html>

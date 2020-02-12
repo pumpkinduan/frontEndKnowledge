@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        .box {
+            width: 800px;
+            height: 100px;
+            border: 1px solid #000;
+            margin: 50px auto;
+            box-sizing: border-box;
+            background: linear-gradient(to right, red 100px,blue 400px, green 300px, pink);
+            /* 线性渐变至少需要传递两个颜色 */
+            /* 默认情况下；系统会自己计算纯色和渐变色的范围 */
+            /* 
+                注意点：
+                    1.只有第一个颜色后面跟着的数值表示为纯色的范围,其余往后的颜色后设置的数值为渐变色的终止位置
+                        0-100为纯红色,100-400为红色到蓝色的渐变色,400-300按理为绿色到蓝色的渐变
+                         ,不过可能由于css渲染原理这种往回涂的色被覆盖或被忽略了
+                         ,然后继续从绿色到粉色渐变,由于粉色没有设置渐变终止位置,则由系统来计算,最后呈现出我们看到的样子
+                    2.渐变色其实就是一张被涂上色的背景图片,因此可以给其设置定位属性与平铺方式
+             */
+            /* 
+                但是,我们也可以自己定义纯色和渐变色的范围。
+                格式为: 颜色 数值(px) ==> red 100px
+             */
+        }
+        .one {
+            width: 100px;
+            height: 100px;
+            border: 5px solid #000;
+            box-sizing: border-box;
+            float: left;
+        }
+        .two {
+            width: 300px;
+            height: 100px;
+            border: 2px solid #fff;
+            box-sizing: border-box;
+            float: left;
+        }
+        .content {
+            width: 300px;
+            height: 200px;
+            margin: 0 auto;
+            box-sizing: border-box;
+            border: 2px solid #323232;
+            background: linear-gradient(0deg, red, blue);
+        }
+        .bb {
+            width: 100px;
+            height: 50px;
+            background: skyblue;
+            transform: rotate(0deg);
+        }
+    </style>
+</head>
+<body>
+    <div class="box">
+        <div class="one"></div>
+        <div class="two"></div>
+    </div>
+    <div class="content">
+
+    </div>
+    <div class="bb"></div>
+</body>
+</html>

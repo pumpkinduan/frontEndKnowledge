@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+		}
+		body {
+			background-color: #09414beb;
+		}
+		.all {
+			width: 400px;
+			height: 400px;
+			box-sizing: border-box;
+			box-shadow: 0 0 5px rgba(255,255,255,0.55);
+			margin: 200px auto;
+			overflow: hidden;
+			position: relative;
+		}
+		.left {
+			width: 200px;
+			height: 400px;
+			border-top-left-radius: 200px;
+			border-bottom-left-radius: 200px;
+			background-color: #f0f0f0;
+			float: left;
+		}
+		.right {
+			width: 200px;
+			height: 400px;
+			border-top-right-radius: 200px;
+			border-bottom-right-radius: 200px;
+			background-color: #000;
+			float: right;
+		}
+		.top {
+			width: 200px;
+			height: 200px;
+			border: 70px solid #f0f0f0;
+			box-sizing: border-box;
+			border-radius: 50%;
+			background-color: #000;
+			top: 0;
+			left: 100px;
+			position: absolute;
+		}
+		.bottom {
+			width: 200px;
+			height: 200px;
+			border: 70px solid #000;
+			box-sizing: border-box;
+			border-radius: 50%;
+			background-color: #f0f0f0;
+			top: 200px;
+			left: 100px;
+			position: absolute;
+		}
+	</style>
+</head>
+<body>
+	<div class="all">
+		<!-- 左边部分 -->
+		<div class="left"></div>
+		<!-- 右边部分 -->
+		<div class="right"></div>
+		<!-- 上边部分 -->
+		<div class="top"></div>
+		<!-- 下边部分 -->
+		<div class="bottom"></div>
+	</div>
+</body>
+</html>

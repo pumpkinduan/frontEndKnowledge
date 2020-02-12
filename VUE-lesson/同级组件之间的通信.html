@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<div id="app">
+		<my-component1 ></my-component1>
+		<my-component2></my-component2>
+	</div>
+	<script src="vue.js"></script>
+	<script>
+		/*
+		1. 空Vue实例
+		2. 实例作用域之间的切换
+		3. 实例的mounted属性和$on函数
+
+		----------------------------------------------------------
+
+		1.空Vue实例
+		----------
+		- 空Vue实例,也叫虚拟实例,大多做为中间过度实例使用
+		- 同级组件之间无法直接进行数据通信,但可通过第三方实现
+		- 这个第三方,可以通过创建一个空Vue实例代替
+
+		----------------------------------------------------------
+
+		2.实例作用域之间的切换
+		------------------
+		- 因为涉及到中间Vue实例,所以切换数据作用域很有必要
+		- 在通信过程中,要随时关注变量: this 的当前指向
+
+		----------------------------------------------------------
+
+		3.实例的mounted属性和$on函数
+		-------------------------
+		- mounted: 实例挂载点渲染完成后自动触发
+		- $on(事件名称, 事件回调函数)
+		- 用来监听实例上自定义事件,该事件必须由$emit触发
+		*/
+		let middleVm = new Vue();
+		var vm = new Vue({
+			el: '#app',
+			data: {
+
+			},
+			components: {
+				'my-component1': {
+					data() {
+						return {
+							//验证码数据
+							data: ['ads1', '112f', '56gh', '58sj','sxg5']
+						}
+					},
+					template: '<button @click="change">换一张</button>',
+					methods: {
+						change() {
+							// console.log(this === vm)
+							//这里的this指的不是vue实例,而是子组件
+							middleVm.$emit('getverify', this.data)
+						}
+					}
+				},
+				'my-component2': {
+					data() {
+						return {
+							style: {
+								background: '#eee',
+								width: '80px',
+								fontSize: '30px',
+								border: '1px solid #111',
+								fontStyle: 'italic'
+							},
+							code: '235p'
+						}
+					},
+					template: '<p :style="style">{{code}}</p>',
+					mounted() {
+						let self = this;
+						middleVm.$on('getverify', (data) => {//给middleVm自定义事件
+							let num = Math.floor(Math.random() * data.length);
+							// console.log(num)
+							self.code = data[num];
+						})
+					}
+				}
+			}
+		})
+	</script>
+</body>
+</html>

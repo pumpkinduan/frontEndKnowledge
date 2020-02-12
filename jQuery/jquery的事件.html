@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        div{
+            width:100px;
+            height:100px;
+            background-color:red;
+        }
+        div p {
+            width: 50px;
+            height: 50px;
+            background-color:pink;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        我是div
+        <p>我是p</p>
+    </div>
+    <button>点击</button>
+    <script src="jquery-3.3.1.js"></script>
+    <script>
+    //jq两种绑定事件方式
+    //1.eventName(fn),编码效率高,部分js事件可添加
+    //2.on(eventName,fn),编码效率低,只要是js中有的事件都可添加,可以在被选元素及子元素上添加一个或多个事件处理程序
+    /*注意点:两种方式可同时绑定多个同一类型(不被覆盖)或不同类型事件*/
+
+    /* $(function (){
+       $('button').on('click mouseleave',function (){
+            console.log(123);
+        })
+    })
+    */
+   
+    /* $(function (){
+        $('div').on('mouseenter mouseleave',function (){
+            console.log('gggg');
+        })
+    })
+*/
+
+
+    /*$(function (){
+        $('button').click(function (){
+            alert('hhhh')
+        })
+    })
+
+    $(function (){
+        $('button').click(function (){
+            alert('hello dzz')
+        })
+    })
+
+    $(function (){
+        $('button').mouseleave(function (){
+            alert('hello mouseleave')
+        })
+    })*/
+
+
+
+    // .on(type,selector,data,handler),该方法实际可以传四个参数，
+    // type:事件的类型--->click,mousedown...
+    // selector:一个字符串选择器,用于过滤出被选中的元素中能触发事件的后代元素
+    //data:当一个事件被触发时，要传递给事件处理函数的event.data,任何类型都可
+   /* $(function (){
+        $('div').on('click','p',[1,2,3],function (event){
+            console.log(event.data);//把[1,2,3]传递给了事件处理函数
+            console.log('点到了div里的p');//只有点到div里的p元素,才可触发绑定给div的事件
+        })
+    })*/
+
+    // 注意了:.on(obj,selector,data),
+    // obj是一个对象，键是由一个或多个由空格分隔的事件类型及可选的名字空间，值是这些事件类型所对应的事件处理函数
+    //data会传入给所有绑定的事件处理函数
+    /*$(function (){
+        $('div').on(
+            {'click':function (e){console.log('点到了div里的p');console.log(e.data);},
+             'mouseleave':function (e){console.log('移走了');console.log(e.data);}
+            },
+            'p',
+            [1,2,3]
+        )
+    })*/
+
+
+
+    // jq中取消绑定事件的方法----> off()
+    // 不传参，移除所有绑定的事件
+    // 传多个参数(事件类型,string类型的)，会移除指定类型的事件
+    // 还有一种更精确的取消绑定的事件,传事件类型和该事件类型对应的事件处理函数的引用
+    $(function (){
+        function a(){
+            console.log('aa');
+        }
+        $('button').click(a);
+        $('button').off('click',a);
+    })
+
+
+    // 什么是事件委托:
+    // 帮忙请别人做事,然后将做完的结果反馈给我们
+
+    // mouseleave()不支持冒泡
+
+
+    </script>
+</body>
+</html>

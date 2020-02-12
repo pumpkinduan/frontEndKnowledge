@@ -1,0 +1,18 @@
+/* 基本类样式,极少成多,提高开发效率 */
+.fr {
+    float: right;
+}
+.fl {
+    float: left;
+}
+.clearfix:before,
+.clearfix:after {
+    clear: both;
+    font-size: 0;
+    content: '';
+    line-height: 0;
+    display: block;
+}
+.text-center {
+    text-align: center;
+}

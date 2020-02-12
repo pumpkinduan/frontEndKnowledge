@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <my-component v-bind.sync="obj"></my-component>
+        <!-- <my-component v-bind:name.sync="name" v-bind:age.sync="age"></my-component> -->
+        <!-- <my-component
+         v-bind:name="obj.name"
+         @update:name="name => obj.name=name"
+         v-bind:age="obj.age"
+          @update:age="age => obj.age=age"
+         
+         ></my-component> -->
+    </div>
+    <script src="./vue.js"></script>
+    <script>
+        let vm = new Vue({
+            el: '#app',
+            data: {
+                obj: {
+                    name: 'lebron',
+                    age: 34
+                }
+
+            },
+            components: {
+                'my-component': {
+                    template: `<div> 
+                    <span> {{name}} {{age}} </span>
+                    <button @click="$emit('update:name', 'pumpkin')">change name</button>
+                    <button @click="$emit('update:age', 19)"> change age </button>
+                </div>`,
+                    props: ['age', 'name']
+                }
+
+            }
+        })
+    </script>
+</body>
+
+</html>

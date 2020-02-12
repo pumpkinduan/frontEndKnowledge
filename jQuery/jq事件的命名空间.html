@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        .father{
+            width: 200px;
+            height: 200px;
+            background-color:red;
+        }
+        .son{
+            width: 100px;
+            height: 100px;
+            background-color:pink;
+        }
+    </style>
+</head>
+<body>
+    <div class="father">  
+        father
+        <div class="son">son</div>
+    </div>
+    <script src="jquery-3.3.1.js"></script>
+    <script>
+        console.log(EventTarget.prototype.__proto__);
+        //命名空间:
+        $(function (){
+            $('.father').on('click.father.son',function (){
+                console.log('father');
+            })
+            $('.son').on('click',function (){
+                console.log('son');
+            })
+            $('.son').trigger('click.son');//触发父元素带有相同命名空间的事件
+            // $('.son').trigger('click');//触发子元素的click事件和父元素的click事件
+        })
+    </script>
+</body>
+</html>

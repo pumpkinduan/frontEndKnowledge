@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<div id="app">
+		<my-component @get-data="getData"></my-component>
+		<ul>
+			<li v-for="item in userInfo">{{item}}</li>
+		</ul>
+	</div>
+	<script src="vue.js"></script>
+	<script>
+		/*
+			子组件传递数据的方式
+			------------------
+			- 子组件是通过自定义**事件方法**向父组件传递数据
+			- 子组件中定义: methods: {...} 属性
+			- 事件方法中,通过this.$emit()方法,将事件与数据发送出来
+		*/
+		const vm = new Vue({
+			el: '#app',
+			data: {
+				//创建接受子组件传来的数据
+				userInfo: []
+			},
+			//注册子组件
+			components: {
+				'my-component': {
+					data() {
+						return {
+							msg: '点我发送信息给父组件',
+							name: 'pumpkin',
+							age: 21
+						}
+					},
+					template: `<button @click="send">{{msg}}</button>`,
+					methods: {
+						send() {
+							console.log(this)
+							//子组件通过 $emit 触发父组件的方法
+							//this.$emit(eventName,args)
+							//eventName:子组件自定义的事件名称,args:传递的参数,一般是子组件向父组件传递的数据
+							this.$emit('get-data',[this.name, this.age])
+						}
+					}
+				}
+			},
+			methods: {
+				getData(data) {//data参数用来接受子组件传递的数据
+					data.forEach(function(elem) {
+						this.userInfo.push(elem)
+					}, this)
+				}
+			}
+		})
+	</script>
+</body>
+</html>

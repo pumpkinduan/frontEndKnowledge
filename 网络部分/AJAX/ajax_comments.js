@@ -1,6 +1,6 @@
 function ajax(option) {
 	if (!option) { return; }
-	//由于url不能是中文的，所以在传输数据有时需要传输中文的，而这数据会拼接到url去，这样就会报错，所以需要进行转码
+	//由于url不能是中文的，在传输数据有时需要传输中文的，而这数据会拼接到url去，这样就会报错，所以需要进行转码
 	// encodeURIComponent(string),对字符串进行uri组件编码，不会对ASCII码字母数字 - _ . ! ~ * ' ( ) 进行编码,但会对中文进行编码
 	//如:张山---》 %E5%BC%A0%E4%B8%89%E4%B8%B0,转为这种格式的，然后浏览器会把它渲染成中文格式的
 	function toString(data) {
@@ -19,8 +19,8 @@ function ajax(option) {
 	}
 	//    option:   为一个对象，把type, url, data, success, error ,time封装在这个对象里，可实现不按顺序便可实现Ajax功能;
 	//a.  data:    传递给后台的参数  格式:{name:"pumpkin",age:18};
-	//b.  url:     请求的服务器地址   格式: http://127.0.0.1:8888/;
-	//c.  type:    请求的类型  如get或post;
+	//b.  url:     请求的服务器地址   格式: 'http://127.0.0.1:8888';
+	//c.  type:    请求的类型  get或post;
 	//d.  success: 服务器成功返回数据时执行的回调, 接收一个参数: 返回的数据;
 	//e.  error:   请求数据失败时执行的回调,  接收一个参数: 错误对象;
 	//f.  time:    限定请求的时间,超时将终止请求;
@@ -71,13 +71,13 @@ function ajax(option) {
 		*/
 		//3.初始化请求
 		if (option.type.toUpperCase() === 'GET') {
-			xmlhttp.open("GET", option.url + "?" + dataStr, true);
+			xmlhttp.open("GET", option.url + "?" + option.data, true);
 			//4.发送请求
 			xmlhttp.send();
 		} else if (option.type.toUpperCase() === 'POST') {
 			xmlhttp.open("POST", option.url, true);
 			xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-			xmlhttp.send(dataStr);
+			xmlhttp.send(option.data);
 		}
 		//5.监听状态的变化
 		xmlhttp.onreadystatechange = function () {

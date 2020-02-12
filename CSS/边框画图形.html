@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+        .wrap1 {
+            position: relative;
+        }
+        .wrap1 .box1 {
+            width: 200px;
+            height: 200px;
+            border: 1px solid #b73434;
+            border-radius: 0 100%;
+            position: absolute;
+        }
+        .wrap1 .box2 {
+            width: 200px;
+            height: 200px;
+            border: 1px solid #1d98ad;
+            border-radius: 100% 0;
+            position: absolute;
+        }
+
+
+        .wrap2 {
+            position: relative;
+            top: 200px;
+        }
+        .wrap2 .line1 {
+            width: 200px;
+            height: 200px;
+            border: 1px solid #1d98ad;
+            border-radius: 100% 100% 0 100%;
+            position: absolute;
+        }
+        .wrap2 .line2 {
+            width: 200px;
+            height: 200px;
+            border: 1px solid #f13708;
+            border-radius: 100% 100% 100% 0;
+            position: absolute;
+            top: 0;
+            left: 200px;
+        }
+        .wrap2 .line3 {
+            width: 200px;
+            height: 200px;
+            border: 1px solid #ceaf27;
+            border-radius: 100% 0 100% 100%;
+            position: absolute;
+            top: 200px;
+            left: 0;
+        }
+        .wrap2 .line4 {
+            width: 200px;
+            height: 200px;
+            border: 1px solid #b820cc;
+            border-radius: 0 100% 100% 100%;
+            position: absolute;
+            top: 200px;
+            left: 200px;
+        }
+
+        .wrap3 li{
+            width: 98px;
+            height: 98px;
+            position: absolute;
+            border: 1px solid transparent;
+        }
+        .wrap3 {
+            position: relative;
+            top: 200px;
+            left: 600px;
+            width: 200px;
+            height: 200px;
+            border: 1px solid #000;
+            overflow: hidden;
+            border-radius: 50%;
+        }
+        .wrap3 .flower1 {
+            border-radius: 0 0 100% 0;
+            border-bottom-color: tomato;
+            border-right-color: tomato;
+            top: 0;
+            left: 0;
+        }
+        .wrap3 .flower2 {
+            border-radius: 0 0 0 100%;
+            border-bottom-color: blue;
+            border-left-color: purple;
+            top: 0;
+            right: 0;
+        }
+        .wrap3 .flower3 {
+            border-radius: 0 100% 0 0;
+            border-top-color: purple;
+            border-right-color: purple;
+            bottom: 0;
+            left: -0;
+        }
+        .wrap3 .flower4 {
+            border-top-color: red;
+            border-left-color: purple;
+            border-radius: 100% 0 0 0;
+            bottom: 0;
+            right: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="wrap1">
+        <div class="box1"></div>
+        <div class="box2"></div>
+    </div>
+
+    <ul class="wrap2">
+        <li class="line1"></li>
+        <li class="line2"></li>
+        <li class="line3"></li>
+        <li class="line4"></li>
+    </ul>
+
+
+    <ul class="wrap3">
+        <li class="flower1"></li>
+        <li class="flower2"></li>
+        <li class="flower3"></li>
+        <li class="flower4"></li>
+    </ul>
+</body>
+</html>

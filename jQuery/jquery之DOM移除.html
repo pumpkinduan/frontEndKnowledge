@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <button>移除li</button>
+    <button>添加li</button>
+    <button>添加div</button>
+    <ul>
+        <li>0
+        <i><span></span></i>
+        </li>
+        <li>1</li>
+        <li>2</li>
+        <li>3</li>
+        <li>4</li>
+    </ul>
+    <div style="width:100px;height:100px;background-color:red;">
+        <p>
+            <span>我是span</span>
+        </p>
+    </div>
+    <div style="width:100px;height:100px;background-color:green;"></div>
+    <script src="jquery-3.3.1.js"></script>
+    <script>
+        //detach():从DOM中去掉所有匹配的元素及其子元素。
+        //detach(selector):表示从匹配的元素集合中选出需要删除的元素及其子元素
+        //注意:该方法会把删除的元素(包括后代元素)作为函数的返回结果
+        $(function (){
+            $('button:contains(移除li)').on('click',function (){
+                // $('li').detach('li:eq(0)');//删除第一个li元素以及子元素i
+                // $('p').detach();//p元素里的span元素也被删除了
+                lists = $('li').detach();//返回删除的所有li
+            });
+            $('button:contains(添加li)').click(function (){
+                $('ul').append(lists);
+            });
+            $('div:eq(0)').click(function (){
+                item1 = $(this).remove();
+                //删除后再次添加该元素,则该元素身上的点击事件失效
+            });
+            $('div:eq(1)').click(function (){
+                item2 = $(this).detach();
+                // 删除后再次添加该元素,该元素身上的点击事件还保留
+            });
+            $('button:contains(添加div)').click(function (){
+                $('ul').after(item2).after(item1);
+            })    
+        })
+        
+         //remove()基本和detach()方法一致，不同点在于用remove()删除的元素，该元素身上绑定的事件也会被删除了,而detach还保留原来事件
+        
+        
+        
+        
+        
+        //empty(): 从DOM中移除集合中匹配元素的所有子节点。
+       
+    </script>
+</body>
+</html>

@@ -38,7 +38,7 @@ function getAllStudent(req, res) {
 
 //处理post请求
 function login(req, res) {
-	req.on('data', function(data) {//post请求发来的参数会保存到request的数据域中,故用data事件监听
+	req.on('data', function(data) {//post请求发来数据会保存到request的数据域中,故用data事件监听
 		data = data.toString();
 		var number = data.split('&')[0].split('=')[1];
 		var password = data.split('&')[1].split('=')[1];

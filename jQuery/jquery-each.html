@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <script src="jquery-3.3.1.js"></script>
+    <script>
+    // jquery的each静态方法遍历数组/伪数组,并且默认返回原数组/对象,即使回调函数有返回值
+    // $.each(arr/obj,fn(index,value))  第一个参数为需要遍历的数组或伪数组,第二个参数为回调函数
+    var arr = [1,2,4,5,6];
+    var obj = {0 : 1,
+               1 : 2,
+               2 : 3,
+               3 : 4,
+               length : 4  
+              };
+    var res = $.each(obj,function (index,ele){
+       // console.log(ele); 
+       // return index + ele;
+    })
+
+    // jquery的map静态方法遍历数组/伪数组,并且默认返回空数组,
+    // 若是回调函数有返回值,则把每次返回的结果作为一个值放到一个新的数组里,最后遍历完原数组后返回该新的数组
+    var res2 = $.map(obj,function (ele,index){
+        console.log(ele);
+        // return ele + 'index';
+    });
+    /* var r = arr.map(function (ele,index){
+        console.log(ele);
+        return  false;
+    })*/
+    </script>
+</body>
+</html>

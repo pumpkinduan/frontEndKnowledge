@@ -1,0 +1,150 @@
+html,body,ul,li,h1,p {
+    margin: 0;
+    padding: 0;
+}
+li {
+    list-style: none;
+}
+a {
+    text-decoration: none;
+}
+/* 头部开始 */
+header {
+    width: 100%;
+    position:  absolute;
+    top: 0;
+    left: 0;
+    z-index:  1;
+}
+header .header-top {
+    background-color: #333;
+    padding: 0 48px;
+    line-height: 40px;
+    display: flex;
+    justify-content: space-between;
+}
+header .header-top ul li {
+    float: left;
+    font-size: 14px;
+    font-weight: 400;
+    margin-right: 42px;
+}
+header .header-top ul li a {
+    color: #ccc;
+}
+header .header-top ul li a:hover {
+    color: #666;
+}
+header .header-top ul.header-nav-right li.sep {
+    color: #ccc;
+}
+header .header-top ul.header-nav-right li:last-child {
+    margin-right: 0;
+}
+
+header .header-bottom {
+    box-sizing: border-box;
+    padding: 0 48px;
+    max-width: 1200px;
+    box-sizing: border-box;
+    height: 60px;
+    line-height: 60px;
+    font-size: 16px;
+    display: flex;
+    margin: 0 auto;
+    justify-content: space-between;
+}
+header .header-bottom a {
+    color: #000;
+    transition: color 0.5s;
+}
+header .header-bottom a:hover {
+    color: #4d91b3;
+}
+header .header-bottom .logo a {
+    font-size: 60px;
+}
+header .header-bottom ul li {
+    float: left;
+    margin-right: 28px;
+}
+header .header-bottom .search a {
+    font-size: 30px;
+}
+/* 头部结束 */
+
+/* 中间部分开始 */
+.main {
+   position: relative;
+}
+.main .main-top .carousel ul li img {
+    width: 100%;
+    vertical-align: top;
+}
+.main .main-top .carousel ol {
+    position: absolute;
+    left: 50%;
+    bottom: 40px;
+    transform: translateX(-50%);
+}
+.main .main-top .carousel ol li {
+    width: 40px;
+    height: 4px;
+    background-color: rgba(255,255,255,.5);
+    float: left;
+    margin-right: 4px;
+}
+.main .main-top .carousel .intro {
+    position: absolute;
+    top: 50%;
+    left: 15%;
+    transform: translateY(-50%);
+    width: 400px;
+    text-align: center;
+}
+.main .main-top .carousel .intro i {
+    display: inline-block;
+    width: 304px;
+    height: 45px;
+}
+.main .main-top .carousel .intro i:first-child {
+    background: url(../images/vivo-banner-title1-big.png) 0 0 no-repeat;
+    width: 400px;
+    height: 60px;
+}
+.main .main-top .carousel .intro i:nth-child(2) {
+    background: url(../images/vivo-banner-title2.png) 0 0 no-repeat;
+}
+.main .main-top .carousel .intro i:nth-child(3) {
+    background: url(../images/vivo-banner-title3.png) 0 0 no-repeat;
+}
+.main .main-top .carousel .intro p {
+    margin-top: 60px;
+    font-size: 14px;
+}
+.main .main-top .carousel .intro p a {
+    color: #ccc;
+    display: inline-block;
+    width: 60px;
+    position: relative;
+    transition: all .5s;
+}
+.main .main-top .carousel .intro p a span {
+    width: 16px;
+    height: 2px;
+    background-color: #ccc;
+    display: inline-block;
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    transition: all .5s;
+}
+.main .main-top .carousel .intro p a:hover {
+    color: #fff;
+}
+.main .main-top .carousel .intro p a:hover span {
+    width: 60px;
+    background-color:#fff;
+}
+/* 中间部分结束 */

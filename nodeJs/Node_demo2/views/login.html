@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 	<meta charset="UTF-8">
 	<title>Document</title>
@@ -8,17 +9,21 @@
 			margin: 0;
 			padding: 0;
 		}
-		.login, .register {
+
+		.login,
+		.register {
 			margin-bottom: 20px;
 			margin-top: 15px;
 			font-size: 14px;
 		}
-		input{
+
+		input {
 			width: 200px;
 			outline: none;
 			line-height: 30px;
 			border: 1px solid #eee;
 		}
+
 		button {
 			width: 50px;
 			height: 30px;
@@ -30,7 +35,8 @@
 		}
 	</style>
 </head>
-<body>	
+
+<body>
 	<!-- <div class="login">
 		<label for="student_number">学号:</label>
 		<input type="text" placeholder="请输入学号" id="student_number">
@@ -46,7 +52,7 @@
 		<input type="password" id="login_pwd" name="stu_pwd" \>
 		<button>登录</button>
 	</form>
-		
+
 	<!-- <div class="register">
 		<label for="create_num">创建学号:</label>
 		<input type="text" placeholder="请输入学号" id="create_num">
@@ -60,7 +66,7 @@
 		var login_btn = login.getElementsByTagName('button')[0];
 		var number = document.getElementById('student_number');
 		var pwd = document.getElementById('login_pwd')
-		login_btn.onclick = function() {
+		login_btn.onclick = function () {
 			var stu_number = number.value;
 			var stu_pwd = pwd.value;
 			// ajax({
@@ -85,4 +91,5 @@
 		}
 	</script>
 </body>
+
 </html>

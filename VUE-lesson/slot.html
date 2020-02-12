@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<div id="app">
+		<!-- <cmp1>
+			<span slot="before">before-slot</span>
+			<span slot="after">after-slot</span>
+		</cmp1> -->
+		<cmp2 :list="list">
+			<template slot-scope="list">
+				<li>{{list}}</li>
+			</template>
+		</cmp2>
+	</div>
+	<script src="vue.js"></script>
+	<script>
+		/*
+		1.插槽是什么?
+		-----------
+		- 插槽是组件模板中预留的扩展接口
+		- 插槽可以将组件内的内容进行分组有效管理
+		- 插槽使用<slot>标签在模板属性中定义
+
+		---------------------------------------------
+
+		2.匿名插槽
+		---------
+		- 不需要名称的插槽
+		- 通常只应用在单插槽的场景中
+
+		--------------------------------------------
+
+		3.命名插槽
+		---------
+		- 用来区分模板中的多个插槽
+		- 建议总是给插槽起一个有意义的名称
+
+		4.作用域插槽:就是绑定了一套数据的插槽
+		-使用:在html中需要在挂载点下写 template模板标签
+		-<template slot-scope="data"></template>
+		-slot-scope的属性值自己定,该值为一个对象,接受了子组件中通过slot绑定的数据(key-value形式)
+		*/
+		let vm = new Vue({
+			el: '#app',
+			data: {
+				list: [1,2,3,4,5]
+			},
+			components: {
+				'cmp1': {//Component template should contain exactly one root element
+					template: `<div>
+									<slot name="before"></slot>
+									<p>我是p标签</p>
+									<ul>
+										<slot name="after"></slot>
+									</ul>
+								</div>
+							  `
+				},
+				'cmp2': {
+					props: ['list'],
+					data() {
+						return {
+							arr: [6,7,8,9]
+						}
+					},
+					template: `<div>
+									<ul>
+										<slot v-for="(item,index) in list" :item="item" :index="index" :data="list" :arr="arr"></slot>
+									</ul>
+							   </div>`
+							   //slot绑定的属性与slot-scope属性相关联
+				}
+			}
+		})
+	</script>
+</body>
+</html>

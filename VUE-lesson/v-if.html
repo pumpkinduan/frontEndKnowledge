@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<!-- v-if是会把DOM节点给移出掉 -->
+	<!-- v-show是会把DOM节点的display属性变为none -->
+	<div id="app">
+	<!-- 	<p v-if = "item > 10">{{item}} 个现货</p>
+		<p v-else = "item < 10">库存紧张</p> -->
+		<template v-if = "item < 20">
+			<p>注意哇</p>
+			<p>库存紧张</p>
+		</template><!--该标签不会渲染进DOM  -->
+		<p v-show="bool">red</p>
+		<p v-show="!bool">blue</p>
+		<button v-on:click="bool = !bool">改变颜色</button>
+	</div>
+	<script src="./vue.js"></script>
+	<script>
+		new Vue({
+			el: '#app',
+			data: {
+				item: 6,
+				bool: true
+			}
+		})
+	</script>
+</body>
+</html>

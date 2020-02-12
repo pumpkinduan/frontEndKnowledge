@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <input v-model="password" type="password">
+        <!-- v-model指令实现双向数据绑定,当input框中的值发生改变时,对应于vue中实例的属性值也会发生相应的改变 -->
+        <!-- 如vue实例的属性password会相应改变 -->
+        <p v-if="password.length > 8">你的字符大于8个</p>
+        <p v-else-if="password.length <= 8 && password.length !== 0">你有{{password.length}}个字符</p>
+        <p v-else>你没有字符</p>
+        <ol>
+        	<li v-for="obj in subs">
+        		{{obj.name}}
+        		<ul>
+        			<li v-for="value in obj.sub">{{value}}</li>
+        		</ul>
+        	</li>
+        </ol>
+    </div>
+    <script src="vue.js"></script>
+    <script>
+    var app = new Vue({
+        el: '#app',
+        data: {
+            password: '12345678',
+            subs: [{
+                name: 'javascript',
+                sub: ['vue', 'react', 'angular']
+            }, {
+            	name: 'database',
+            	sub: ['mysql','mongodb','sql']
+            },{
+            	name: 'system',
+            	sub: ['macos','windows','linux']
+            }]
+        }
+    })
+    console.log(app.password)
+    </script>
+</body>
+
+</html>

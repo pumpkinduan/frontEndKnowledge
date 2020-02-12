@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<div id="app">
+		<h3>留言板</h3>
+		<input v-model="text" @keyup.enter="add" type="text" placeholder="请输入内容">
+		<button @click="add">提交</button>
+		<ul>
+			<li v-for="(msg,index) in lists">
+				{{msg}}
+				<button @click="deleteMsg(index)">删除</button>
+				<button @click="editMsg(index, msg)">编辑</button>
+			</li>
+		</ul>
+		<button @click="empty">清空</button>
+	</div>
+	<script src="vue.js"></script>
+	<script>
+		let vm = new Vue({
+			el: '#app',
+			data: {
+				text: '',
+				lists: []
+			},
+			methods: {
+				add() {
+					//尾部添加
+					// this.lists.push(this.text);
+					// //清空留言版
+					// this.text = '';
+
+					//头部添加
+					this.lists.unshift(this.text);
+					this.text = '';
+				},
+				empty() {
+					//清空所有留言数据
+					this.lists.splice(0)
+				},
+				deleteMsg(index) {
+					this.lists.splice(index, 1);
+				},
+				editMsg(index, msg) {
+					let newMsg = prompt('请输入内容', msg);
+					this.lists.splice(index, 1, newMsg);
+				}
+			}
+		})
+	</script>
+</body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<div id="app">
+		<textarea v-model="text" @keydown.delete="countAdd" @input="count()"></textarea>
+		<p>还可以输入:{{maxNum}}个字符</p>
+	</div>
+	<script src="vue.js"></script>
+	<script>
+		/*
+		*用到的知识点**
+		- 事件属性
+		- 监听属性
+		- 双向数据绑定
+
+		我们的任务
+		--------
+		- 实时监控用户输入的内容,一旦出现敏感词,立即提示并终止
+		*/
+		new Vue({
+			el: '#app',
+			data: {
+				//敏感词
+				senstive: ['sex', '六合彩', '一夜情', '赌博', '吸毒'],
+				//与用户输入的内容进行数据双向绑定
+				text: '',
+				//最大输入的字符长度
+				maxNum: 100,
+				flag: true//使得input事件与keydown事件同一刻只触发其中一个	
+			},
+			methods: {
+				count() {
+					if( this.maxNum > 0 && this.flag) {
+						return this.maxNum --;
+					}
+				},
+				countAdd() {
+					if( this.maxNum < 100 && this.text.length > 0) {
+						this.flag = false;
+						return this.maxNum ++;
+					}
+				}
+			},
+			watch: {
+				text(value) {
+					this.senstive.forEach( (word) => {
+						if( value.indexOf(word) !== -1) {
+							alert('包含非法信息');
+							location.reload();//重新加载当前页面
+						}
+					} )
+				}
+			}
+		})
+	</script>
+</body>
+</html>

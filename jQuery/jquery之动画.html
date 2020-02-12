@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <button>go</button>
+    <button>stop</button>
+    <button>back</button>
+    <div style="width:100px;height:100px;background-color:pink;position:absolute;">div</div>
+    <div style="width:100px;height:100px;background-color:red;position:absolute;left:400px;">div</div>
+    <script src="jquery-3.3.1.js"></script>
+    <script>
+    //animate({},time,speed,fn)
+    //{}css属性
+    //time动画运动的时间
+    //speed动画运动的速率(默认swing，慢快慢)
+    //fn回调函数，运动结束后执行的函数
+    
+    // stop(a,b)
+    // a:表示是否取消以列队动画(链式调用动画函数时可看效果)，默认值false
+    // b:表示是否当前动画立即完成，默认值false
+    
+
+    $(function (){
+        $('button:contains(go)').click(function (){
+            $('div').eq(0).animate({'left':'+=400'},2000).animate({'top':'+=400'},2000)
+        })
+        $('button:contains(stop)').click(function (){
+            //$('div').eq(0).stop(false,false);//div运动立即停止，不会运动到目标点，队列动画开启
+           // $('div').eq(0).stop(true,false);//div运动立即停止，不会运动到目标点，队列动画也取消
+            //$('div').eq(0).stop(true,true);//div立即运动到目标点，队列动画取消
+            $('div').eq(0).stop(false,true);//div立即运动到目标点，队列动画开启
+        })
+    })
+
+    </script>
+</body>
+</html>

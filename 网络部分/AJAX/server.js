@@ -2,7 +2,6 @@ let http = require('http');
 let fs = require('fs');
 let url = require('url');
 let cb = fs.readdirSync('./web');
-console.log(cb)
 http.createServer(function(req, res) {
     let pathname =  url.parse(req.url).pathname;
     let params = url.parse(req.url, true).query;

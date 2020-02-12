@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<table cellpadding="10" cellspacing="0" border="1" align="center" id="app">
+		<caption>小小购物车</caption>
+		<tr style="background: #eee" align="center">
+			<td>编号</td>
+			<td>名称</td>
+			<td>单价</td>
+			<td>数量</td>
+			<td>金额</td>
+		</tr>
+		<tr v-for="(item,index) in products" align="center">
+			<td>{{item.id}}</td>
+			<td>{{item.name}}</td>
+			<td>{{item.price}}</td>
+			<td><input type="number" v-model.number="item.quality"></td>
+			<td>{{subTotal(index)}}</td>
+		</tr>
+		<tr align="center">
+			<td colspan="3">总计</td>
+			<td>{{totalNum}}</td>
+			<td>{{totalSum}}</td>
+		</tr>
+	</table>
+	<script src="vue.js"></script>
+	<script>
+		var vm = new Vue({
+			el:'#app',
+			data: {
+				products: [{
+					id: 1000,
+					name: 'huawei mate20 pro',
+					price: 5999,
+					quality: 0
+				},
+				{
+					id: 1001,
+					name: 'huawei mate20 x',
+					price: 4999,
+					quality: 0
+				},
+				{
+					id: 1002,
+					name: 'huawei p20 pro',
+					price: 4999,
+					quality: 0
+				}]
+			},
+			computed: {
+				//计算单一商品金额
+				subTotal(index) {
+					return function(index) {
+						//这里的this vue改变了其指向
+						return this.products[index].price * this.products[index].quality;
+					}
+				},
+				totalNum() {
+					let num = 0;
+					this.products.forEach((item) => {
+						num += item.quality;
+					})
+					return num;
+				},
+				totalSum() {
+					let sum = 0;
+					this.products.forEach((item) => {
+						sum += item.price * item.quality;
+					})
+					return sum;
+				}
+
+			}
+		})
+	</script>
+</body>
+</html>

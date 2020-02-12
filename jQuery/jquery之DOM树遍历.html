@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <p>p1</p>
+    <p>p2</p>
+    <div>div</div>
+    <ul>
+        <li>1
+            <div><li></li></div>
+        </li>
+        <li>2</li>
+        <li>3</li>
+        <li>4</li>
+    </ul>
+    <script src='jquery-3.3.1.js'></script>
+    <script>
+    // A.add(B)创建一个新的jQuery对象 ，元素添加到匹配的元素集合中
+    // A和B集中操作，B添加到A的集合中去了
+    $(function (){
+       /* $('div').add('p').css({'backgroundColor':'red','width':100,'height':100})*/
+       /*$('div').add($('p')[0]).css({'backgroundColor':'red','width':100,'height':100})*/
+    })
+
+
+    // find(selector/element):通过一个选择器,jQuery对象,或元素过滤,得到当前匹配的元素集合中每个元素的后代
+    $(function (){
+        console.log($('ul').find('li'));//找到ul的后代li
+    })
+
+
+    // children(): 获得匹配元素集合中每个元素的子元素，选择器选择性筛选
+    </script>
+</body>
+</html>

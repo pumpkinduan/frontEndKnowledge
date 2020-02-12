@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<div class="box">box</div>
+	<div id="app" style="padding: 10px">
+		<local-component :link="nav" :lesson="course"></local-component>
+	</div>
+	<script src="https://cdn.bootcss.com/vue/2.5.16/vue.js"></script>
+	<script>
+		//一.父组件与子组件的定义
+			//1.父组件:Vue实例可充当(子组件的调用者)
+			//2.子组件:Vue实例挂载点可访问的组件
+
+			//全局组件:所有实例都能用全局组件。(Vue.component()声明)
+			//局部组件(vue实例中的components属性中声明)
+
+		
+		//创建vue实例，这里充当父组件
+		let v = new Vue({
+			el: '#app',//vue实例的挂载点
+			data: {
+				nav:['首页','视频','工具','直播'],
+				course: 'vue.js'
+			},
+			components: {//子组件:局部组件
+				'local-component': {
+					data() {
+						return {
+							site: 'html中文网'
+						}
+					},
+					//link与nav进行绑定,即nav映射到link这个prop上,不过还需显示的在html代码中在该子组件标签中使用v-bind指令进行绑定
+					props: ['link','lesson'],
+					template: `<p>{{site}}<ul><li v-for="item in link">{{item}}</li></ul></p>`
+				}
+			}
+		})
+
+
+
+		//二.props属性:
+			//子组件用来接收父组件传数据的容器
+			//必须在子组件中定义
+			//必须是数组格式,每个元素对应一个父组件变量
+
+		//三.子组件与父组件的数据绑定
+		//在实例挂载点的组件模板(挂载点)上,使用v-bind指令
+		//将父组件指定数据对象绑定到子组件的props属性中
+		//单向绑定,即子组件对父组件的数据,只能读取,不能更新
+
+
+	
+	</script>
+</body>
+</html>

@@ -14,7 +14,7 @@ function loginFilter(request, response) {//登录页面的拦截器
             }
         }
     }
-    response.writeHead(302, {'location': './login.html'});//没有登录就每次 都跳转到登录页面
+    response.writeHead(302, {'location': 'login.html'});//没有登录就每次 都跳转到登录页面
     response.end();
     return false;
 }

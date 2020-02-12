@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+        ul {
+            width: 400px;
+            height: 400px;
+            border: 1px solid #000;
+            margin: 100px auto;
+            display: flex;
+            /* flex-wrap: wrap; */
+            /* flex-direction: column; */
+        }
+        ul li {
+            width: 200px;
+            height: 100px;
+            text-align: center;
+            line-height: 100px;
+            color: #fff;
+            font-size: 40px;
+        }
+        ul li:nth-child(1) {
+            /* flex-shrink：伸缩项的缩小属性*/
+            /* 注意点: 只有在以行为单位,单行内所有伸缩项宽度总和大于伸缩容器的宽度时才会生效 */
+            /* 因为可能会存在换行 */
+            /* 默认下: flex-shrink为1,单行内所有伸缩项宽度总和大于伸缩容器的宽度时,会等比缩小伸缩项*/
+
+            /* 计算公式: 1.(单行内所有伸缩项宽度总和) - (伸缩容器的宽度) = 溢出宽度值
+                           200 * 3 - 400 = 200
+                        2.计算权重: 溢出宽度值 * (单行内所有伸缩项设置的flex-shrink的值的总和)
+                            200 * (2+2+1) = 1000
+                        3. 计算缩小的范围: 溢出宽度值 * 伸缩项的宽度 * 伸缩项缩小的比例值(flex-shrink的值) / 权重
+                第一个li盒子缩小的宽度为   200 * 200 * 2 / 1000 = 80                        
+                第二个li盒子总宽度为 :  200 * 200 * 2 / 1000 = 80
+                第三个li盒子总宽度为 :  200 * 200 * 1 / 1000 = 40
+             */
+            /* 
+                简便计算: 每一份的缩小范围为: 溢出宽度值 / (单行内所有伸缩项设置的flex-shrink的值的总和) --> 200 / (2+2+1) = 40
+                第一个li盒子缩小的宽度为  2(第一个li的flex-shrink的值) * 40 = 80   
+             */
+             /* 也就是flex-shrink值越大,辣么对应的伸缩项最后的宽度越小 */
+
+             /* 注意点: 主轴方向为水平缩小的就是宽度,主轴方向为竖直,则缩小的为高度 */
+            background-color: pink;
+            flex-shrink: 2;
+        }
+        ul li:nth-child(2) {
+            background-color: tomato;
+            flex-shrink: 2;
+        }
+        ul li:nth-child(3) {
+            background-color: skyblue;
+            flex-shrink: 1;
+        }
+    </style>
+</head>
+<body>
+    <ul>
+        <li>1hlkkh</li>
+        <li>2</li>
+        <li>3</li>
+    </ul>
+</body>
+</html>

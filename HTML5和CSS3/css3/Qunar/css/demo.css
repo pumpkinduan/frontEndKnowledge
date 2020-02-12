@@ -1,0 +1,192 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    list-style: none;
+}
+img {
+    vertical-align: bottom;
+}
+html {
+    background: #eee;
+}
+body {
+    /* 最大宽度,防止网页拉伸变形 */
+    max-width: 960px;
+    /* 防止网页内容压缩变形 */
+    min-width: 375px;
+    background: #f2f2f2;
+    margin: 0 auto;
+}
+/* 头部开始 */
+.wrapper .header img {
+    width: 100%;
+}
+/* 头部结束 */
+
+/* 主要展示区域开始 */
+.main-content {
+    color: #f2f2f2;
+    padding: 12px 0;
+}
+.main-content .section {
+    height: 100px;
+    margin: 4px 2px;
+    display: flex;
+}
+.main-content .section .col {
+    /* 默认下:flex-basis: auto;
+       会使得伸缩项根据其内容有初始时的宽度,
+       在等比扩充时,扩充的大小相等,但最后盒子大小可能不一致,会造成盒子对不齐的现象,
+       所以可以统一设置flex:1
+       等同于
+       flex-grow: 1;
+       flex-shrink: 1;
+       flex-basis: 0%;
+    */
+    flex: 1;
+    text-align: center;
+}
+.main-content .section.one {
+    background: #f55;
+}
+.main-content .section.two {
+    background: #00a7f7;
+}
+.main-content .section.three {
+    background: #7cb832;
+}
+.main-content .section.four {
+    background: #f90;
+}
+.main-content .section .col div {
+    line-height: 50px;
+    height: 50px;
+}
+.main-content .section .col div:first-child {
+    border-bottom: 1px solid #d4d4d4;
+}
+
+.main-content .section .col.hotel p {
+    margin: 15px 0;
+}
+.main-content .section .col:nth-child(2) {
+    border-left: 1px solid #d4d4d4;
+    border-right: 1px solid #d4d4d4;
+}
+.main-content .section .col.hotel img {
+    width: 42px;
+    height: 46px;
+}
+.main-content .section.four {
+    height: 50px;
+}
+/* 主要展示区域结束 */
+
+/* 次要展示区域开始 */
+.sub-content {
+    margin: 10px 0;
+    padding: 10px 10px;
+    background-color: #fff;
+}
+.sub-content .sub-content-inner .nav {
+    display: flex;
+    text-align: center;
+    margin-bottom: 10px;
+}
+.sub-content .sub-content-inner .nav li {
+    flex: 1;
+   
+}
+.sub-content .sub-content-inner .nav li i {
+    display: inline-block;
+    margin: 10px 0;
+    width: 33px;
+    height: 33px;
+    background-repeat: no-repeat;
+    background-image: url(../images/icons.png);
+}
+.sub-content .sub-content-inner .nav-top li:first-child i {
+    background-position: -37px -13px;
+}
+.sub-content .sub-content-inner .nav-top li:nth-child(2) i {
+    background-position: -124px -13px;
+}
+.sub-content .sub-content-inner .nav-top li:nth-child(3) i {
+    background-position: -212px -13px;
+}
+.sub-content .sub-content-inner .nav-top li:nth-child(4) i {
+    background-position: -299px -13px;
+}
+.sub-content .sub-content-inner .nav-bottom li:nth-child(1) i {
+    background-position: -37px -81px;
+}
+.sub-content .sub-content-inner .nav-bottom li:nth-child(2) i {
+    background-position: -124px -81px;
+}
+.sub-content .sub-content-inner .nav-bottom li:nth-child(3) i {
+    background-position: -212px -81px;
+}
+.sub-content .sub-content-inner .nav-bottom li:nth-child(4) i {
+    background-position: -299px -81px;
+}
+.sub-content .sub-content-inner .nav li p {
+    color: #666;
+    font-size: 12px;
+}
+/* 次要展示区域结束 */
+
+/* 底部指引开始 */
+.guide-content {
+    margin: 10px 0;
+    padding: 10px 0;
+    background-color: #fff;
+}
+.guide-content .guide-content-inner {
+    display: flex;
+} 
+.guide-content .guide-content-inner li {
+    flex: 1;
+    color: #666;
+    text-align: center;
+}
+.guide-content .guide-content-inner li i {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 1px solid #eee;
+    line-height: 38px;
+    text-align: center;
+    margin-bottom: 5px;
+}
+.guide-content .guide-content-inner li p {
+    font-size: 13px;
+}
+.icon-wode,
+.icon-dingdan,
+.icon-luotuo {
+    font-size: 24px;
+}
+/* 底部指引结束 */
+
+/* 底部开始 */
+.footer {
+    padding-bottom: 10px;
+    overflow: hidden;
+    text-align: center;
+    color: #666;
+    font-size: 12px;
+}
+.footer p {
+    float: left;
+}
+.footer p:last-child {
+    margin-left: 10px;
+}
+.footer p:last-child a {
+    color: #333;
+    text-decoration: none;
+}
+/* 底部结束 */
+

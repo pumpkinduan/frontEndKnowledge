@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <script src-"jquery-3.3.js"></script>
+    <script>
+        //有时候，我们在编写代码时可能会用到其它的框架，而这些框架又有名为$的函数,则会引起冲突
+        //解决:
+        // 1.释放$的使用权
+       /* jQuery.noConflict();在使用jQuery之前执行这个代码，则$无效,而后要用到jQuery库需用jQuery名引用
+        jQuery(function (){
+             alert('111');
+        })*/
+       // 2.自定义一个访问符号
+       // var dzz = jQuery.noConflict();
+       // dzz(function (){
+       //       alert('111');
+       // })
+
+    </script>
+</body>
+</html>

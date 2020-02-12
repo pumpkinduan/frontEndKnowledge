@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        *{
+            margin:0;
+            padding: 0;
+        }
+        html{
+            border:5px solid gray;
+            padding:10px;
+            margin-left:10px;
+        }
+        div{
+            width: 100px;
+            /*line-height:100px;*/
+            height:100px;
+            background-color:pink;
+            text-align:center;
+            border:5px solid orange;
+            /*box-sizing:border-box;*/
+            padding:10px;
+        }
+        .box{
+            position:relative;
+            padding: 10px;
+        }
+        p{
+            width: 100px;
+            height: 25px;
+            background-color:red;
+            margin-left:100px;
+            border:2px solid #000;
+            position:absolute;
+           top:0px;
+          left:0px; 
+        }
+    </style>
+</head>
+<body>
+    <div >我是div</div>
+    <div class="box">是div<p>我是p</p></div>
+    
+    <script src="jquery-3.3.1.js"></script>
+    <script>
+    //.height();获取匹配元素集合中的第一个元素的当前计算高度值,若加上'box-sizing':'border-box',该高度值是内容区的高度(height - padding - border),返回的是数字类型的，不带单位px
+    //不加上的话该高度获取的值就是css中(盒模型中的)的height的值
+
+    // 注意:若是没给指定的元素设置高度而是单独的设置了行高,辣么不管有没有box-sizing:border-box,获取到的高度都是行高的值
+
+    //.css('height')不管加不加box-sizing:border-box,获取的都是css(盒模型中的)height的值   
+    /*$(function (){
+        console.log($('div').height());
+        // console.log($('div').css('height'));
+    });
+*/
+    /*.width():获取匹配元素集合中第一个元素的当前计算宽度。不接受任何参数,返回的是数字类型的，不带单位px
+    若加上'box-sizing':'border-box',获取的宽度值是width - padding - border的结果值(内容区的宽度值)
+    不加上的话该宽度获取的值就是css中(盒模型中的)的width的值
+    */
+    /*.width(value):设置匹配元素集合中每个元素的CSS宽度。值:字符串或整数
+    若加上'box-sizing':'border-box',辣么设置的宽度实际上是给内容区设置的宽度，在css中呈现出的width = padding+border+content
+    */
+    /*$(function (){
+        // console.log($('div').width());
+        console.log($('div').width('120'));//由于css中设置了'box-sizing':'border-box'，所以实际width=130px
+    })*/
+   
+
+    //.width(fn(index,value)):该函数返回一个要设置的宽度
+   /* $(function (){
+        $('div').width(function (index,value){
+            console.log(index);//代表元素集合中的元素索引位置
+            console.log(value);//代表元素集合中元素的原来宽度
+            return 200;
+        })
+    })*/
+
+
+
+
+
+    /*innerHeight():获取匹配元素集合中第一个元素的当前计算高度，包括填充(padding)但不包含边框。
+    // 注意:若是没给指定的元素设置高度而是单独的设置了行高,辣么不管有没有box-sizing:border-box,获取到的高度都是行高的值
+    */
+
+   /* $(function (){
+        console.log($('div').innerHeight());
+    })*/
+
+    // innerHeight(value)设置匹配元素集合中每个元素的CSS内部高度(content+padding)。
+    // innerHeight(fn(index,value))  index:元素集合中元素的位置索引,value:元素的原来内部高度,该函数返回一个要设置的内部高度
+   /* $(function (){
+        // console.log($('div').innerHeight(220));
+        console.log($('div').innerHeight(function (index,value){
+            return 220;
+        }));    
+    })*/
+
+
+    // offset:获取匹配集合元素中的第一个元素的坐标，相对于文档的坐标(可包含边框的宽度,即从边框的外边缘到文档的这段距离)
+    // .offset()返回一个包含top 和 left属性的对象 。
+     $(function (){
+       console.log($('p').offset());
+     })
+
+    // .offset(obj):设置匹配的元素集合中每一个元素的坐标，坐标相对于文档。
+   /* $(function (){
+       console.log($('p').offset({top:100,left:200}));
+    })*/
+
+    //.position():获取匹配元素中第一个元素的当前坐标,相对于offset parent的坐标.(offset parent指离该元素最近的而且被定位过的祖先元素)
+    //.position()方法可以取得当前元素相对于父元素的偏移位置,即从当前元素的margin外边缘到offset parent的边框的内边缘的这段距离
+    /*$(function (){
+       console.log($('p').position());
+    })*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </script>
+</body>
+</html>

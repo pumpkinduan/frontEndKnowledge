@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+        ul {
+            width: 300px;
+            height: 300px;
+            border: 1px solid #000;
+            margin: 100px auto;
+            display: flex;
+        }
+        ul li {
+            width: 100px;
+            height: 100px;
+            background: pink;
+            text-align: center;
+            line-height: 100px;
+            color: #fff;
+            font-size: 40px;
+        }
+        ul li:nth-child(1) {
+            /* order属性设置给伸项的,用来指定伸缩项的排列顺序 */
+            /* 默认下:所有伸缩项的order值为0,这样就会按照DOM结构先后顺序来排列伸缩项 */
+            /* order的值越大,辣么对应的伸缩项的排列越靠后 */
+            order: 0;
+        }
+        ul li:nth-child(2) {
+            background-color: tomato;
+            order: 2;
+        }
+        ul li:nth-child(3) {
+            background-color: skyblue;
+            order: 0;
+        }
+    </style>
+</head>
+<body>
+    <ul>
+        <li>1x</li>
+        <li>2</li>
+        <li>3</li>
+    </ul>
+</body>
+</html>

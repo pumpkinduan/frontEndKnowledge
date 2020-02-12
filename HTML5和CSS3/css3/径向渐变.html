@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        .box { 
+            width: 500px;
+            height: 400px;
+            margin: 100px auto;
+            /* 径向渐变,默认以渐变容器的中心向四周扩散 */
+            background: radial-gradient(red, blue);
+
+            /* 也可以改变其默认的渐变中心点的位置 */
+            /* background: radial-gradient(at 100px 200px ,red, blue); */
+
+            /* 还可以指定其渐变色的范围 */
+            /* background: radial-gradient(100px, red, blue); */
+
+            /* 要是想既指定渐变色的范围又指定了渐变的起始位置,应该这么写 */
+            /* background: radial-gradient(100px at 100px 200px,red,blue); */
+
+
+            /* 径向渐变的应用场景一般用来做一些有渐变色的按钮 */
+        }
+        .btn {
+            width: 100px;
+            height: 40px;
+            line-height: 40px;
+            text-align: center;
+            box-sizing: border-box;
+            border-radius: 5px;
+            margin: 0 auto;
+            color: #fff;
+            background: radial-gradient(skyblue, blue);
+        }
+    </style>
+</head>
+<body>
+    <div class="box"></div>
+    <div class="btn">点我</div>
+</body>
+</html>

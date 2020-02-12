@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <input type="text">
+    <script>
+        //debounce: 防止用户高频操作导致事件处理函数的多次执行
+        // 1.提升网页性能  2.用户的高频操作降为只执行一次事件处理函数
+        // 3.用户的高频操作完成时大于指定的时间间隔,触发事件处理函数的执行
+        let oInput = document.getElementsByTagName('input')[0];
+        // oInput.oninput = function(e) {
+        //     console.log('send ajax request');
+        // }
+        /*
+        let timerId = null;
+        oInput.oninput = function(e) {
+           timerId && clearTimeout(timerId);
+           timerId = setTimeout(function() {
+            console.log('send ajax request');
+           }, 1000)
+        }
+        */
+        function debounce(handle, delay) {
+            var timerId = null;
+            return function() {
+                let self = this;//DOM元素
+                let args = arguments;//事件对象
+                console.log(args);
+                timerId && clearTimeout(timerId);
+                timerId = setTimeout(function() {
+                    handle.apply(self, args);
+                }, delay || 500);
+            }
+        }
+        oInput.oninput = debounce(function (e){
+            console.log(e)
+            console.log('send ajax request')
+        })
+    </script>
+</body>
+</html>

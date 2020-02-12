@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <p></p>
+    <div>div1</div>
+    <div>div2</div>
+    <div></div>
+    <div><span>span</span></div>
+    <ul>
+        <div>
+            <li>0</li>
+            <ul>
+                <li>1</li>
+            </ul>
+            <li>2</li>
+            <li>3</li>
+        </div>
+    </ul>
+    <li>6</li>
+    <script src="jquery-3.3.1.js"></script>
+    <script>
+        //wrap(wrappingElement)给每个匹配元素包裹一个HTML结构
+        // 参数可是选择器,元素,HTML字符串,或jQuery对象集合的第一个元素
+        $(function (){
+            // $('li').wrap('<p>');//HTML字符串,相当创建一个标签
+            // $('li').wrap($('div'))//jQuery对象集合的第一个元素
+            //$('li').wrap('body div')//选择器
+        })
+        
+        
+        //wrapAll() 在集合中所有匹配元素的外面包裹一个HTML结构
+        // 参数与wrap方法一样
+        // 注意:会破坏结构
+        $(function (){
+            //找到所有的li元素，并把所以li元素放到一起用div包裹起来,开始li元素是在ul里找到的，所以ul外面的li会被移到ul里去
+            // $('li').wrapAll('div')
+
+        })
+
+
+
+        //wrapInner()在匹配元素里的内容外包一层结构
+        /*$(function (){
+            $('div').wrapInner($('p')[0]);
+        })*/
+
+
+
+
+
+
+
+        //unwrap()将匹配元素集合的父级元素(直接父级)删除，保留自身（和兄弟元素，如果存在）在原来的位置
+        $(function (){
+            // $('li').unwrap()
+            //$('li').unwrap('div')//删除li的父级是div的
+            $('li').unwrap('ul')//删除li的父级是ul的
+        })
+
+        // unwrap(selector):一个选择器，用来检查匹配的父元素。如果一个元素的父不匹配该选择器，该元素将不会被解开
+
+
+    </script>
+</body>
+</html>

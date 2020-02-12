@@ -87,12 +87,14 @@ function defineReactive(obj) {
                 writtable: true,
                 configurable: true,
                 get: function () {
-                    if ( Dep.target ) {
+                    //Dep.target是一个标记,防止每次视图更新后  dep.addSub(tempAttr, Dep.target)反复执行进入死循环
+                    if (Dep.target) {
                         dep.addSub(tempAttr, Dep.target);
                     }
                     return proxyObj[tempAttr];
                 },
                 set: function (newValue) {
+                    Dep.target = null;
                     if ( newValue === proxyObj[tempAttr] ) return;
                     proxyObj[tempAttr] = newValue;
                     //set函数形成的闭包中保存了每个属性名
@@ -169,13 +171,17 @@ class Dep {
         } else {
             subs.get(key).push(watcher);
         }
+        console.log(subs)
     }
     notify(changedAttr) {
         // console.log(this.subs.get('name') === this.subs.get('age'));
         if ( this.subs.has(changedAttr) ) {
             //当所依赖的data中的属性发生变化时,触发对应的那一个watcher实例去更新页面,而不是触发所有watcher实例
             //在这里由于一个vue实例下对应着一个watcher实例,所以所有data中的属性对应的watcher其实都是一样的
-            this.subs.get(changedAttr).update(changedAttr);
+            let watchers = this.subs.get(changedAttr);
+            for (var i = 0; i < watchers.length; i ++) {
+                watchers[i].update(changedAttr);
+            }
         }
     }
 }
@@ -185,6 +191,7 @@ class Watcher {
     constructor(vm, render) {
         this.vm = vm;
         this.render = render;
+        Dep.target = this;
     }
     update(changedAttr) {
         console.log('update')

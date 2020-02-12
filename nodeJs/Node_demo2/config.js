@@ -1,6 +1,7 @@
 //用来解析配置文件server.conf
 let fs = require('fs');
-let data = fs.readFileSync('./server.conf').toString().split('\r\n');
+let path = require('path');
+let data = fs.readFileSync(path.join(__dirname, 'server.conf')).toString().split('\r\n');
 let globalConf = {};
 let reg = /(_path){1}$/g;
 for ( let i = 0; i < data.length; i ++ ) {

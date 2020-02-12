@@ -103,6 +103,18 @@
             }
 
         }
+
+        let p = new Promise((suc, err) => {
+            setTimeout(function() {
+                suc();
+            }, 4000)
+        });
+        p.then(() => {
+            console.log('action')
+        })
+        .then( () => {
+            console.log('over')
+        })
     </script>
 </body>
 </html>

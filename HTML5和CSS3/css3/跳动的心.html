@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+		}
+		.heart {
+			width: 400px;
+			height: 400px;
+			margin: 100px auto;
+			position: relative;
+			animation: heartbeat 0.8s infinite forwards;
+		}
+		.heart .left {
+			width: 200px;
+			height: 200px;
+			border-radius: 50%;
+			background-color: red;
+			position: absolute;
+			top: 0;
+			left: 30px;
+			box-shadow: 0 0 50px red;
+		}
+		.heart .right {
+			width: 200px;
+			height: 200px;
+			border-radius: 50%;
+			background-color: red;
+			position: absolute;
+			top: 0;
+			right: 30px;
+			box-shadow: 0 0 50px red;
+		}
+		.heart .bottom {
+			width: 200px;
+			height: 200px;
+			background-color: red;
+			position: absolute;
+			bottom: 130px;
+			left: 50%;
+			transform: translateX(-50%) rotate(45deg);
+			box-shadow: 0 0 50px red;
+		}
+		@keyframes heartbeat {
+			0% {transform: scale(1, 1);}
+			25% {transform: scale(1.2, 1.2);}
+			75% {transform: scale(1.2, 1.2);}
+			100% {transform: scale(1,1);}
+		}
+	</style>
+</head>
+<body>
+	<div class="heart">
+		<div class="left"></div>
+		<div class="right"></div>
+		<div class="bottom"></div>
+	</div>
+</body>
+</html>

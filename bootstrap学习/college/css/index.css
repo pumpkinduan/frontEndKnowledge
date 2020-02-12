@@ -1,0 +1,161 @@
+/**********************头部样式******************/
+#lk_header .top-bar {
+	height: 40px;
+	border-bottom: 1px solid #eee;
+	line-height: 39px;
+}
+#lk_header .top-bar .top-bar-1 img {
+	position: absolute;
+	top: 30px;
+	width: 130px;
+	left: 0;
+	z-index: 1;
+	display: none;
+}
+#lk_header .top-bar .top-bar-1:hover img {
+	display: block;
+} 
+#lk_header .navbar {
+	margin-bottom: 0;
+}
+#lk_header .navbar-user {
+	background-color: #fff;
+}
+#lk_header .navbar .navbar-brand {
+	padding: 10px 15px;
+	height: 70px;
+}
+#lk_header .navbar .navbar-brand img {
+	width: 180px; 
+	margin-top: -2px;
+}
+
+#lk-navbar li.active a { 
+	border-bottom: 2px solid #0AB4F7;
+}
+#lk-navbar li a {
+	background-color: #fff;
+	height: 70px;
+	padding: 10px 15px;
+	line-height: 45px;
+}
+#lk-navbar li a:hover {
+	border-bottom: 2px solid #0AB4F7;
+}
+/**********************头部样式******************/
+
+/*********************轮播图样式*****************/
+#lk-carousel .item {
+	background-size: cover;
+}
+@media screen and (min-width: 768px) {
+	#lk-carousel .item {
+		height: 410px;
+	}
+/*	#lk-carousel .item img {
+		visibility: hidden;
+	}
+	#lk-carousel .item:first-child {
+		background: url('../imgs/slide_01_2000x410.jpg') center center no-repeat;
+	}
+	#lk-carousel .item:nth-child(2) {
+		background: url('../imgs/slide_02_2000x410.jpg') center center no-repeat;
+	}
+	#lk-carousel .item:nth-child(3) {
+		background: url('../imgs/slide_03_2000x410.jpg') center center no-repeat;
+	}*/
+}
+@media screen and (max-width: 768px) {
+	#lk-carousel .item img {
+		width: 100%;
+		visibility: visible;
+	}
+}
+
+/*********************轮播图样式*****************/
+
+/*********************关于我们*****************/
+#lk_about .container p {
+	line-height: 30px;
+	margin-bottom: 10px;
+}
+	
+
+/*********************关于我们*****************/
+
+/*********************tab选项卡样式*****************/
+#lk_product {
+	background-color: #f0f0f0;
+	margin-top: 50px;
+}
+#lk_product .nav-tabs {
+	padding-top: 25px;
+	border-bottom: 1px solid #ddd;
+}
+#lk_product .nav-tabs a {
+	font-size: 18px;
+	border: none;
+	background-color: transparent;
+	font-weight: 800;
+	color: #999;
+}
+#lk_product .nav-tabs li {
+	margin-right: 20px;
+}
+#lk_product .nav-tabs li.active a {
+	border-bottom: 2px solid #0AB4F7;
+	color: #222;
+}
+
+/*********************tab选项卡样式*****************/
+
+#lk_product {
+	padding-bottom: 20px;
+}
+#lk_product .pannel-left {
+	padding: 40px 0;
+}
+#lk_product .pannel-right {
+	margin-top: -20px;
+}
+#lk_product .tab-content {
+	padding-top: 20px;
+}
+#lk_product .tab-content .media h4 {
+	text-indent: 0.5em;
+}
+#lk_product .tab-content .breadcrumb {
+	background-color: transparent;
+	padding: 10px 0;
+}
+#lk_product .tab-content .breadcrumb a {
+	color: #666;
+}
+#lk_product .tab-content .info {
+	margin-top: 20px;
+}
+#lk_product .tab-content .info a {
+	margin-right: 15px;
+}
+#lk_product .tab-content #tab3 .badge {
+	margin-top: 20px;
+	padding: 15px 10px;
+}
+/****************hot-course*****************/
+#lk_hot_course .container .media .media-left {
+	width: 20%;
+}
+#lk_hot_course .container .media .media-body {
+	width: 60%;
+	vertical-align: middle;
+}
+#lk_hot_course .container .media .media-body p {
+	margin: 10px 0;
+}
+#lk_hot_course .container .media .media-right {
+	width: 20%;
+	vertical-align: middle;
+}
+
+/****************hot-course*****************/
+

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+		}
+		.nav {
+			width: 200px;
+			height: 45px;
+			background: red url(img/nav-center.jpg) center 0 repeat;
+			margin: 100px auto;
+		}
+		.nav .left {
+			width: 100%;
+			height: 100%;
+			background: url(img/nav-left.jpg) 0 0 no-repeat;
+		}
+		.nav .right {
+			width: 100%;
+			height: 100%;
+			background: url(img/nav-right.jpg) right 0 no-repeat;
+		}
+	</style>
+</head>
+<body>
+	<!-- 为了使各种特殊形状的背景能够自适应元素中文本内容的多少，出现了CSS滑动门技术。 -->
+	<div class="nav">
+		<div class="left">
+			<div class="right"></div>
+		</div>
+	</div>
+</body>
+</html>

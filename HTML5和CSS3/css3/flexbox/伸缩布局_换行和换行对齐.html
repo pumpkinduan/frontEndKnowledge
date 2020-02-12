@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+        ul {
+            width: 600px;
+            height: 600px;
+            border: 1px solid #000;
+            margin: 100px auto;
+            display: flex;
+            /* flex-wrap: 控制伸缩项的换行方式 */
+            /* 默认为 nowrap,也就是不换行,当伸缩项的宽度大于伸缩容器时,系统会自动等比压缩伸缩项,使其填满伸缩容器 */
+            /* flex-wrap: nowrap; */
+
+            /* wrap：当伸缩容器的一行放不下伸缩项时,就会换行处理 */
+            flex-wrap: wrap;
+
+            /* align-content: 规定伸缩项目换行在侧轴上的对齐方式,若不换行则无效*/
+            /* center：使得伸缩项换行后整体的中点与侧轴的中点对齐 */
+            /* align-content: center; */
+
+            /* flex-start:换行后的伸缩项整体与侧轴的起点对齐,伸缩项之间一行接一行,无空隙*/
+            align-content: flex-start;
+
+            /* flex-end:换行后的伸缩项整体与侧轴的终点对齐,伸缩项之间一行接一行,无空隙*/
+            /* align-content: flex-end; */
+
+            /* stretch(默认值):这个拉升与align-items:stretch的拉升不一样 */
+            /* 它指的是: 以行为单位进行拉伸,均分侧轴剩余的空间,得到的值为拉伸部分的值,若伸缩项设置了高度,则以空白来填充拉伸部分(若无,则拉伸伸缩项),使得每一行高度累加占满整个侧轴 */
+            /* 均分指的是: 有多少行,也就是多少伸缩项,就将剩余空间除以几 */
+            /* 每一行的高度就变成了 伸缩项的高度 + 拉伸部分的高度值 */
+            /* align-content: stretch; */
+
+            /* space-around: 环绕拉伸 */
+            /* 换行之后所有的伸缩项在侧轴上环绕对齐,可理解为 加在伸缩项上下两端的空白部分环绕着伸缩项 */
+            /* align-content: space-around; */
+
+             /* 换行之后所有的伸缩项在侧轴上两端对齐*/
+            /* align-content: space-between; */
+
+        }
+        ul li {
+            width: 400px;
+            /* height: 100px; */
+            background: pink;
+            text-align: center;
+            /* line-height: 100px; */
+            color: #fff;
+            font-size: 40px;
+        }
+        ul li:nth-child(2) {
+            background-color: tomato;
+            /* height: 150px; */
+        }
+        ul li:nth-child(3) {
+            background-color: skyblue;
+        }
+    </style>
+</head>
+<body>
+    <ul>
+        <li>1x</li>
+        <li>2</li>
+        <li>3</li>
+        <li>4</li>
+        <li>5</li>
+    </ul>
+</body>
+</html>

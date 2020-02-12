@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<div id="app">
+	<p>姓<input v-model="firstName" type="text"></p>
+	<p>名<input v-model="lastName" type="text"></p>
+	<p>{{firstName}}</p>
+	<p>{{lastName}}</p>
+	<p>{{fullName}}</p>
+</div>
+<body>
+	<script src="vue.js"></script>
+	<script>
+		//watch的值为一个对象
+		//对象的键为要监控的数据(该数据为vue实例上的属性)
+		//值可以为函数,只要监控的键发生了改变,则会触发函数执行,该函数有两个形参,第一个为当前值,第二个为变化前的值
+
+		//值可以为函数名,不过是用引号括起来的
+		//值还可以是包含选项的对象: 选项包括有三个
+		//handler：其值是一个回调函数。即监听到变化时应该执行的函数。
+
+		//deep:其值是true或false;确认是否深入监听.(一般监听时是不能监听到对象属性值的变化的，数组的值变化可以听到。)
+
+		//immediate：其值是true或false;确认是否以当前的初始值执行handler的函数。
+		var app = new Vue({
+			el: '#app',
+			data: {
+				firstName: '12',
+				lastName: '33',
+				fullName: ''
+			},
+			watch: {
+				firstName : function(curValue, befValue) {
+					console.log(curValue)
+					console.log(befValue)
+					this.fullName = this.firstName + this.lastName;
+				},
+				lastName: 'reverseName'
+			},
+			methods: {
+				reverseName() {
+					this.fullName = this.lastName + this.firstName;
+				}
+			}
+		})
+	</script>
+</body>
+</html>

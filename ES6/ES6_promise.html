@@ -70,7 +70,9 @@
                     let result = resolveFn(this.value);
                     // console.log(result)
                     if (result instanceof myPromise) {
-                      result.then(suc, err); //result对象的状态的改变会执行对应的回调函数,则新返回的promise对象的状态会发生相应改变
+                      result.then(suc, err);
+                      //result对象的状态的改变会执行对应的回调函数,则新返回的promise对象的状态会发生相应改变
+                      //即result为resolved状态，则新返回的promise实例也为resolved状态,因为会触发suc函数的执行
                     } else {
                       //若resolveFn返回的不是一个promise对象,则默认将新返回的promise对象的状态变为'resolved'
                       suc(result);

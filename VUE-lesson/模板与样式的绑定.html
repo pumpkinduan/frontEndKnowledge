@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		.correct {
+			color: green;
+		}
+		.error {
+			color: red;
+		}
+	</style>
+</head>
+<body>
+	<div id="app">
+		<p class="correct error">{{text}}</p>
+		<p class="error">{{text}}</p>
+		<hr>
+
+		<!-- vi-bind 简写 : -->
+		<!-- 需要将类名做为vue实例数据对象的属性,并设置为状态(bool) -->
+		<!-- <p v-bind:class="correct">{{text}}</p> 没反应-->
+		<p v-bind:class="{correct: isActive}">{{text}}</p>
+		<p v-bind:class="{error: isActive}">{{text}}</p>
+	</div>
+	<script src="vue.js"> </script>
+	<script>
+		/*1.元素绑定class与style属性
+		-----------------------
+		- 本质上就是对元素的class和sytle属性进行操作
+		- 因为这二个操作非常重要且频繁,所以有必要单独讨论
+		- 语法: v-bind:class="", v-bind:style="""
+		*/
+		var vm = new Vue({
+			el: '#app',
+			data: {
+				text: '快乐的学习vue',
+				isActive: true
+			}
+		})
+	</script>
+</body>
+</html>

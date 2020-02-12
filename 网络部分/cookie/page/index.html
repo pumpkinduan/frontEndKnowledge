@@ -10,7 +10,7 @@
     <script>
         /*
         1.什么是cookie:
-            cookie是服务器保存到浏览器的一下段文本信息,每个cookie大小一般不超过4kb
+            cookie是服务器保存到浏览器下的一段文本信息,每个cookie大小一般不超过4kb
             浏览器每次向服务器发送http请求时都会自动附带上这段信息
 
         2.cookie的作用:
@@ -54,7 +54,7 @@
        测试:
             我们可以在谷歌浏览器上访问 localhost:12306/page/index.html,
             另外开启两个窗口分别访问localhost:12306/page/index1.html和
-            localhost:12306/cookie-test.html
+            localhost:12306/test-cookie.html
        */
 
        //此外还有一个注意点,但是由于这里没有多个域名不能演示
@@ -63,51 +63,6 @@
        //而edu.it666.com域名下是无法访问的
        //但是我们可以通过domain=it666.com;让cookie的作用范围为该一级域名,这样的话二级域名下的路径也可以访问了
        //document.cookie = sex=male;domain=it666.comn;path=/;
-
-
-       function addCookie(option) {
-            //{key, value, day, path, domain}
-            //处理cookie的生效路径
-            // /course/28/task/229/show
-            var pathname = window.location.pathname
-            var index = pathname.lastIndexOf('/');
-            // /course/28/task/229
-            option.path = option.path || pathname.slice(0,index);
-
-            //处理cookie生效的域名
-            option.domain = option.domain || document.domain;
-
-            //处理cookie的过期时间
-            if ( option.day ) { 
-                var time = new Date();
-                time.setDate(time.getDate() + option.day); 
-                //添加cookie
-                document.cookie = option.key+'='+option.value+';'+'expires='+time.toGMTString()+';'+'path='+option.path+';'+'domain='+option.domain+';';
-            } else {
-                document.cookie = option.key+'='+option.value+';'+'path='+option.path+';'+'domain='+option.domain+';';
-            } 
-        }
-        addCookie({key:'id', value:1});
-        function getCookie(key) {
-            var cookies = document.cookie.split('; ');
-            var len = cookies.length;
-            for ( var i = 0; i < len; i ++ ) {
-                var arr = cookies[i].split('=');
-                if ( arr[0] === key ) {
-                    return arr[1];
-                }
-            }
-        }
-        console.log(getCookie('id'))
-
-        function removeCookie(key, path) {
-            addCookie({
-                key: key,
-                day: -1,
-                path: path
-            })
-        } 
-        removeCookie('sex', '/')
     </script>
 </body>
 </html>

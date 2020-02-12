@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <div class="box"></div>
+    <p></p>
+    <script src="jquery-3.1.1.js"></script>
+    <script>
+        //$();代表调用jQuery的核心函数
+        
+        // 1.接受一个函数
+            $(function (){
+                alert('111');
+            });
+        // 2.接受一个字符串
+          // 2.1接受一个字符串选择器
+          
+          // 2.2接受一个代码片段
+           var $div = $('<div>div</div>');
+          console.log($div);
+
+        // 3.接受一个DOM元素
+        // 该DOM元素会被核心函数包装成一个jQuery对象
+    </script>
+</body>
+</html>

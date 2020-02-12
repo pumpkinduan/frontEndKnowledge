@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>holdReady</title>
+</head>
+<body>
+    <button>点击恢复ready事件</button>
+    <script src="jquery-3.3.1.js"></script>
+    <script>
+    // holdReady(true);暂停jq入口函数ready的执行;
+    $.holdReady(true);
+    $().ready(function (){
+        alert('111');
+    });
+    $('button').on('click',function (){
+        $.holdReady(false);
+    });
+    </script>
+</body>
+</html>

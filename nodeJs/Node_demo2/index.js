@@ -2,33 +2,37 @@ let http = require('http');
 let url = require('url');//该模块用来解析url得到我们想要的url格式
 let globalConf = require('./config.js');
 let fs = require('fs');
+let path = require('path');
 let {pathMap} = require('./loader.js');
 let log = require('./log');
 let filters = require('./filter_loader.js');
 let loader = require('./loader.js');
 http.createServer((req, res) => {
-	let pathName = url.parse(req.url).pathname;
+	let pathName = url.parse(req.url).pathname;//请求路径
 	if( pathName === '/' ) {pathName = '/index.html'}
+	const extName = path.extname(pathName);//后缀名
+	console.log(extName)
 	let isStatic = isStaticRequest(pathName);
 	log(pathName);//print logs...
 	//请求资源之前进行拦截处理
-	for ( var i = 0 ; i < filters.length; i ++ ) {
-		var flag = filters[i](req, res);
-		if ( !flag ) {
-			return false;
-		}
-	}
+	// for ( var i = 0 ; i < filters.length; i ++ ) {
+	// 	var flag = filters[i](req, res);
+	// 	if ( !flag ) {
+	// 		return false;
+	// 	}
+	// }
 	if ( isStatic ) {
 		//请求的为静态资源
 		//处理请求后返回响应给浏览器客户端
-		res.writeHead(200)//响应头
 		fs.readFile(globalConf.page_path + pathName, (error, data) => {
 			if( error ) {
 				console.log('请求错误' + error);
 				return res.end('404 Not Found');
 			}
-			// console.log(data.toString())
-			res.end(data.toString());
+			setContentType(extName, (contentType) => {
+				res.writeHead(200, 'OK', { "content-type": contentType });
+				res.end(data.toString());
+			})
 		})
 	} else {
 		//请求的是动态资源
@@ -41,21 +45,20 @@ http.createServer((req, res) => {
 		// 		res.end('500 server异常');
 		// 	}
 		// }
- 		for ( var temp of loader ) {//让路径多样化
+		 for ( var temp of loader ) {//让路径多样化
             try {
                 if ( new RegExp('^' + temp[0] + '$').test(pathName) ) {
                     temp[1](req, res);
                 }
             } catch(e) {
-				console.log(e)
                 res.end('500 bad server')
             } 
        } 
 	}
 }).listen(globalConf.port, () => {
 	console.log('server is running...')
-	log('server is running...')
 })
+//判断是否是请求静态资源
 function isStaticRequest(pathName) {
 	let opt = globalConf.static_file_type;
 	let len = opt.length;
@@ -64,4 +67,12 @@ function isStaticRequest(pathName) {
 			return true;//是静态资源
 		}
  	}
+}
+//根据请求路径的后缀名，给相应的响应头设置对应的content-type
+function setContentType(extName, callBack) {
+	let MIMEJson = fs.readFile('./MIME.json', (err, data) => {
+		if ( err ) throw err;
+		const mimeObj = JSON.parse(data.toString());
+		callBack(mimeObj[extName])
+	});
 }

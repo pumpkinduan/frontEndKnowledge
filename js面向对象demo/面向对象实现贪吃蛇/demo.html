@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>贪吃蛇</title>
+	<link rel="stylesheet" href="css/demo.css">
+</head>
+<body>
+	<div class="startInterface">
+		<div class="startBg"></div>
+	</div>
+	<div class="mainInterface">
+		<div class="gameBtn">
+			<span class="infoText">开始/暂停&nbsp;:</span>
+			<div class="pauseBtn" id="btn"></div>
+		</div>
+		<div class="scoreInfo">
+			<span class="currentScore">当前得分:</span>
+			<span class="scores">0</span>
+		</div>
+		<div class="mainMap"></div>
+	</div>
+	<div class="overInterface">
+		<div class="overBg">
+			<img src="images/startP.jpg">
+			<span class="close"></span>
+			<span class="countScore">0</span>
+		</div>
+	</div>
+	<script src="js/jquery-3.3.1.js"></script>
+	<script src="js/map.js"></script>
+	<script src="js/food.js"></script>
+	<script src="js/snake.js"></script>
+	<script>
+		(function() {
+			//获取地图,即蛇运动的范围
+			var $map = $('.mainMap');
+			var map = Map($map);
+			var snake = Snake();
+			// console.log(snake)
+			//生成食物
+			var food = Food();
+			var timer = null;
+			var $startInterface = $('.startInterface');
+			var $mainInterface = $('.mainInterface');
+			var $overInterface = $('.overInterface');
+			var $startBg = $('.startBg');
+			var $btn = $('#btn');
+			var $close = $('.close');
+
+			// console.log(food)
+			//监听事件
+			bindEvents();
+			// function snakeMove() {
+			// 	snake.move();
+			// 	//移出之前的蛇
+			// 	$('.snakeHead').add('.snakeBody').remove();
+			// 	//当蛇数组中的坐标发生改变时重新展示
+			// 	snake.show($map);
+			// }
+			function getScore() {
+				var score = snake.eatFood(food,map.width, map.height, $map);
+				$('.scores').text(score);
+				$('.countScore').text(score);
+			}
+			//若是蛇撞墙或咬到自己(蛇头坐标与蛇身重合),则游戏结束
+			function gameOver() {
+				clearInterval(timer);
+				$('.overInterface').css('display','block');
+			}
+			//重新加载游戏
+			function reloadGame() {
+				food = Food();
+				snake = Snake();
+				$('.scores').text(snake.scores);
+				$('.countScore').text(snake.scores);
+			}
+			function autoPlay() {
+				snake.snakeMove($map);
+				getScore();
+				if(snake.snakeDead(map)){
+					gameOver();
+				}
+			}
+			function bindEvents() {
+				//开始进入主界面
+				$startBg.click(function() {
+					$startInterface.css('display','none');
+					$mainInterface.css('display','block');
+					map.show();
+					food.show(map.width,map.height,$map);
+					snake.show($map);
+					timer = setInterval(autoPlay,snake.speed)
+				})
+				//监听开始暂停按钮
+				$btn.click(function() {
+					$(this).toggleClass('startBtn');
+					if($(this).hasClass('startBtn')){
+						clearInterval(timer)
+					}else{
+						timer = setInterval(autoPlay,snake.speed)
+					}
+				})
+
+				//监听关闭按钮
+				$close.click(function() {
+					$(this).parent().parent().css('display','none');
+					$mainInterface.css('display','none');
+					$('.snakeHead').add('.snakeBody').add('.apple').remove();
+					reloadGame();
+					$startInterface.css('display','block');
+				})
+
+				//监听上下左右按键事件
+				document.onkeydown = function(event) {
+					var event = event || window.event;
+					var code = event.keyCode || event.which;
+					// console.log(code)
+					snake.setDirection(code);
+					if(code == 32){
+						$btn.trigger('click');
+					}
+					// console.log(snake.direction);
+				}
+			}
+		}())
+	</script>
+</body>
+</html>

@@ -1,0 +1,13 @@
+.clearfix::after,
+.clearfix::before {
+    content: '';
+    clear: both;
+    font-size: 0;
+    display: block;
+}
+.fr {
+    float: right;
+}
+.fl {
+    float: left;
+}

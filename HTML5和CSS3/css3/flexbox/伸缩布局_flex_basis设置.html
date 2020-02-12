@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+        ul {
+            width: 400px;
+            height: 400px;
+            border: 1px solid #000;
+            margin: 100px auto;
+            /* display: flex; */
+            align-items: flex-start;
+        }
+        ul li {
+            /* width: 200px; */
+            height: 100px;
+            text-align: center;
+            line-height: 100px;
+            color: #fff;
+            font-size: 40px;
+            margin-top: 40px;
+        }
+        ul li:nth-child(1) {
+            /* flex-basis作用于伸缩项中 */
+            /* 使得伸缩项按照主轴方向进行拉伸,或理解为宽度,高度设置 */
+            /* 主轴方向为水平,则设置宽度,反之为高度 */
+
+            /* 其默认值为 auto,伸缩项的宽度由内容撑开 */
+            /* flex-basis: auto; */
+
+            /* 1.当给伸缩项的width属性设置了具体数值,又给它设置了flex-basis也为具体数值,则width失效,flex-basis优先级高于width */
+            /* width: 200px;
+            flex-basis: 100px; */
+
+
+            /* 2.当给伸缩项的flex-basis属性设置为auto,又给它的width设置为具体数值或%,则flex-basis失效 */
+            /* width: 100px; */
+            flex-basis: auto;
+            width: 100%;
+            background-color: pink;
+        }
+        ul li:nth-child(2) {
+            background-color: tomato;
+        }
+        ul li:nth-child(3) {
+            background-color: skyblue;
+        }
+    </style>
+</head>
+<body>
+    <ul>
+        <li>1</li>
+        <li>2</li>
+        <li>3</li>
+    </ul>
+</body>
+</html>

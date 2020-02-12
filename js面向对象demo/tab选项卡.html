@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            list-style-type: none;
+        }
+
+        #tab {
+            width: 400px;
+            margin: 100px auto;
+            border: 1px solid #eee;
+            background: #f2f2f2;
+        }
+
+        #tab_top {
+            display: flex;
+        }
+
+        #tab_top li {
+            flex: 1;
+            text-align: center;
+            line-height: 30px;
+            height: 30px;
+            width: 100px;
+            cursor: pointer;
+        }
+
+        #tab_top li.selected {
+            color: #222;
+            font-weight: bolder;
+            border-bottom: 2px solid #f40;
+        }
+
+        #tab_bottom {
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        #tab_bottom li {
+            padding: 15px 10px;
+            display: none;
+        }
+    </style>
+    <div id="tab">
+        <ul id="tab_top">
+            <li class="tab-item selected">公告</li>
+            <li class="tab-item">规则</li>
+            <li class="tab-item">论坛</li>
+            <li class="tab-item">安全</li>
+        </ul>
+        <ul id="tab_bottom">
+            <li class="tab-content">公告</li>
+            <li class="tab-content">规则</li>
+            <li class="tab-content">论坛</li>
+            <li class="tab-content">安全</li>
+    </div>
+    </div>
+</head>
+
+<body>
+    <script>
+        class Tab {
+            constructor() {
+                //拿到需要操作的tab元素   
+                this.tab = document.getElementById('tab_top');
+                this.tab_items = document.querySelectorAll('.tab-item');
+                this.tab_content = document.querySelectorAll('.tab-content');
+                this.tab_items[0].style.display = 'block';
+                this.tab_content[0].style.display = 'block';
+                this.preIndex = 0;
+            }
+            // addClickEvent() {//利用排他思想
+            //     let len = this.tab_items.length;
+            //     for (let i = 0; i < len; i++) {
+            //         this.tab_items[i].onclick = () => {
+            //             this._change(i);
+            //         }
+            //     }
+            // }
+            addMouseEvent() {
+                let len = this.tab_items.length;
+                //ES6的写法:利用块级作用域和闭包解决了元素与索引的相互对应,代码简单
+                // for (let i = 0; i < len; i++) {
+                //     this.tab_items[i].onmouseenter = () => {
+                //         this._change(i);
+                //     }
+                // }
+
+                //ES5的写法:利用事件委托,这样性能有所提升,因为没有给每个元素都绑定一个事件处理函数
+                //这里不能用onmouseenter,因为它不支持冒泡,无法获取事件的源对象
+                this.tab.onmouseover = (e) => {
+                    var e = e || window.event;
+                    var targetEle = e.target;
+                    var curIndex = Array.from(this.tab_items).findIndex((item) => {
+                        return targetEle === item;
+                    })
+                    if ( curIndex === -1 ) return;
+                    this._change(curIndex);
+                    // for (var i = 0; i < len; i ++) {
+                    //     if (this.tab_items[i] === targetEle) {
+                    //         return this._change(i);
+                    //     }
+                    // }
+                }
+            }
+            _change(i) {
+                if ( i === this.preIndex ) return;//避免作用到同一元素而触发不必要的事件
+                let curItem = this.tab_items[i];
+                let curContent = this.tab_content[i];
+                //给当前被点击的元素添加类名
+                curItem.classList.add('selected');
+                // curItem.className += ' selected';
+                curContent.style.display = 'block';
+
+
+                //将上一个被点击的元素所绑定的类名移除
+                this.tab_items[this.preIndex].classList.remove('selected');
+                // this.tab_items[this.preIndex].className.replace('selected', '');
+                //将上一个被点击的元素所对应的内容区域隐藏
+                this.tab_content[this.preIndex].style.display = 'none';
+                //保存索引
+                this.preIndex = i;
+            }
+        }
+        new Tab().addMouseEvent();
+        // new Tab().addClickEvent();
+    </script>
+</body>
+
+</html>

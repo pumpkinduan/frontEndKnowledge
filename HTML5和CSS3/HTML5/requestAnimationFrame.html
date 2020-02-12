@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .box {
+            width: 200px;
+            height: 200px;
+            background-color: pink;
+            border-radius: 10px 10px 5px 5px;
+        }
+        #btn {
+            margin-top: 220px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box"></div>
+    <button id="btn">开始运动</button>
+    <script>
+        //window.requestAnimationFrame(callBack)告诉浏览器在每次重绘页面(大约每16.7ms)之前调用指定的回调函数
+        //该方法接收一个回调函数为参数,并给回调函数传入一个双精度的时间戳(ms),表示回调函数开始执行的时刻
+        //我们可以利用递归调用requestAnimationFrame()来实现动画函数效果
+
+
+        //由于显示器每秒可刷新60次,该API的优势便利用了显示器的刷新机制,
+        //将回调函数的执行频率与显示器的刷新频率保持同步,则可使得动画流畅,优化性能
+        //如: 要是页面每秒重绘60次,那么 我就每秒执行60次回调函数,不多也不少,即可保证效果,也不影响性能
+        /*
+        let i = 0;
+        function test(timestamp) {
+            if ( i == 2 ) { return window.cancelAnimationFrame(timeId) }
+            console.log(Date.now()) // 1558315810962   1558315810974
+            console.log(timestamp); // 14.728          31.075
+            //从上面打印结果可看出执行了两次回调函数
+            //每个时间戳表示当前时刻,而两个时间戳之间的差值约为 16.3ms左右,每次刷新页面看到的结果都不一样
+            //因为时间无时无刻都在变化,timestamp也就不一样了,不过最近的两个时间戳之间的差值都差不多为16.3~16.7
+            i ++;
+            requestAnimationFrame(test);
+        }
+        let timeId = requestAnimationFrame(linear);
+        */
+
+
+        //练习: 
+        let oBox = document.querySelector('div');
+        oBox.style.position = 'absolute';
+        oBox.style.left = '0px';
+        let btn = document.getElementById('btn');
+        btn.onclick = function () {
+            let start = parseInt(oBox.style.left);
+            let speed = 5;
+            function linear(timestamp) {
+                if (start >= 200) return window.cancelAnimationFrame(timeId);
+                start += speed;
+                oBox.style.left = start + 'px';
+                window.requestAnimationFrame(linear);
+            }
+            let timeId = window.requestAnimationFrame(linear);
+        }
+
+        //end:number
+        /*
+        function linearMove(obj, end) {
+            let start = parseInt(obj.offsetLeft);
+            let speed = ( end - start ) > 0 ? 10 : -10;
+            function middleFunc(timestamp) {
+                !start && (start = timestamp);
+                let progress = timestamp - start;
+                let k = 5;
+                obj.style.left = Math.min( progress / k ,end ) + 'px';
+                if ( progress < k * end ) {
+                    requestAnimationFrame(middleFunc);
+                }
+            }
+            let timeId = window.requestAnimationFrame(middleFunc);
+        }
+        linearMove(oBox, 200)
+        */
+    </script>
+</body>
+
+</html>

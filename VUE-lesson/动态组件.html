@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<div id="app">
+		<button @click="change">切换组件</button>
+		 <!-- 根据不同条件显示不同的组件，可以通过v-if实现，但是这种方法不是最好的方法 -->
+		<!-- <com1 v-if="isActive"></com1>
+		<com2 v-else></com2> -->
+
+		<!-- component标签是动态组件标签,需要设置is属性,is设置为哪个组件名,component在渲染时就会被渲染为这个组件 -->
+        <!-- 所以,要想实现组件的切换,只需要将cmponent的is属性绑定到一个变量上,变量的值在多个组件名之间切换,就能实现组件的切换 -->
+		<!-- <component :is="cmpName"></component> -->
+
+        <!-- 如果希望组件切换时保留原来的组件,切回时不创建新的组件,则需要把component写在keep-alive -->
+        <keep-alive>
+        	<component :is="cmpName"></component>
+        </keep-alive>
+	</div>
+	<script src="vue.js"></script>
+	<script>
+		let vm = new Vue({
+			el: '#app',
+			data: {
+				isActive: true,
+				cmpName: 'com1'
+			},
+			methods: {
+				change() {
+					this.isActive = this.isActive ? false : true;
+					this.cmpName = this.cmpName === 'com1' ? 'com2' : 'com1'; 
+				}
+			},
+			components: {
+				'com1': {
+					data() {
+						return {
+							lists: [1,2,3,4,5]
+						}
+					},	
+					template: `<div>
+								组件1:<input></input>
+							   </div>
+							  `
+				},
+				'com2': {
+					template: `<div>组件2:<input></input></div>`
+				}
+			}
+		})	
+	</script>
+</body>
+</html>

@@ -33,10 +33,10 @@
     // 一个数据结构只要部署了Symbol.iterator属性,就被视为具有iterator接口,就可以用for...of循环遍历它的成员。
     // 也就是说,for...of循环内部调用的是数据结构的Symbol.iterator方法。
     // 所以上的 Array Map Set String arguments NodeLists的实例可以直接用for of循环
-    let arr = [1,2,3]
-    for(let i of arr){
-        console.log(i)
-    }//1 2 3
+    // let arr = [1,2,3]
+    // for(let i of arr){
+    //     console.log(i)
+    // }//1 2 3
 
     //模拟部署在数组上的遍历器-->arr[Symbol.iterator]
     // function myIterator(arr) {
@@ -51,13 +51,14 @@
     //      }
     //  }
     // }
-    let map = new Map();
-    map.set('0',1);
-    map.set('1',2)
-    console.log(map)
-    for (var k of map) {
-        console.log(k)
-    }
+    // let map = new Map();
+    // map.set('0',1);
+    // map.set('1',2)
+    // console.log(map)
+    // for (var k of map) {
+    //     console.log(k)
+    // }
+
     </script>
 </body>
 

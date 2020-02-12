@@ -8,13 +8,14 @@
 </head>
 <body>
     <script>
-        //instanceof: 该运算符用于测试构造函数的prototype属性是否出现在对象的原型链中的任何位置
+        //instanceof: 该运算符用于测试构造函数的prototype是否出现在对象的原型链中的任何位置
         function Person() {
 
         }
         var xx = new Person();
         // console.log( xx instanceof Person );//true
-
+        console.log( xx instanceof Object );//true
+        // xx.__proto__ -> Person.prototype; Person.prototype.__proto__ -> Object.prototype
         //模拟实现
         //突破口: Object.prototype.__proto__ === null
         function my_instanceof(obj, Func) {

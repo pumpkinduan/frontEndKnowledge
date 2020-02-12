@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            list-style-type: none;
+        }
+        ul {
+            width: 600px;
+            border: 1px solid #000;
+            margin: 100px auto;
+            /* 使得ul成为伸缩容器,默认有主轴和侧轴 */
+            /* ul的直接子元素成为伸缩容器 */
+            display: flex;
+            /* flex-direction:规定了主轴的方向,也是容器里伸缩项的排列方向 */
+            /* 默认为row,也就是主轴的起点在伸缩容器的最左边,终点在最右边 */
+            /* 这样伸缩项会水平排列,从左至右 */
+            /* flex-direction: row; */
+            
+            /* 改变主轴的方向,主轴的起点在伸缩容器的最右边,终点在最左边 */
+            /* 这样伸缩项会水平排列,从右至左 */
+            /* flex-direction: row-reverse; */
+
+            /* 使得伸缩项从上至下排列 */
+            /* flex-direction: column; */
+
+            /* 使得伸缩项从下至上排列 */    
+            flex-direction: column-reverse;
+            /**********************************************************/
+        }
+        ul li {
+            width: 100px;
+            height: 100px;
+            background: pink;
+            text-align: center;
+            line-height: 100px;
+            color: #fff;
+            font-size: 40px;
+        }
+        ul li:nth-child(2) {
+            background-color: tomato;
+        }
+        ul li:nth-child(3) {
+            background-color: skyblue;
+        }
+    </style>
+</head>
+<body>
+    <ul>
+        <li>1</li>
+        <li>2</li>
+        <li>3</li>
+    </ul>
+</body>
+</html>

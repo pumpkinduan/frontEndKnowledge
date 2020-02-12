@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>百度登录框</title>
+    <link rel="stylesheet" href="iconfont.css">
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            list-style: none;
+            text-decoration:none;
+        }
+        
+        .box{
+            width: 360px;
+            height: 460px;
+            background-color:#fff;
+            margin:100px auto;
+            
+            box-sizing:border-box;
+            border:1px solid #000;
+        }
+        .box .wrapper{
+            width: 300px;
+            position:relative;
+            padding:30px 30px 0 30px;
+        }
+        .box .wrapper>i{
+            position:absolute;
+            top:10px;
+            right:10px;
+            font-size:24px;
+            font-weight:bolder;
+            cursor: pointer;
+        }
+        .box .wrapper>i:hover{
+            opacity:0.5;
+        }
+        .box .logo{
+            background: #fff url() 0 0 no-repeat;
+            background:url(img/loginlogo.png) left no-repeat;
+            font-size:16px;
+            /*width:300px;*/
+            height:32px;
+            box-sizing:border-box;
+            padding-left:118px;
+            padding-top:12px;
+            margin-top:10px;
+        }
+        .box .text{
+            margin-top:50px;
+        }
+        .box .text input,.box .pw input{
+            width:290px;
+            height: 42px;
+            padding-left:10px;
+            line-height:42px;
+            font-size:14px;
+            border:1px solid #ddd;
+            
+        }
+        .box .pw{  
+            margin-top:30px;
+        }
+        .box p input{
+            box-shadow: 0 0 0 25px #fff inset;
+        }
+        .box .log-on,.box .check-box{
+            margin-top:20px;
+            font-size:12px;
+        }
+        .box .check-box input,label{
+            vertical-align:top;
+        }
+        label{
+            display:inline-block;
+            line-height: 12px;
+        }
+        .box .log-on{
+            margin-top:10px;
+        }
+        .box .log-on input{
+            width: 300px;
+            line-height: 40px;
+            background-color:#3f89ec;
+            border-radius:5px;
+            text-align:center;
+            font-weight:bolder;
+            color:#fff;
+            border:none;
+            cursor:pointer;
+        }
+        .box .prompt{
+            margin-top:15px;
+            /*width:300px;*/
+            font-size:12px;
+            color:#3f89ec;
+            display:flex;
+            justify-content:space-between;
+        }
+        .box .bottom-message{
+            height: 60px;
+            padding:0 30px;
+            background-color:#f0f6ff;
+            color:#2e82ff;
+        }
+        .box .core-bottom{
+            position:relative;
+            margin-top:40px;
+        }
+        .box .bottom-message p{
+            position: absolute;
+            font-size:14px;
+        }
+        .box .bottom-message p:last-child{
+            width: 60px;
+            height: 40px;
+            right:0;
+            top:20px;
+        }
+        .box .bottom-message .QR{
+            width:80px;
+            height: 20px;
+            padding-top:20px;
+
+        }
+        .box .bottom-message p:hover,.box .prompt a:hover{
+            opacity: 0.6;
+            cursor: pointer;
+        }
+         .box .bottom-message .QR span{
+            padding-right:68px;
+            padding-top:12px;
+            font-size:0;
+            border-right:1px solid #2e82ff;
+        }
+        .box a{
+            color:#2e82ff;
+            /*font-size:18px;*/
+        }
+        .box .bottom-message ul{
+            width: 40px;
+            position: absolute;
+            top:20px;
+            left:80px;
+        }
+        .box .bottom-message ul li:first-child{
+            float:left;
+        }
+        .box .bottom-message ul li:last-child{
+            float:right;
+        }
+    </style>
+</head>
+<body>
+    <button>登录</button>
+    <!-- <div class="box">
+        <div class="wrapper">
+                <i class="iconfont icon-shanchuyixuanqunchengyuanchacha"></i>
+                <div class="logo">用户名密码登录</div>
+                <p class="text">
+                    <input type="text" placeholder="手机/邮箱/用户名">
+                </p>
+                <p class="pw">
+                    <input type="password" placeholder="密码">
+                </p>
+                <div class="check-box">
+                    <input type="checkbox" checked id="xxx">
+                    <label for="xxx">下次自动登录</label>
+                </div>
+                <div class="log-on">
+                    <input type="submit" value="登录">
+                </div>
+                <div class="prompt">
+                    <a href="#">忘记密码?</a>
+                    <a href="#">短信快捷登录</a>
+                </div>
+        </div>
+        <div class="bottom-message">
+            <div class="core-bottom">
+                <div class="QR">
+                    <p>扫码登录</p>
+                    <span></span>
+                </div>
+                <ul class="icon">
+                    <li>
+                        <a href="#" class="iconfont icon-qq" title="微博账号"></a>
+                    </li>
+                    <li>
+                        <a href="#" class="iconfont icon-xinlangweibo" title="QQ账号"></a>
+                    </li>
+                </ul>
+                <p><a href="#">立即注册</a></p>
+            </div>
+        </div>
+        
+    </div> -->
+    <script src="jquery-3.3.1.js"></script>
+    <script>
+        var key = true;
+        $('button').on('click',function (){
+            if(key){
+                key = false;
+                var str = '<div class="box">\
+                                <div class="wrapper">\
+                                        <i class="iconfont icon-shanchuyixuanqunchengyuanchacha"></i>\
+                                        <div class="logo">用户名密码登录</div>\
+                                        <p class="text">\
+                                            <input type="text" placeholder="手机/邮箱/用户名">\
+                                        </p>\
+                                        <p class="pw">\
+                                            <input type="password" placeholder="密码">\
+                                        </p>\
+                                        <div class="check-box">\
+                                            <input type="checkbox" checked id="xxx">\
+                                            <label for="xxx">下次自动登录</label>\
+                                        </div>\
+                                        <div class="log-on">\
+                                            <input type="submit" value="登录">\
+                                        </div>\
+                                        <div class="prompt">\
+                                            <a href="#">忘记密码?</a>\
+                                            <a href="#">短信快捷登录</a>\
+                                        </div>\
+                                </div>\
+                                <div class="bottom-message">\
+                                    <div class="core-bottom">\
+                                        <div class="QR">\
+                                            <p>扫码登录</p>\
+                                            <span></span>\
+                                        </div>\
+                                        <ul class="icon">\
+                                            <li>\
+                                                <a href="#" class="iconfont icon-qq" title="微博账号"></a>\
+                                            </li>\
+                                            <li>\
+                                                <a href="#" class="iconfont icon-xinlangweibo" title="QQ账号"></a>\
+                                            </li>\
+                                        </ul>\
+                                        <p><a href="#">立即注册</a></p>\
+                                    </div>\
+                        </div>';
+                $('body').append($(str));
+                }
+                $('.box').css('display','block');
+                $('i').one('click',function (){
+                    $('.box').css('display','none');
+                })
+        });
+    </script>
+</body>
+</html>

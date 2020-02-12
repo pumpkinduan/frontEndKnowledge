@@ -1,0 +1,13 @@
+{
+    ".js": 	"application/x-javascript",
+    ".jpeg": "image/jpeg",
+    ".jpg": "image/jpeg",
+    ".ico": "image/x-icon",
+    ".html": "text/html",
+    ".css": "text/css",
+    ".txt": "text/plain",
+    ".avi": "video/x-msvideo",
+    ".mp3": "audio/mpeg",
+    ".mp4": "video/mp4",
+    ".png": "image/png"
+}

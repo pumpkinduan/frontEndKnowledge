@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>jq实现折叠菜单栏</title>
+    <link rel="stylesheet" href="iconfont.css">
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            list-style:none;
+        }
+        .wrapper{
+            width: 280px;
+            margin:100px auto;
+        }
+        .wrapper>li{
+            border:1px solid #aaa;
+            line-height:30px;
+            border-bottom:none;
+            font-size:14px;
+            text-indent:2em;
+            position:relative;
+        }      
+        .wrapper>li:first-child{
+            border-top-right-radius:10px; 
+            border-top-left-radius:10px; 
+        }
+        .wrapper>li:last-child{
+            border-bottom:1px solid #aaa;
+            border-bottom-right-radius:10px; 
+            border-bottom-left-radius:10px;
+        }
+        .wrapper>li>span{
+            display:inline-block;
+            cursor:pointer;
+            width:28px;
+            height:28px;
+            position:absolute;
+            right:10px;
+            top:0px;
+            background:url(img/xiala.png) 0 0 no-repeat;
+            transform:rotate(-90deg);
+        }
+        .wrapper>.selected>span{
+            transform:rotate(0deg);
+        }
+        .wrapper .sub{
+            display:none;
+        }
+        .wrapper .sub>li{
+            list-style:none;
+            background-color:pink;
+            border-bottom:1px solid #fff;
+        }
+        .wrapper .sub>li:hover{
+            background-color:lightblue;
+        }
+    </style>
+</head>
+<body>
+        <ul class="wrapper">
+            <li>
+                一级菜单
+                <span></span>
+                <ul class="sub">
+                    <li>二级菜单</li>
+                    <li>二级菜单</li>
+                    <li>二级菜单</li>
+                    <li>二级菜单</li>
+                </ul>
+            </li>
+            <li>
+                一级菜单
+                <span></span>
+                <ul class="sub">
+                    <li>二级菜单</li>
+                    <li>二级菜单</li>
+                    <li>二级菜单</li>
+                    <li>二级菜单</li>
+                </ul>
+            </li>
+             <li>
+                一级菜单
+                <span></span>
+                <ul class="sub">
+                    <li>二级菜单</li>
+                    <li>二级菜单</li>
+                    <li>二级菜单</li>
+                    <li>二级菜单</li>
+                </ul>
+            </li>
+            <li>
+                一级菜单
+                <span></span>
+                <ul class="sub">
+                    <li>二级菜单</li>
+                    <li>二级菜单</li>
+                    <li>二级菜单</li>
+                    <li>二级菜单</li>
+                </ul>
+            </li>
+            <li>
+                一级菜单
+                <span></span>
+                <ul class="sub">
+                    <li>二级菜单</li>
+                    <li>二级菜单</li>
+                    <li>二级菜单</li>
+                    <li>二级菜单</li>
+                </ul>
+            </li>
+            <li>
+                一级菜单
+                <span></span>
+                <ul class="sub">
+                    <li>二级菜单</li>
+                    <li>二级菜单</li>
+                    <li>二级菜单</li>
+                    <li>二级菜单</li>
+                </ul>
+            </li>
+            <li>
+                一级菜单
+                <span></span>
+                <ul class="sub">
+                    <li>二级菜单</li>
+                    <li>二级菜单</li>
+                    <li>二级菜单</li>
+                    <li>二级菜单</li>
+                </ul>
+            </li>
+        </ul>
+    <script src="jquery-3.3.1.js"></script>
+    <script>
+        $(function (){
+            $('.wrapper>li').hover(function (){
+                var $sub = $(this).children('.sub');
+                //停止当前正在运行的动画,避免用户多次触发动画发生
+                $sub.stop();
+                $sub.slideDown(500,'linear');
+                // $(this).children('span').css({'transform':'rotate(0deg)'});
+                $(this).addClass('selected');
+                $(this).siblings().removeClass('selected');
+                var other = $(this).siblings().children('.sub');
+                other.slideUp(500,'linear');
+            },function (){
+                var $sub = $(this).children('.sub');
+                $sub.stop();
+                // $(this).children('span').css({'transform':'rotate(-90deg)'});
+                $(this).removeClass('selected');
+                $sub.slideUp(500,'linear');
+            })
+        })
+
+    </script>
+</body>
+</html>

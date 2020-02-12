@@ -32,12 +32,12 @@ function ajax(option) {
 			xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
 		}
 		if (option.type.toUpperCase() === 'GET') {
-			xmlhttp.open("GET", option.url + "?" + dataStr, true);
+			xmlhttp.open("GET", option.url + "?" + option.data, true);
 			xmlhttp.send();
 		} else if (option.type.toUpperCase() === 'POST') {
 			xmlhttp.open("POST", option.url, true);
 			xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-			xmlhttp.send(dataStr);
+			xmlhttp.send(option.data);
 		}
 		xmlhttp.onreadystatechange = function () {
 			if (xmlhttp.readyState === 4) {

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<div id="app">
+		<ul>
+			<li v-for="item in renderMovie">{{item}}</li>
+		</ul>
+		<button v-on:click="addMovie">添加电影</button>
+	</div>
+	<script src="vue.js"></script>
+	<script>
+		new Vue({
+			el: '#app',
+			data: {
+				movies: [
+					{
+						name: 'crazy alien',
+						year: 2019
+					},
+					{
+						name: '流浪地球',
+						year: 2019
+					},
+					{
+						name: '廉政风云',
+						year: 2019
+					}
+				]
+			},
+			computed: {
+				//依赖缓存,当movies成员发生改变时,则会触发该函数的执行
+				renderMovie() {
+					return this.movies.map(function(movie) {
+						return movie.name + '(' + movie.year + ')';
+					})	
+				}
+			},
+			watch: {
+				movies(newValue) {
+					alert('我添加了' + newValue[newValue.length - 1].name)
+				}
+			},
+			methods: {
+				addMovie() {
+					//利用数组的push方法,可以检测到数组成员的变化,因为vue中重写了一份push源码,从而可以根据数组成员的值变化来动态渲染DOM
+					this.movies.push({name: '新喜剧之王', year: 2019})
+				}
+			}
+		})
+	</script>
+</body>
+</html>

@@ -3,9 +3,10 @@
 //以mvvm为中心进行建立
 function MVVM(option) {
     //拿到根元素与其子元素所需依赖的数据
-    this.el = document.getElementById(option.el);
+    this.el = document.querySelector(option.el);
     this._data = option.data;
     //保存根元素的模板,避免重复访问innerHTML
+    console.log( this.el)
     this.originTemplate = this.el.innerHTML;
     //定义vue实例下的一个watcher对象
     let watcher = new Watcher(this, localRender);
@@ -141,7 +142,7 @@ function createVirtualDom(node) {
             //解析{{name}}这类的模板字符串(文本结点)
             var templateArr = parseTemplate(child.nodeValue);
             //将模板字符串{{name}}与其所在的文本结点形成一对多的映射
-            //因为模板字符串{{name}}可在在多个文本结点中使用
+            //因为模板字符串{{name}}可能在多个文本结点中使用
             for ( let j = 0, l = templateArr && templateArr.length; templateArr && j < l; j ++ ) {
                 if ( this.mapping.has(templateArr[j]) ) {
                     let tempArr = this.mapping.get(templateArr[j]);
@@ -156,6 +157,7 @@ function createVirtualDom(node) {
             continue;
         }
     }
+    console.log(tempVNode)
     return tempVNode;
 }
 

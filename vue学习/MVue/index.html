@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./global.js"></script>
+    <script src="./Watcher.js"></script>
+    <script src="./Observer.js"></script>
+    <script src="./Compiler.js"></script>
+    <script src="./index.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <h1>我是h1</h1>
+        <p>我是一个p标签 <span v-text="age"></span></p>
+        <span>{{msg}}</span>
+        <span>--male--{{persons.sex}} ----- {{persons.hobby}}</span>
+        <span class="text" v-text="name"></span>
+        <input v-model="index" type="text">
+        <p>{{index}}</p>
+        <p v-html="age"></p>
+        <b v-html="persons.play"></b>
+        <button v-on:click="pop" v-text="prompt"></button>
+    </div>
+
+</body>
+<script>
+    let vm = new MVue({
+        el: "#app",
+        data: {
+            persons: {
+                sex: 'male',
+                hobby: 'girl',
+                play: '<em>basketball</em>'
+            },
+            msg: '你好span',
+            name: 'pumpkin',
+            age: '<h2>18</h2>',
+            index: 1,
+            prompt: 'click',
+            hi: 'hi'
+        },
+        methods: {
+            pop() {
+                alert('hi');
+                console.log(this.age)
+            }
+        }
+    })
+</script>
+
+</html>

@@ -16,20 +16,22 @@
         <div>
             年龄:<span>{{age}}</span>
         </div>
-        {{test}}
         <input type="text">
+        <span v-text="hobby"></span>
     </div>
     <!-- <script src="defineReactive1.js"></script> -->
     <!-- <script src="defineReactive2.js"></script> -->
     <script src="index.js"></script>
+    <!-- <script src="../vue.js"></script> -->
     <script>
         let data = {
             name: 'Lebran James',
             age: 34,
-            sex: 'male'
+            sex: 'male',
+            hobby: 'girl'
         }
         let myMVVM = new MVVM({
-            el: 'app',
+            el: '#app',
             data: data
         });
     </script>

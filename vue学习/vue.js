@@ -702,7 +702,6 @@
 
   Dep.prototype.addSub = function addSub (sub) {
     this.subs.push(sub);
-    console.log(this.subs[0] === Dep.target)
   };
 
   Dep.prototype.removeSub = function removeSub (sub) {
@@ -727,8 +726,6 @@
     }
     for (var i = 0, l = subs.length; i < l; i++) {
       subs[i].update();
-      console.log(subs)
-      console.log('updated')
     }
   };
 
@@ -1022,7 +1019,6 @@
       enumerable: true,
       configurable: true,
       get: function reactiveGetter () {
-        console.log(Dep.target)
         var value = getter ? getter.call(obj) : val;
         if (Dep.target) {
           dep.depend();

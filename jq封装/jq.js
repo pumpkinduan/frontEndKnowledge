@@ -187,8 +187,6 @@
             target = this;
             i--;
         }
-
-
         // var obj = {a:1}
         // var obj1 = {aa:11,c:obj}
         // obj = {a:1,aa:11,c:obj}

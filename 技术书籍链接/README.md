@@ -6,3 +6,5 @@
 - [JavaScript标准参考教程2](https://wangdoc.com/javascript)
 - [较深入的JS参考小册](https://yangbo5207.github.io/wutongluo/ji-chu-jin-jie-xi-lie/yi-3001-nei-cun-kong-jian-xiang-jie.html)
 - [ES6标准入门教程](https://es6.ruanyifeng.com/#docs/let)
+#### 写文档的编辑器
+- [Markdown入门](http://xianbai.me/learn-md/index.html)

@@ -31,7 +31,7 @@ HTTP协议由请求报文和响应报文组成。
     - GET对数据长度有限制，因为发送数据时，会被添加到URL中，而URL长度是受限制的(最大长度是2048个字符)，而POST无限制
     - GET可收藏为书签，而POST不可以
     - GET历史参数会保留在浏览器历史中，POST不会
-    - GET只允许ASII字符，POST无限制，也允许二进制数据
+    - GET只允许ASCII字符，POST无限制，也允许二进制数据
     - GET编码类型为application/x-www-form-url，而post为encodedapplication/x-www-form-urlencoded或multipart/form-data，为二进制数据提供多重编码类型
     - GET后退/刷新无影响，POST数据会被重新提交
     - POST => 浏览器会先发送header，服务器响应100 continue，浏览器再发送data，服务器响应200 ok则返回数据，而GET请求 => 浏览器会把header和data一并发送出去，所以**GET产生一个TCP数据包，而POST产生两个**

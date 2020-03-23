@@ -5,29 +5,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=0.5">
     <title>Document</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-        }
-        img{
-            width: 300px;
-            display: block;
-        }
-    </style>
 </head>
-<!-- 不缩放的情况下，一个css像素等于一个设备独立像素 -->
-
 <body>
-    <img src="./1.jpg" alt="">
     <script>
         // 生成二叉树结点
         // 每一个结点包含一个数据域、左右孩子结点的引用
         class Node {
-            constructor(value, left = null, right = null) {
+            constructor(value) {
                 this.value = value;
-                this.left = left;
-                this.right = right;
+                this.left = null;
+                this.right = null;
             }
             show() { //显示当前结点的值
                 console.log(this.value);
@@ -155,6 +142,32 @@
         // tree.inOrderTraversal(tree.root); // 2 3 5 7 9
         // console.log(tree.lastOrderTraversal(tree.root)); // 3 7 9 5 2
         tree.tierOrderTraversal(tree.root);
+
+        // 前序遍历序列的第一个结点确定为根节点root
+        // 在中序遍历序列中找到root并分割出左右两个子序列，root左边的是左子树，右边的是右子树
+        // 对左右子树分别递归使用相同的方法继续分解
+        // 递归结束的条件是前序遍历序列为空或还剩一个结点
+        function createTreeByOrder(lastOrder, inOrder) {
+            if (lastOrder.length == 0) {
+                return null;
+            }   
+            if (lastOrder.length == 1) { // 没有这个if则会进入死循环，导致栈溢出
+                return new Node(lastOrder[0])
+            }
+            let value = lastOrder[lastOrder.length - 1];
+            let node = new Node(value);
+            let index = inOrder.indexOf(value);
+            let leftTreeInOrder = inOrder.slice(0, index);
+            let rightTreeInOrder = inOrder.slice(index + 1);
+            let leftTreeLastOrder = lastOrder.slice(0, index);
+            let rightTreeLastOrder = lastOrder.slice(index, inOrder.length - 1);
+            node.left = createTreeByOrder(leftTreeLastOrder, leftTreeInOrder);
+            node.right = createTreeByOrder(rightTreeLastOrder, rightTreeInOrder);
+            return node;
+        }
+        let newTree = createTreeByOrder([7, 4, 2, 5, 8, 6, 3, 1],[4,7,2,1,5,3,8,6])
+        // console.log(tree.preOrderTraversal(newTree))
+        console.log(tree.inOrderTraversal(newTree))
     </script>
 </body>
 

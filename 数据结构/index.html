@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=0.5">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        img{
+            width: 300px;
+            display: block;
+        }
+    </style>
+</head>
+<!-- 不缩放的情况下，一个css像素等于一个设备独立像素 -->
+
+<body>
+    <img src="./1.jpg" alt="">
+    <script>
+        // 生成二叉树结点
+        // 每一个结点包含一个数据域、左右孩子结点的引用
+        class Node {
+            constructor(value, left = null, right = null) {
+                this.value = value;
+                this.left = left;
+                this.right = right;
+            }
+            show() { //显示当前结点的值
+                console.log(this.value);
+            }
+        }
+        // 构造排序二叉树
+        class Tree {
+            constructor(value) {
+                // 初始化一个根结点
+                this.root = null;
+            }
+            insert(value) { //插入结点
+                // current表示当前操作的结点，第一次是根结点
+                let current = this.root;
+                // 将当前传入的value值构建成一个结点
+                let node = new Node(value);
+                if (!this.root) { //根节点为空时，第一次插入的结点作为根结点
+                    this.root = node;
+                    return;
+                }
+                while (true) {
+                    if (value < current.value) {
+                        if (!current.left) {
+                            current.left = node;
+                            return;
+                        }
+                        current = current.left;
+                    } else {
+                        if (!current.right) {
+                            current.right = node;
+                            return;
+                        }
+                        current = current.right;
+                    }
+
+                }
+            }
+            preOrderTraversal(current) {
+                let stack = [];
+                let result = [];
+                while (current || stack.length > 0) {
+                    while (current) {
+                        stack.push(current);
+                        result.push(current.value);
+                        current = current.left;
+                    }
+                    current = stack.pop();
+                    current = current.right;
+                }
+                console.log(result)
+                return result;
+            }
+            inOrderTraversal(current) {
+                // 遇到一个结点，将其入栈，并去遍历它的左子树
+                // 当左子树遍历结束后(即左子树的左孩子结点为空)，从栈顶弹出这个结点并访问它
+                // 然后将当前被弹出的结点为目标结点，按中序遍历该结点的右子树
+                let stack = [];
+                let result = [];
+                while (current || stack.length > 0) {
+                    while (current) { // 一直向左将沿途结点压入堆栈
+                        stack.push(current);
+                        current = current.left;
+                    }
+                    current = stack.pop(); //当前结点弹出堆栈
+                    result.push(current.value); //访问当前结点
+                    current = current.right; //左子树遍历结束，目标转向右子树
+
+                }
+                console.log(result)
+                return result;
+            }
+            lastOrderTraversal(current) {
+                // 开始，根结点入栈
+                // 1.左孩子结点入栈，直至左孩子结点为空, 指针指向栈顶的结点
+                // 2.栈顶结点的右孩子结点为空或右孩子结点被访问过，则当前结点出栈，访问它并标记被访问
+                // 3.栈顶结点的右孩子结点不为空且没有被标记访问过，右孩子结点入栈，重复1 2 3
+                let stack = [];
+                let result = [];
+                let marked = null;
+                while (current || stack.length > 0) {
+                    while (current) {
+                        stack.push(current);
+                        current = current.left;
+                    }
+                    // 1.1
+                    current = stack[stack.length - 1];
+                    if (!current.right || current.right == marked) {
+                        current = stack.pop();
+                        result.push(current.value);
+                        marked = current;
+                        current = null; //回到1.1处，指针指向栈顶的结点
+                    } else {
+                        current = current.right;
+                    }
+                }
+                return result;
+            }
+            tierOrderTraversal(current) {
+                //遍历从根节点开始，首先将**根节点**入队，
+                //然后开始循环=>结点出队、访问该结点、其左右儿子入队
+                let result = [];
+                let queue = [];
+                if (current) {
+                    queue.push(current);
+                }
+                while (queue.length > 0) {
+
+                    current = queue.shift();
+                    result.push(current.value);
+                    if (current.left) {
+                        queue.push(current.left);
+                    }
+                    if (current.right) { queue.push(current.right); }
+                }
+                return result;
+            }
+        }
+        let tree = new Tree();
+        tree.insert(2);
+        tree.insert(5);
+        tree.insert(3);
+        tree.insert(9);
+        tree.insert(7);
+        // tree.preOrderTraversal(tree.root); // 2 5 3 9 7
+        // tree.inOrderTraversal(tree.root); // 2 3 5 7 9
+        // console.log(tree.lastOrderTraversal(tree.root)); // 3 7 9 5 2
+        tree.tierOrderTraversal(tree.root);
+    </script>
+</body>
+
+</html>

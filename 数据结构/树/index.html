@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=0.5">
     <title>Document</title>
 </head>
+
 <body>
     <script>
         // 生成二叉树结点
@@ -143,31 +144,35 @@
         // console.log(tree.lastOrderTraversal(tree.root)); // 3 7 9 5 2
         tree.tierOrderTraversal(tree.root);
 
-        // 前序遍历序列的第一个结点确定为根节点root
-        // 在中序遍历序列中找到root并分割出左右两个子序列，root左边的是左子树，右边的是右子树
-        // 对左右子树分别递归使用相同的方法继续分解
-        // 递归结束的条件是前序遍历序列为空或还剩一个结点
-        function createTreeByOrder(lastOrder, inOrder) {
-            if (lastOrder.length == 0) {
-                return null;
-            }   
-            if (lastOrder.length == 1) { // 没有这个if则会进入死循环，导致栈溢出
-                return new Node(lastOrder[0])
-            }
-            let value = lastOrder[lastOrder.length - 1];
-            let node = new Node(value);
-            let index = inOrder.indexOf(value);
-            let leftTreeInOrder = inOrder.slice(0, index);
-            let rightTreeInOrder = inOrder.slice(index + 1);
-            let leftTreeLastOrder = lastOrder.slice(0, index);
-            let rightTreeLastOrder = lastOrder.slice(index, inOrder.length - 1);
-            node.left = createTreeByOrder(leftTreeLastOrder, leftTreeInOrder);
-            node.right = createTreeByOrder(rightTreeLastOrder, rightTreeInOrder);
-            return node;
-        }
-        let newTree = createTreeByOrder([7, 4, 2, 5, 8, 6, 3, 1],[4,7,2,1,5,3,8,6])
-        // console.log(tree.preOrderTraversal(newTree))
-        console.log(tree.inOrderTraversal(newTree))
+// 因为后序遍历中树的根节点是最后访问的，而左子树是最先访问的，符合先进后出，所以利用堆栈结构实现
+
+// 根据前序遍历序的第一个结点即为该树的根节点，将其入栈
+// 在中序遍历序列中找到根节点的左右子树
+// 在前序遍历序列中找到左右子树的前序遍历序列
+// 先对右子树进行分割，分割完后在对左子树使用相同方法进行分割
+
+let lastOrder = [];
+function returnLastOrder(preOrder, inOrder) {
+    if (preOrder.length == 0) {
+        return lastOrder;
+    }
+    if (preOrder.length == 1) {
+        lastOrder.unshift(preOrder[0]);
+        return lastOrder;
+    }
+    let value = preOrder[0];
+    lastOrder.unshift(value);
+    let index = inOrder.indexOf(value);
+    let leftTreeInOrder = inOrder.slice(0, index);
+    let leftTreePreOrder = preOrder.slice(1, index + 1);
+
+    let rightTreePreOrder = preOrder.slice(index + 1);
+    let rightTreeInOrder = inOrder.slice(index + 1);
+    returnLastOrder(rightTreePreOrder, rightTreeInOrder);
+    returnLastOrder(leftTreePreOrder, leftTreeInOrder);
+    return lastOrder;
+}
+        console.log(returnLastOrder([1,2,4,7,3,5,6,8], [4,7,2,1,5,3,8,6]))
     </script>
 </body>
 

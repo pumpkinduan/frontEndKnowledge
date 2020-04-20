@@ -26,7 +26,7 @@ let oInput = document.getElementById('inp');
 function sayHi() {
     console.log('成功防抖');
 }
-oInput.addEventListener('input', debounce(sayHi), 400); //成功防抖
+oInput.addEventListener('input', debounce(sayHi, 400), false); //成功防抖
 // 400毫秒内无论触发多少次input事件，最后只执行一次
 </script>  
 ```

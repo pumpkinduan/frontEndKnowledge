@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <button id="loginBtn">登录</button>
+    <script>
+        var getSingle = function (fn) {
+            var instance = null;
+            return function () {
+                return instance || (instance = fn.apply(this, arguments));
+            };
+        };
+
+        var createLoginLayer = function () {
+            var oDiv = document.createElement("div");
+            oDiv.innerText = "I am loginLayer";
+            document.body.appendChild(oDiv);
+            oDiv.style.display = "none";
+            return oDiv;
+        };
+        var createSingleLoginLayer = getSingle(createLoginLayer);
+        document.getElementById("loginBtn").onclick = function () {
+            var loginLayer = createSingleLoginLayer();
+            loginLayer.style.display = "block";
+        };
+    </script>
+</body>
+
+</html>

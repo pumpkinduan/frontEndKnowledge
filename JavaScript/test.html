@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+    
+function curry(fn) {
+    var args = [].slice.call(arguments, 1); // 避免截取fn函数，所以索引为1
+    var fnLength = fn.length;
+    return function _(...params) {
+        // var _args = args.concat([].slice.call(arguments));
+        var _args = [...args, ...params];
+        
+        if (_args.length >= fnLength) { //参数收集完毕，给到原函数并执行
+            return fn.apply(this, _args);
+        }
+        return curry.call(this, fn, ..._args); //保存收集的参数，递归返回一个新的函数继续收集参数
+    }
+}
+        function add(a, b, c) { return a + b + c; }
+        var _add = curry(add);
+        console.log(_add(1, 2)(3)); // 6
+console.log(_add(1)(2)(3)); // 6
+
+        function checkByRegExp(reg, str) {
+            return reg.test(str);
+        }
+        var check = curry(checkByRegExp);
+        var checkPhone = check(/^1\d{10}$/);
+        console.log(checkPhone('13407342232'))
+        var checkEmail = check(/^(\w)+(\.\w+)*@(\w)+((\.\w+)+)$/);
+       console.log(checkEmail('sfssgsf3'))
+    </script>
+</body>
+
+</html>

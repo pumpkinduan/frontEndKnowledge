@@ -1,13 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
 </head>
+
 <body>
     <script>
+        Function.prototype.myBind = myBind;
+        var person = {
+            name: "Tom",
+            age: 19,
+        };
+        function test(age, name) {
+            this.age = age;
+            this.name = name;
+            console.log(age);
+            console.log(name);
+            return 12
+        }
+        test.prototype.num = 111;
+        var bindTest = test.bind(person, 21); // 初始参数
+        var obj = new bindTest("Yilia"); // 21 Yilia
+        obj.num = 1314666;
+        console.log(test.prototype.xxx)
+        function myBind(thisArg) {
+            var _this = thisArg; // 返回的新函数的this
+            var fn = this; // 拿到原函数
+            var args = [].slice.call(arguments, 1); // 收集预设参数
+            var _ = function() { // 返回一个包装原函数的新函数
+                // 将预设参数与传的参数整合并执行原函数
+                // 另外，将原函数return出去的值也return出去，避免新函数的返回值一直为undefined
+                return fn.apply(_this, args.concat([].slice.call(arguments)));
+            }
+            _.prototype = fn.prototype; // 新增
+            return _;
+            
+        }
+    </script>
+    <!-- <script>
         //func.apply(thisArg, [arg1, arg2, ...])
         //func.call(thisArg, arg1, arg2, ...)
         //thisArg: 在函数func运行时改变其this的指向为thisArg
@@ -106,6 +140,7 @@
             console.log('I am a beautiful rose with ' + this.petalCount + ' petals!!!')
         }
         new lateBloomer().bloom();
-    </script>
+    </script> -->
 </body>
+
 </html>

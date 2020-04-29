@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <style>
+        .box {
+            overflow: hidden;
+        }
+
+        .left {
+            float: left;
+            background: pink;
+            padding-bottom: 9999px;
+            margin-bottom: -9999px;
+        }
+
+        .right {
+            background: skyblue;
+            overflow: hidden;
+            padding-bottom: 9999px;
+            margin-bottom: -9999px;
+        }
+    </style>
+    <div class="box">
+        <div class="left">left</div>
+        <div class="right">right</div>
+    </div>
+</body>
+
+</html>

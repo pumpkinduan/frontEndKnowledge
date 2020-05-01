@@ -9,31 +9,7 @@
 
 <body>
     <script>
-        function reverseLinkedList(head) {
-            let pre = null; //表头无上一个结点，故初始化为null
-            while (head) {
-                next = head.next;
-                head.next = pre;
-                pre = head;
-                head = next;
-            }
-            console.log(pre)
-            return pre;
-        }
-        let head = {
-            value: 1,
-            next: {
-                value: 2,
-                next: {
-                    value: 3,
-                    next: {
-                        value: 4,
-                        next: null
-                    }
-                }
-            }
-        }
-        reverseLinkedList(head);
+       
     </script>
 </body>
 

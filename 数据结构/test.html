@@ -9,7 +9,58 @@
 
 <body>
     <script>
-       
+        class Queue {
+            constructor(length = 6) {
+                this.queue = new Array(length);
+                this.size = 0; 
+            }
+            init() {
+                this.front = 0;// 记录队列头元素位置
+                this.rear = -1; // 记录队尾元素位置
+            }
+            enqueue(x) {
+                if (this.isEmpty()) {this.init()}
+                if (this.isMaxsize()) throw new Error('队列已满');
+                this.rear = ++this.rear % this.getLength();
+                this.queue[this.rear] = x;
+                this.size++;
+                return x;
+            }
+            getLength() {
+                return this.queue.length;
+            }
+            isMaxsize() {
+                return this.size === this.getLength();
+            }
+            isEmpty() {
+                return this.size === 0;
+            }
+            dequeue() {
+                if (this.isEmpty()) { throw new Error('队列为空') }
+                let item = this.queue[this.front];
+                this.queue[this.front] = null;
+                this.front = ++this.front % this.getLength();
+                this.size--;
+                return item;
+            }
+        }
+        let q = new Queue();
+        q.enqueue(1)
+        q.enqueue(2)
+        q.enqueue(3)
+        q.enqueue(4)
+        q.enqueue(5)
+        q.enqueue(6)
+        q.dequeue()
+        q.dequeue()
+        q.dequeue()
+        q.dequeue()
+        q.dequeue()
+        q.dequeue()
+        q.enqueue(7)
+        q.enqueue(8)
+        console.log(q);
+
     </script>
 </body>
 

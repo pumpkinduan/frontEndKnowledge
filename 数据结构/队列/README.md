@@ -96,5 +96,3 @@ q.enqueue(7);
 q.enqueue(8);
 console.log(q);
 ```
-
-#### 队列的链式存储(链表实现)

@@ -9,58 +9,154 @@
 
 <body>
     <script>
-        class Queue {
-            constructor(length = 6) {
-                this.queue = new Array(length);
-                this.size = 0; 
+        class Node {
+            constructor(value, next) {
+                this.value = value;
+                this.next = next;
             }
-            init() {
-                this.front = 0;// 记录队列头元素位置
-                this.rear = -1; // 记录队尾元素位置
-            }
-            enqueue(x) {
-                if (this.isEmpty()) {this.init()}
-                if (this.isMaxsize()) throw new Error('队列已满');
-                this.rear = ++this.rear % this.getLength();
-                this.queue[this.rear] = x;
-                this.size++;
-                return x;
-            }
-            getLength() {
-                return this.queue.length;
-            }
-            isMaxsize() {
-                return this.size === this.getLength();
+        }
+        class LinkedList {
+            constructor(value = null, next = null) {
+                // 用头结点表示整个列表
+                this.head = new Node(value, next); // 头结点
+                this.rear = null; // 指针指向尾节点
+                this.size = 0; // 链表长度
             }
             isEmpty() {
                 return this.size === 0;
             }
-            dequeue() {
-                if (this.isEmpty()) { throw new Error('队列为空') }
-                let item = this.queue[this.front];
-                this.queue[this.front] = null;
-                this.front = ++this.front % this.getLength();
+            addAtHead(val) {
+                // 在链表的第一个元素之前添加一个值为 val 的节点。
+                // 插入后，新节点将成为链表的第一个节点。
+
+                /*
+                    1. 新创建一个值为val的结点，并用cur表示
+                    2. 将cur结点的next指针指向头结点head
+                    3. 将cur结点作为当前链表的头结点
+                */
+                let cur = new Node(val, null);
+                if (!this.isEmpty()) {
+                    cur.next = this.head;
+                    this.head = cur;
+                } else {
+                    this.head = cur;
+                    this.rear = cur;
+                }
+                this.size++;
+                return true;
+            }
+            get(index) {
+                // 获取链表中第 index 个节点的值，如果索引无效，则返回-1
+                if (index < 0 || index > this.size - 1) return -1;
+                let target = this.head;
+                while (index > 0) {
+                    index--;
+                    target = target.next;
+                }
+                return target;
+            }
+            addAtTail(val) {
+                // 将值为 val 的节点追加到链表的最后一个元素
+                let cur = new Node(val, null);
+                if (!this.isEmpty()) {
+                    this.rear.next = cur;
+                    this.rear = this.rear.next;
+                } else {
+                    this.head = cur;
+                    this.rear = cur;
+                }
+                this.size++;
+                return true;
+            }
+            addAtIndex(index = 0, val) {
+                // 在链表中的第 index 个节点之前添加值为 val 的节点
+                // 如果 index 等于链表的长度，则该节点将附加到链表的末尾
+                // 如果 index 大于链表长度，则不会插入节点
+                // 如果 index 小于0，则在头部插入节点
+                if (index > this.size) return;
+                if (index <= 0) { return this.addAtHead(val); }
+                if (index === this.size) { return this.addAtTail(val); }
+                let prev = new Node(null, null), next = this.head;
+                let cur = new Node(val, null);
+                while (index) {
+                    prev = next;
+                    next = next.next;
+                    index--;
+                }
+                prev.next = cur;
+                cur.next = next;
+                this.size++;
+
+            }
+            deleteHead() {
+                let cur = this.head;
+                this.head = this.head.next;
+                return cur;
+            }
+            formCycle(pos) { // 形成环形链表
+                // pos正整数 表示链表尾连接到链表中的位置(索引从 0 开始)
+                if (pos >= this.size - 1 || pos < 0) throw new Error('错误索引')
+                this.rear.next = this.get(pos);
+
+            }
+            hasCycle() {
+                if (!this.head) return false;
+                var slow = this.head;
+                var fast = this.head;
+                while (true) {
+                    if (!fast || !fast.next) return false;
+                    slow = slow.next;
+                    fast = fast.next.next;
+                    if (slow === fast) return true;
+                }
+            }
+            deleteAtIndex(index) {
+                //删除链表中的第 index 个节点
+
+                // 删除结点必须知道三个连续结点的位置
+                // 1. current 当前被删除的结点
+                // 2. pre 当前被删除的结点的上一个结点
+                // 3. next 当前被删除的结点的上下一个结点
+                if (index > this.size - 1 || index < 0) return;
+                if (index === 0) { return this.deleteHead(); }
+                let prev = null;
+                let cur = this.head, next = cur.next;
+                while (index) {
+                    prev = cur;
+                    cur = next;
+                    next = cur.next;
+                    index--;
+                }
+                if (!next) { // 表示删除了尾结点，修正rear的指向
+                    this.rear = prev;
+                }
+                prev.next = next;
                 this.size--;
-                return item;
+                return cur;
+
             }
         }
-        let q = new Queue();
-        q.enqueue(1)
-        q.enqueue(2)
-        q.enqueue(3)
-        q.enqueue(4)
-        q.enqueue(5)
-        q.enqueue(6)
-        q.dequeue()
-        q.dequeue()
-        q.dequeue()
-        q.dequeue()
-        q.dequeue()
-        q.dequeue()
-        q.enqueue(7)
-        q.enqueue(8)
-        console.log(q);
+        let list = new LinkedList();
+        list.addAtTail(3)
+        list.addAtTail(2)
+        list.addAtTail(0)
+        list.addAtTail(-4)
+        list.formCycle(1);
+        // var hasCycle = function (head) {
+        //     if (!head) return false;
+        //     var map = new Map();
+        //     var cur = head;
+        //     while (cur) {
+        //         if (!cur.next) return false;
+        //         map.set(cur, true);
+        //         if (map.has(cur.next)) return true;
+        //         cur = cur.next;
+        //     }
+        //     return true;
+        // };
+        console.log(list.hasCycle())
 
+        console.log(list)
     </script>
 </body>
 

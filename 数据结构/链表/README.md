@@ -12,11 +12,11 @@ class Node {
   }
 }
 class LinkedList {
-  constructor(value = null, next = null) {
+  constructor(value = null) {
     // 用头结点表示整个列表
-    this.head = new Node(value, next); // 头结点
+    this.head = new Node(value, null); // 头结点
     this.rear = null; // 指针指向尾节点
-    this.size = 0; // 链表长度
+    this.size = value ? 1 : 0; // 链表长度
   }
   isEmpty() {
     return this.size === 0;

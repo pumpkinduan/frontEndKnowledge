@@ -118,9 +118,9 @@ class ListStack {
   constructor() {
     this.size = 0;
     // this.top 指向栈顶节点
-    // this.head 指向入栈的第一个节点，也就是栈底节点
-    // 通过this.top获取栈顶元素节点，并实现push操作
-    // 通过this.head可以遍历整个栈结构的元素节点，并实现pop操作
+    // this.head 指向入栈的第一个节点，也就是栈顶节点，由它构建整个链表
+    // 通过this.top指向栈底元素节点，并实现push和pop操作
+    // 通过this.head可以遍历整个栈结构的元素节点
     this.top = this.head = null;
   }
   push(value) {
